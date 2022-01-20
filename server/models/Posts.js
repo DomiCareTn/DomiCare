@@ -22,6 +22,10 @@ const Posts = mongoose.model(
     content: {
       type: String
     },
+    user: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "ServiceSeeker",
+		},
     city: {
       type: String,
     },

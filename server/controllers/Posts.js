@@ -11,7 +11,7 @@ module.exports = {
                 .catch((err)=>console.log(err))
       },    
       FindAllServiceSeekerPosts:(req,res)=>{
-        Posts.find({type:"request"})
+        Posts.find({type:"request"}).select("").populate("user")
                 .then((result)=>{
                   console.log('FindAllServiceSeekerPosts', result)
                   res.send(result)})
@@ -31,7 +31,8 @@ module.exports = {
             endDate:req.body.selectedEndDate,
             adress:req.body.adress,
             file:req.body.file,
-            type:"request"
+            type: "request",
+            user:req.body.user
           });
           console.log('CreateServiceSeekerPost',Post)
           res.status(200).json(Post);

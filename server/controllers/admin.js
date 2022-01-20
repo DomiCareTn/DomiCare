@@ -4,6 +4,8 @@ const Posts = require("../models/Posts.js")
 const report = require('../models/reports.js')
 const Equipement = require("../models/Equipements.js")
 const QuestAns = require("../models/Question&Answers");
+const ServiceProvider  = require("../models/ServiceProvider.js")
+const ServiceSeeker  = require("../models/ServiceSeeker.js")
 
 
 
@@ -62,7 +64,7 @@ module.exports = {
     },
     delete_equipement: async (req, res) => {
         const equipId = req.params.id
-        console.log(postId)
+        console.log(equipId)
 
 
         try {
@@ -71,7 +73,28 @@ module.exports = {
         catch (error) { console.log('err', error) }
           
     },
-
+    get_all_service_Providers: async(req,res) => {
+        try {
+           const SP = await ServiceProvider.find({})
+            res.send(SP)
+        
+    }
+    catch (err) {
+        res.send(err)
+    }
+        
+    },
+    get_all_service_Seekers: async(req,res) => {
+        try {
+           const SS = await ServiceSeeker.find({})
+            res.send(SS)
+        
+    }
+    catch (err) {
+        res.send(err)
+    }
+        
+    },
 
 
 
@@ -98,6 +121,66 @@ module.exports = {
         catch (error) { console.log('err', error) }
           
     },
+    bann_User: async (req, res) => {
+        
+        const id = req.params.id
+        console.log(id);
+        
+        try {
+            const bann = await ServiceProvider.findByIdAndUpdate(id,{banned:true})
+            res.send({bann})
+         }
+        catch(err){console.log(err);
+        }
+    },
+    bann_UserSS: async (req, res) => {
+        
+        const id = req.params.id
+        console.log(id);
+        
+        try {
+            const bann = await ServiceSeeker.findByIdAndUpdate(id,{banned:true})
+            res.send({bann})
+         }
+        catch(err){console.log(err);
+        }
+    },
+    unbann_User: async (req, res) => {
+        
+        const id = req.params.id
+        console.log(id);
+        
+        try {
+            const unbann = await ServiceProvider.findByIdAndUpdate(id,{banned:false})
+            res.send({unbann})
+         }
+        catch(err){console.log(err);
+        }
+    },
+    unbann_UserSS: async (req, res) => {
+        
+        const id = req.params.id
+        console.log(id);
+        
+        try {
+            const unbann = await ServiceSeeker.findByIdAndUpdate(id,{banned:false})
+            res.send({unbann})
+         }
+        catch(err){console.log(err);
+        }
+    },
+    // find_One: async (req, res, next) => {
+    //     console.log(req.params.id)
+    //     try {
+          
+    //       const servs = await ServiceProvider.findById({ _id: req.params.id });
+    //       console.log(servs)
+    //       res.status(200).json(servs);
+    //     } catch (error) {
+    //       next(error);
+    //     }
+    //   },
+
         
     
 
