@@ -4,9 +4,9 @@ import axios from 'axios';
 import {localhost} from "@env";
 import { View, StyleSheet,  Picker, } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { CredentialsContext } from './Authentification/CredentialsContext.js';
+import { CredentialsContext } from '../Authentification/CredentialsContext.js';
 import { useNavigation } from "@react-navigation/native"
-import { storage } from "../.firebase_config.js";
+import { storage } from "../../.firebase_config.js";
 import * as ImagePicker from "expo-image-picker";
 import { FormControl,Icon,NativeBaseProvider,Center,Spinner,Input,Button  } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
@@ -28,16 +28,16 @@ const SeekerRequest = (props) => {
 
   const post = () => {
    
-
-    axios.post(`http://${localhost}:3000/Posts/CreateServiceSeekerPost`, {details,address,file,seekerId
-  ,selectedStartDate, selectedEndDate,selectedValue})
+    console.log("create a post");
+    
+    axios.post(`http://192.168.11.61:3000/Posts/CreateServiceSeekerPost`, {details,address,file,seekerId,selectedStartDate, selectedEndDate,selectedValue})
       .then(res => console.log(res)).catch(err => console.log(err))
     
   }
   const onSubmit = () => { 
     post()
-    simpleAlertHandler()
-    navigation.navigate('serviceProvidersList')
+    // simpleAlertHandler()
+    navigation.navigate('ServiceSeekersPosts')
   }
   const onDateChange = (date, type) => {
     //function to handle the date change

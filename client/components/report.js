@@ -20,7 +20,7 @@ import { useNavigation } from "@react-navigation/native";
 export default () => {
     const navigation = useNavigation()
     const {storedCredentials,setStoredCredentials}=React.useContext(CredentialsContext)
-    const  userData = storedCredentials.userData;
+    const  userData = storedCredentials;
  
   const [reprtText, setData] = React.useState("");
 
@@ -38,9 +38,9 @@ export default () => {
           popup: "animate__animated animate__fadeOutUp",
         },
       });
-      var reqS={reason:reprtText,reportedId:'61dd711fdcb65ed8ac17ba1d',reporterId:userData._id}
-      userData.type=== undefined ? reqS['onModel']='ServiceSeeker' : reqS['onModel']='ServiceProvider' ;
-    Axios.post(`http://${localhost}:3000/reports`, reqS)
+      var reqS={reason:reprtText,reportedId:'61dd711fdcb65ed8ac17ba1d',reporterId:userData.userData._id}
+      userData.userData.type=== undefined ? reqS['onModel']='ServiceSeeker' : reqS['onModel']='ServiceProvider' ;
+    Axios.post("http://localhost:3000/reports", reqS)
       .then(() => {
        console.log(userData)
        setTimeout(() => {

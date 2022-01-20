@@ -12,11 +12,14 @@ const ServiceProvider =  require("./routers/ServiceProvider")
 const admin =  require("./routers/Admin.js")
 const ServiceProviderProfile = require("./routers/users.js")
 const SeekerRequest = require ("./routers/SeekerRequest.js")
-const servicesrequests=require("./routers/servicesrequestsfeed.js")
+const Users = require("./routers/users.js")
+const ServiceSeekerRequests = require ("./routers/ServiceSeekerRequests.js")
+// const servicesrequests=require("./routers/servicesrequestsfeed.js")
 
 
 // **************************************
 const Posts=require("./routers/Posts.js")
+const Transactions=require("./routers/Transactions.js")
 // **************************************
 
 // const ServiceSeekerRequests = require ("./routers/ServiceSeekerRequests.js")
@@ -51,14 +54,14 @@ app.use("/auth", auth);
 app.use("/ServiceProvider", ServiceProvider);
 app.use("/editprofile",ServiceProviderProfile);
 app.use("/SeekerRequest",SeekerRequest);
-app.use("/posts",servicesrequests)
-
-// app.use("/ServiceSeekerRequests",ServiceSeekerRequests);
+app.use("/Users",Users);
+app.use("/ServiceSeekerRequests",ServiceSeekerRequests);
 
 app.use("/reports",Reports);
 
 // **************************************
 app.use("/Posts",Posts)
+app.use('/Transactions',Transactions)
 // **************************************
 
 /**************** Listening Requests ****************/

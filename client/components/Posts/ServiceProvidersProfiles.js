@@ -24,9 +24,12 @@ const serviceProvidersList = ({ navigation }) => {
   const [Data, setData] = useState([]);
 
   useEffect(async () => {
+   
     try {
       const result = await axios.get(
-        `http://${localhost}:3000/serviceProvidersList/serviceProvidersList`
+        
+        
+        `http://192.168.11.61:3000/Posts/serviceProvidersList`
       );
       setSProviders(result.data);
       setData(result.data);
@@ -139,7 +142,7 @@ const serviceProvidersList = ({ navigation }) => {
                   <AirbnbRating style={styles.airbnbRating} />
                   <Button
                     title="Ask for service"
-                    onPress={() => navigation.navigate("SeekerRequest", u)}
+                    onPress={() => navigation.navigate("ServiceSeekerSendARequest", u)}
                   />
                 </View>
               );

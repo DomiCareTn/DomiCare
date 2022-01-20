@@ -91,6 +91,7 @@ module.exports = {
                               phoneNumber:data.phoneNumber,
                               gender:'',
                               dateOfBirth:'',
+                              
                               verified: true
                           }
                           ServiceSeeker.create(obj)
@@ -176,7 +177,7 @@ module.exports = {
                                             phoneNumber: data.phoneNumber,
                                             gender: "",
                                             dateOfBirth: "",
-                                            picture: "",
+                                            picture: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
                                         };
                                         ServiceSeeker.create(obj)
                                             .then((user) => res.send(user))
@@ -218,7 +219,7 @@ module.exports = {
                                     phoneNumber: data.phoneNumber,
                                     gender: "",
                                     dateOfBirth: "",
-                                    picture: "",
+                                    picture: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
                                 };
                                 ServiceProvider.create(obj)
                                     .then((user) => res.send(user))
@@ -258,7 +259,7 @@ module.exports = {
                                     phoneNumber: data.phoneNumber,
                                     gender: "",
                                     dateOfBirth: "",
-                                    picture: "",
+                                    picture: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
                                     certificate : data.certificate
                                 };
                                 ServiceProvider.create(obj)

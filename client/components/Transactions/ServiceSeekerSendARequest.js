@@ -7,9 +7,9 @@ import {localhost} from "@env";
 import { View, StyleSheet,  ScrollView, Alert, Picker, Image, Text, TouchableOpacity ,SafeAreaView} from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { CredentialsContext } from './Authentification/CredentialsContext.js';
+import { CredentialsContext } from '../Authentification/CredentialsContext.js';
 import { useNavigation } from "@react-navigation/native"
-import { storage } from "../.firebase_config.js";
+import { storage } from "../../.firebase_config.js";
 import * as ImagePicker from "expo-image-picker";
 import { FormControl,Icon,NativeBaseProvider,Center,Spinner,Input,Button  } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
@@ -35,14 +35,14 @@ const  userData = storedCredentials.userData;
   const post = () => {
    
 
-    axios.post(`http://${localhost}:3000/SeekerRequest/SeekerRequest/`, {type,details,address,file,seekerId,providerId,selectedStartDate, selectedEndDate })
+    axios.post(`http://192.168.11.61:3000/Transactions/seekersendrequest`, {type,details,address,file,seekerId,providerId,selectedStartDate, selectedEndDate })
       .then(res => console.log(res)).catch(err => console.log(err))
     console.log('hello',details,address,Prescription)
   }
   const onSubmit = () => { 
     post()
     simpleAlertHandler()
-    navigation.navigate('serviceProvidersList')
+    navigation.navigate('ServiceProvidersProfiles')
   }
   const onDateChange = (date, type) => {
     //function to handle the date change

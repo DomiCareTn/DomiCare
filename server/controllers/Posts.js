@@ -11,7 +11,8 @@ module.exports = {
                 .catch((err)=>console.log(err))
       },    
       FindAllServiceSeekerPosts:(req,res)=>{
-        Posts.find({type:"request"}).select("").populate("user")
+        console.log('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh')
+        Posts.find({type:"request"})
                 .then((result)=>{
                   console.log('FindAllServiceSeekerPosts', result)
                   res.send(result)})
@@ -20,6 +21,7 @@ module.exports = {
       CreateServiceSeekerPost:async (req, res, next) => {
         
 
+        console.log('create a post');
         
         
         try {
