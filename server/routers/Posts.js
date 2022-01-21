@@ -11,5 +11,6 @@ router.route("/serviceProvidersList")
 
 router.route("/servicesrequests")
   .get(Posts.FindAllServiceSeekerPosts) 
-
+router.route("/AServiceSeekerPosts/:_id")
+  .get(Posts.FindAServiceSeekerPosts)
 module.exports = router;

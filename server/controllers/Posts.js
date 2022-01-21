@@ -11,7 +11,16 @@ module.exports = {
                 .catch((err)=>console.log(err))
       },    
       FindAllServiceSeekerPosts:(req,res)=>{
+        
         Posts.find({type:"request"}).populate("serviceSeeker_id")
+                .then((result)=>{
+                  console.log('FindAllServiceSeekerPosts', result)
+                  res.send(result)})
+                .catch((err)=>console.log(err))
+      },
+      FindAServiceSeekerPosts:(req,res)=>{
+        
+        Posts.find({serviceSeeker_id:req.params._id})
                 .then((result)=>{
                   console.log('FindAllServiceSeekerPosts', result)
                   res.send(result)})
@@ -41,5 +50,15 @@ module.exports = {
         catch (error) {
           next(error);
         }
-      }
+      },
+      DeleteApost: async (req, res) => {
+    
+        try {
+          await Posts.findByIdAndDelete({ _id: req.params._id });
+          res.send("Request Successfully Deleted");
+        } catch (error) {
+          console.log(error);
+        }
+      },
+
 }

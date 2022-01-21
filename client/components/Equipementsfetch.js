@@ -34,7 +34,7 @@ const Equipementsfetch = () => {
             });
     }, []);
     //  var fetchData=()=>{
-    //     fetch("http://localhost:3000/Equipements")
+    //     fetch("http://192.168.11.61:3000/Equipements")
     //     .then(response=>{
     //       console.log("response",response,response.json());
     //      response.json()

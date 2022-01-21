@@ -4,7 +4,7 @@ import {Picker} from "@react-native-picker/picker"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CredentialsContext } from './Authentification/CredentialsContext.js';
 import axios from 'axios'
-import {localhost} from "@env";
+
 
 const EditEquipement = ({navigation}) => {
   const [text, onChangeText] = React.useState("Useless Text");

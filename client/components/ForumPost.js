@@ -52,7 +52,7 @@ const ForumPost = (props) => {
             const com = await axios.get(
                 `http://192.168.11.61:3000/savepost/findcomments/${_id}`
             );
-            console.log(com.data);
+           
             setpost(post.data);
             setparticipants(post.data.participants);
             setcomments(com.data);}
@@ -76,7 +76,6 @@ const ForumPost = (props) => {
         const recom = await axios.get(
             `http://192.168.11.61:3000/savepost/findcomments/${_id}`
         );
-
         setcomments(recom.data);}
         catch(err){
           console.log(err);
@@ -157,9 +156,9 @@ const ForumPost = (props) => {
                     value={value}
                     variant="rounded"
                     placeholder="Round"
-                    onChange={(event)=>handleChange(event)}
+                    onChange={handleChange}
                     w={{
-                       
+                    
                         md: "25%",
                     }}
                     InputRightElement={
@@ -200,10 +199,7 @@ const ForumPost = (props) => {
                                                         <View key={key}>
                                                             <Text>
                                                                 {" "}
-                                                                {
-                                                                    reply.owner
-                                                                        .name
-                                                                }{" "}
+                                                                {reply.owner.name}{" "}
                                                             </Text>
                                                             <Text>
                                                                 {" "}

@@ -9,7 +9,7 @@ import axios from "axios";
 import moment from "moment";
 
 
-const ServicesRequests = () => {
+const AServiceSeekerPosts = () => {
   const [feed, setFeed] = useState([]);
   const { storedCredentials, setStoredCredentials } =
     React.useContext(CredentialsContext);
@@ -18,23 +18,20 @@ const ServicesRequests = () => {
 
   useEffect(async () => {
     console.log("feed", feed);
+    const _id=userData._id
     try {
       const posts = await axios.get(
-        `http://192.168.11.61:3000/Posts/servicesrequests`
+        `http://192.168.11.61:3000/Posts/AServiceSeekerPosts/${_id}`
       );
       setFeed(posts.data);
     } catch (err) {
       console.log(err);
     }
   }, []);
-  const OfferMysService = async (e) => {
-    const postid = e._id;
-    const providerId = userData._id;
-    const seekerId = e.serviceSeeker_id;
-    const type = "offer";
-
-    const offer = await axios.post(
-      `http://192.168.11.61:3000/Transactions/OfferMyService`,
+  const Delete = async (e) => {
+    const _id = e._id;
+    const offer = await axios.delete(
+      `http://192.168.11.61:3000/Transactions/deleteapost/${_id}`,
       { type, postid, providerId, seekerId }
     );
   };
@@ -54,27 +51,16 @@ const ServicesRequests = () => {
           return (
             <View style={styles.container} key={key}>
               <Card style={{ padding: 10, margin: 10 }} >
-                <Text style={{ marginLeft: 270 }}>{e.createdAT}</Text>
-
-                <Avatar
-                  bg="green.500"
-
-
-                  
-                  size="md"
-                  source={{
-                    uri: e.serviceSeeker_id.picture
-                  }}
-                ></Avatar>
-                <Text> By:{e.serviceSeeker_id.userName}</Text>
+                <Text >createdAt:{e.createdAT}</Text>
                 <Text>city:{e.city}</Text>
+                <Text>city:{e.adress}</Text>
                 <Text>Date:{e.startDate}-{e.endDate}</Text>
                 <Text>Details:{e.content}</Text>
                 <Button
                   onPress={() => {
-                    OfferMysService(e);
+                    Delete(e);
                   }}
-                  title="Offer my services"
+                  title="Delete"
                   color="teal"
                   accessibilityLabel="Learn more about this purple button"
                 />
@@ -94,4 +80,4 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
-export default ServicesRequests;
+export default AServiceSeekerPosts;

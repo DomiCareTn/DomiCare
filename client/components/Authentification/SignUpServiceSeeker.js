@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
-import { IPAdress } from "@env";
+
 import {
     Box,
     Heading,
@@ -132,7 +132,7 @@ function SignUp() {
 
     const post = () => {
         axios
-            .post(`http://localhost:3000/auth/SSSignUp`, { formData })
+            .post(`http://192.168.11.61:3000/auth/SSSignUp`, { formData })
             .then((response) => {
                 let errors = {};
                 const data = response.data;

@@ -1,7 +1,7 @@
 
 import React, { useState,useEffect } from "react";
 import axios from 'axios';
-import {localhost} from "@env";
+
 
 
 import { View, StyleSheet,  ScrollView, Alert, Picker, Image, Text, TouchableOpacity ,SafeAreaView} from "react-native";

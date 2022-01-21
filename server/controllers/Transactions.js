@@ -62,7 +62,7 @@ module.exports = {
       const offers = await Transactions.find({
         type: "request",
         providerId: req.params._id,
-      });
+      }).populate('seekerId')
       res.send(offers);
       console.log("offers", offers);
     } catch (err) {
@@ -89,7 +89,7 @@ module.exports = {
       const offers = await Transactions.find({
         type: "request",
         seekerId: req.params._id,
-      });
+      }).populate("seekerId")
       res.send(offers);
     } catch (err) {
       res.send(err);

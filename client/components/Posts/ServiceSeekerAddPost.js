@@ -1,7 +1,7 @@
 
 import React, { useState} from "react";
 import axios from 'axios';
-import {localhost} from "@env";
+
 import { View, StyleSheet,  Picker, } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CredentialsContext } from '../Authentification/CredentialsContext.js';

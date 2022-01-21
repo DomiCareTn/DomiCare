@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {localhost} from "@env";
+
 import {
   View,
   StyleSheet,

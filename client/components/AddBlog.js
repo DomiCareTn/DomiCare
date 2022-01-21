@@ -5,7 +5,7 @@ import { TextArea, Center, NativeBaseProvider } from "native-base";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CredentialsContext } from "./Authentification/CredentialsContext.js";
-import { localhost } from "@env";
+
 
 const AddBlog = (props) => {
     const { storedCredentials, setStoredCredentials } =

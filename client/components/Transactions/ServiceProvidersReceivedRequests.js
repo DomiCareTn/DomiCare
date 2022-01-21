@@ -6,7 +6,7 @@ import {Avatar , NativeBaseProvider} from 'native-base';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CredentialsContext } from "../Authentification/CredentialsContext.js";
 import axios from "axios";
-import {localhost} from "@env";
+
 
  const ReceivedRequests =()=> {
     const { storedCredentials, setStoredCredentials } =
@@ -41,7 +41,9 @@ import {localhost} from "@env";
     return (
         <NativeBaseProvider>
             <ScrollView>
-      {feed.map((e,key)=>{return(
+      {feed.map((e,key)=>{
+        console.log("first",e);
+        return(
       <View style={styles.container} key={key}>
         <Card style={{padding: 10, margin: 10}}>
         <Text style={{marginLeft: 270}}> createdAt</Text>
