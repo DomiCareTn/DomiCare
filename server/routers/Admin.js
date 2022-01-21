@@ -14,6 +14,8 @@ router.route("/reports")
   .get(AdminController.get_reports)
   router.route("/equipement")
   .get(AdminController.get_equipement)
+  router.route("/transactions")
+  .get(AdminController.get_all_transactions)
   router.route("/quesans")
   .get(AdminController.get_quesans)
   router.route("/deleteEquip/:id")
@@ -32,6 +34,9 @@ router.route("/banned/:id")
   .patch(AdminController.unbann_UserSS)
   // router.route("/findss/:id")
   // .get(AdminController.find_One)
+  router.route("/admins")
+  .get(AdminController.get_all_admins)
+  
  
 
 module.exports = router;

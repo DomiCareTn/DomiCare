@@ -1,24 +1,49 @@
-const adminLogin = require("../models/Admins.js");
+const admin = require("../models/Admins.js");
 const bcrypt = require("bcrypt");
 const Posts = require("../models/Posts.js")
 const report = require('../models/reports.js')
 const Equipement = require("../models/Equipements.js")
 const QuestAns = require("../models/Question&Answers");
 const ServiceProvider  = require("../models/ServiceProvider.js")
-const ServiceSeeker  = require("../models/ServiceSeeker.js")
+const ServiceSeeker = require("../models/ServiceSeeker.js")
+const Transactions = require("../models/Transactions");
+const Admins = require("../models/Admins");
+
 
 
 
 module.exports = {
 
-    login: function (req, res) {
-        adminLogin.create({ email: req.body.email,password:req.body.password }, (err, user) => {
-            bcrypt.compare(req.body.password, user.password, (err, isMatch) => {
-                if (err) res.json({ message: 'password incorrect' })
-                res.status(200).send(isMatch)
-            })
-        })
+    login: async (req, res) => {
+        try {
+            console.log(req.body);
+        let { email , password } = req.body
+            let user = await admin.findOne({ email })
+            console.log(user);
+            if (!user) {
+            
+            return res.json({ msg: "this user doesn't exist" })
+
+            }
+            else{res.json({ msg: "login succeded" })}
+        let isMatch = bcrypt.compareSync(password, user.password);
+        if (!isMatch) {
+            return res.send({ msg: "Wrong password" })
+            }
+    }catch(err){console.log(err);}
+
+        
     },
+
+    
+
+
+
+
+
+
+
+
     get_all_posts: async(req,res) => {
         try {
            const posts = await Posts.find({})
@@ -169,17 +194,28 @@ module.exports = {
         catch(err){console.log(err);
         }
     },
-    // find_One: async (req, res, next) => {
-    //     console.log(req.params.id)
-    //     try {
-          
-    //       const servs = await ServiceProvider.findById({ _id: req.params.id });
-    //       console.log(servs)
-    //       res.status(200).json(servs);
-    //     } catch (error) {
-    //       next(error);
-    //     }
-    //   },
+    get_all_transactions: async(req,res) => {
+        try {
+           const trans = await Transactions.find({})
+            res.send(trans)
+        
+    }
+    catch (err) {
+        res.send(err)
+    }
+        
+    },
+    get_all_admins: async(req,res) => {
+        try {
+           const admin = await Admins.find({})
+            res.send(admin)
+        
+    }
+    catch (err) {
+        res.send(err)
+    }
+        
+    },
 
         
     
