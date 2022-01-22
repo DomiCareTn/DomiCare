@@ -55,10 +55,13 @@ import axios from "axios";
           }}
         >
             </Avatar>
-            <Text> firstName</Text>
-          <Text>lastName</Text>
-          <Text>Gender</Text>
-          <Text>Speciality</Text>
+            <Text> From: {e.seekerId.userName}</Text>
+            <Text>Details:{e.details}</Text>
+            <Text>City:{e.seekerId.city}</Text>
+            <Text>StartDate{e.selectedStartDate}</Text>
+            <Text>EndDate{e.selectedEndDate}</Text>
+
+          
           <Button
             onPress={()=>{AcceptRequest(e._id)}}
             title="Accept"

@@ -44,7 +44,7 @@ module.exports = {
   find_All_Comments: async (req, res, next) => {
     try {
       
-      const com = await QuestAns.find({ postId : req.params.id}).exec();
+      const com = await QuestAns.find({ postId : req.params.id}).sort({createdAt: -1}).exec();
          
       res.status(200).json(com);
     } catch (error) {
@@ -107,7 +107,7 @@ module.exports = {
       next(error);
     }
   },
-  like_One: async (req, res, next) => {
+  like_One: async (req, res) => {
     
     if(req.body.action==='inc')
     
@@ -116,7 +116,7 @@ module.exports = {
        
       const Quest = await QuestAns.findOneAndUpdate(
         { _id: req.body.postid },{"$push" : {"participants": req.body.userid}},{new : true});
-      
+      console.log("quest",Quest);
       res.status(200).json(Quest);
     } catch (error) {
       console.log(err)
