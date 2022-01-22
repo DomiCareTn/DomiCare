@@ -21,4 +21,8 @@ router
     router
     .route("/ServiceProvider/UpdatePassword/:userId")
     .put(UsersController.SP_UpdatePassword);
+    
+    router
+    .route("/ServiceProvider/Fetch")
+    .get(UsersController.SP_FetchAll);
 module.exports = router;

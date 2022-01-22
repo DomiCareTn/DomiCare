@@ -1,5 +1,7 @@
 import React from "react";
 import axios from "axios";
+import moment from "moment";
+
 import {
     View,
     SafeAreaView,
@@ -109,7 +111,9 @@ export const ProfileServiceSeeker = () => {
                             <Icon name="cake" color="#777777" size={20} />
                             <Text style={{ color: "#777777", marginLeft: 20 }}>
                                 {formData.dateOfBirth
-                                    ? formData.dateOfBirth
+                                    ? moment(formData.dateOfBirth).format(
+                                          "MMM Do YYYY"
+                                      )
                                     : "N/A"}
                             </Text>
                         </View>
@@ -124,17 +128,6 @@ export const ProfileServiceSeeker = () => {
                                 {formData.gender ? formData.gender : "N/A"}
                             </Text>
                         </View>
-                    </View>
-
-                    <View style={styles.menuWrapper}>
-                        <TouchableRipple onPress={() => {}}>
-                            <View style={styles.menuItem}>
-                                <Icon name="chat" color="#76becc" size={25} />
-                                <Text style={styles.menuItemText}>
-                                    My Posts
-                                </Text>
-                            </View>
-                        </TouchableRipple>
                     </View>
                 </View>
             </View>
@@ -218,7 +211,9 @@ export const ProfileServiceProvider = () => {
                             <Icon name="cake" color="#777777" size={20} />
                             <Text style={{ color: "#777777", marginLeft: 20 }}>
                                 {formData.dateOfBirth
-                                    ? formData.dateOfBirth
+                                    ? moment(formData.dateOfBirth).format(
+                                          "MMM Do YYYY"
+                                      )
                                     : "N/A"}
                             </Text>
                         </View>
@@ -378,7 +373,9 @@ export const ProfileEquipementsProvider = () => {
                             <Icon name="cake" color="#777777" size={20} />
                             <Text style={{ color: "#777777", marginLeft: 20 }}>
                                 {formData.dateOfBirth
-                                    ? formData.dateOfBirth
+                                    ? moment(formData.dateOfBirth).format(
+                                          "MMM Do YYYY"
+                                      )
                                     : "N/A"}
                             </Text>
                         </View>
@@ -477,11 +474,7 @@ const styles = StyleSheet.create({
         position: "absolute",
         marginTop: 30,
     },
-    // name: {
-    //     fontSize: 22,
-    //     color: "#FFFFFF",
-    //     fontWeight: "600",
-    // },
+
     body: {
         marginTop: 40,
     },
@@ -491,6 +484,7 @@ const styles = StyleSheet.create({
         padding: 30,
     },
     name: {
+        marginTop: 20,
         fontSize: 28,
         color: "#696969",
         fontWeight: "600",

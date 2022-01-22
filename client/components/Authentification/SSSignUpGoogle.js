@@ -75,7 +75,6 @@ function SSSignUpGoogle() {
                 } else {
                     const data = res.data;
                     persistLogin({ userData: data });
-                    navigation.navigate("Home");
                 }
             })
             .catch((err) => console.log(err));

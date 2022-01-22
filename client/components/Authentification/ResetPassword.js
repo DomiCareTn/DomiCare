@@ -78,7 +78,6 @@ function ResetPassword() {
             .then((response) => {
                 const data = response.data;
                 persistLogin({ userData: data });
-                navigation.navigate("Home");
             })
             .catch((err) => {
                 console.log(err);
