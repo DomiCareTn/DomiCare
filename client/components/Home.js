@@ -121,11 +121,11 @@ const HomeScreen = () => {
     const [formData, setData] = React.useState([]);
     const [equipements, setEquipements] = React.useState([]);
     const [SPTab, setSPTab] = React.useState(1);
-    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
+    LogBox.ignoreLogs(["VirtualizedLists"]);
 
     React.useEffect(() => {
         axios
-            .get(`http://192.168.11.137:3000/Users/ServiceProvider/Fetch/`)
+            .get(`http://192.168.11.61:3000/Users/ServiceProvider/Fetch/`)
             .then((res) => {
                 const data = res.data;
                 setData(data);
@@ -134,7 +134,7 @@ const HomeScreen = () => {
                 console.log(error);
             });
         axios
-            .get(`http://192.168.11.137:3000/Equipements`)
+            .get(`http://192.168.11.61:3000/Equipements`)
             .then((result) => {
                 const data = result.data;
                 setEquipements(data);

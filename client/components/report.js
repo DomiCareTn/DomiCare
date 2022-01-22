@@ -46,7 +46,7 @@ export default () => {
         userData.userData.type === undefined
             ? (reqS["onModel"] = "ServiceSeeker")
             : (reqS["onModel"] = "ServiceProvider");
-        Axios.post("http://192.168.11.137:3000/reports", reqS)
+        Axios.post("http://192.168.11.61:3000/reports", reqS)
             .then(() => {
                 console.log(userData);
                 setTimeout(() => {

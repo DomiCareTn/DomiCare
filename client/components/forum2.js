@@ -29,7 +29,7 @@ export const Forum2 = (props) => {
     useEffect(async () => {
         try {
             const result = await axios(
-                `http://192.168.11.137:3000/savepost/savepost`
+                `http://192.168.11.61:3000/savepost/savepost`
             );
             setData(result.data);
             console.log("first", result.data);

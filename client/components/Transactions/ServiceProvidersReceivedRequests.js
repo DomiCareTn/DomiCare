@@ -18,18 +18,28 @@ const ReceivedRequests = () => {
         console.log(_id);
         try {
             const posts = await axios.get(
-                `http://192.168.11.137:3000/Transactions/servicerequests/${_id}`
+                `http://192.168.11.61:3000/Transactions/servicerequests/${_id}`
             );
             setFeed(posts.data);
         } catch (err) {
             console.log(err);
         }
     }, []);
-    const DeclineRequest = async (_id) => {
+    const AcceptRequest = async (e)=>{
+      try{
+        await axios.put(
+          `http://192.168.11.61:3000/Transactions/acceptrequest/${e._id}`,{e}
+        )
+      }
+      catch(err){
+        console.log(err);
+      }
+    }
+    const DeclineRequest = async (e) => {
         try {
             console.log("cancel", _id);
-            await axios.delete(
-                `http://192.168.11.137:3000/Transactions/deleterequest/${_id}`
+            await axios.put(
+                `http://192.168.11.61:3000/Transactions/deleterequest/${e._id}`,{e}
             );
         } catch (err) {
             console.log(err);
