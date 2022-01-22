@@ -8,6 +8,7 @@ import { storage } from "../../.firebase_config.js";
 import * as Google from "expo-google-app-auth";
 
 import {
+    Image,
     Box,
     Heading,
     VStack,
@@ -195,7 +196,7 @@ function SignUp() {
 
     const post = () => {
         axios
-            .post(`http://192.168.11.61:3000/auth/SPSignUp`, { formData })
+            .post(`http://192.168.11.137:3000/auth/SPSignUp`, { formData })
             .then((response) => {
                 let errors = {};
                 const data = response.data;
@@ -207,7 +208,6 @@ function SignUp() {
                     setErrors(errors);
                 } else {
                     persistLogin({ userData: data });
-                    navigation.navigate("Home");
                 }
             })
             .catch((err) => {
@@ -238,13 +238,19 @@ function SignUp() {
                     <Modal.Body>you have successfully registered</Modal.Body>
                 </Modal.Content>
             </Modal>
-            <Divider my={2} />
-            <Button mt="4" colorScheme="teal" onPress={handleGoogleSignup}>
-                Sign up with Google
-            </Button>
-            <Divider my={2} />
+            <Image
+                source={require("../../assets/categories/logo_small.png")}
+                style={{
+                    width: 300,
+                    height: 60,
+                    position: "absolute",
+                    top: 80,
+                    left: 15,
+                }}
+                alt="logo"
+            />
 
-            <Box safeArea p="2" w="120%" maxW="300" py="8">
+            <Box safeArea p="2" w="120%" maxW="300" py="8" marginTop={79}>
                 <Heading
                     size="lg"
                     color="coolGray.800"
@@ -268,6 +274,15 @@ function SignUp() {
                 </Heading>
 
                 <VStack space={3} mt="5">
+                    <Divider my={2} />
+                    <Button
+                        mt="4"
+                        colorScheme="teal"
+                        onPress={handleGoogleSignup}
+                    >
+                        Sign up with Google
+                    </Button>
+                    <Divider my={2} />
                     <FormControl isRequired isInvalid={"firstName" in errors}>
                         <FormControl.Label>First name</FormControl.Label>
                         <Input

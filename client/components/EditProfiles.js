@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import moment from "moment";
+import { LogBox } from "react-native";
 import {
     View,
     Text,
@@ -9,12 +10,8 @@ import {
     TextInput,
     StyleSheet,
     ScrollView,
-    Button,
-    Image,
+    ActivityIndicator,
 } from "react-native";
-import { Picker } from "@react-native-picker/picker";
-
-import { useTheme, Divider } from "react-native-paper";
 
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -29,7 +26,13 @@ import BottomSheet from "reanimated-bottom-sheet";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { storage } from "../.firebase_config.js";
 
+import "firebase/compat/storage";
+import { Divider } from "react-native-paper";
+
 export const EditProfileEP = () => {
+    LogBox.ignoreLogs(["timer"]);
+    LogBox.ignoreLogs(["Unhandled"]);
+
     const { storedCredentials, setStoredCredentials } =
         React.useContext(CredentialsContext);
     const userData = storedCredentials.userData;
@@ -37,6 +40,7 @@ export const EditProfileEP = () => {
     const [image, setImage] = useState(
         "https://api.adorable.io/avatars/80/abott@adorable.png"
     );
+    const [uploading, setUploading] = React.useState(false);
     const [updateData, setUpdateData] = React.useState({});
     const [formData, setData] = React.useState({});
     const [date, setDate] = useState(new Date(1598051730000));
@@ -48,7 +52,7 @@ export const EditProfileEP = () => {
     React.useEffect(() => {
         axios
             .get(
-                `http://192.168.11.61:3000/Users/ServiceProvider/Fetch/${userData._id}`
+                `http://192.168.11.137:3000/Users/ServiceProvider/Fetch/${userData._id}`
             )
             .then((res) => {
                 const data = res.data;
@@ -109,7 +113,7 @@ export const EditProfileEP = () => {
         const currentDate = selectedDate || date;
         setShow(Platform.OS === "ios");
         setUpdateData({ ...updateData, dateOfBirth: currentDate });
-        setCalender(moment(currentDate).format("MMM Do YY"));
+        setCalender(moment(currentDate).format("MMM Do YYYY"));
     };
     const showMode = (currentMode) => {
         setShow(true);
@@ -130,6 +134,7 @@ export const EditProfileEP = () => {
 
         if (!result.cancelled) {
             setFile(picked);
+            // setData({ ...formData, picture: picked });
             uploadFile();
         }
     };
@@ -152,14 +157,17 @@ export const EditProfileEP = () => {
         snapshot.on(
             storage.TaskEvent,
             () => {
-                console.log("loading");
+                setUploading(true);
             },
             (error) => {
-                console.log(error);
+                setUploading(false);
+                throw error;
                 return;
             },
             () => {
                 snapshot.snapshot.ref.getDownloadURL().then((url) => {
+                    setUploading(false);
+                    setData({ ...formData, picture: url });
                     setUpdateData({ ...updateData, picture: url });
                 });
             }
@@ -178,7 +186,7 @@ export const EditProfileEP = () => {
         const userID = formData._id;
         axios
             .put(
-                `http://192.168.11.61:3000/Users/ServiceProvider/Update/${userID}`,
+                `http://192.168.11.137:3000/Users/ServiceProvider/Update/${userID}`,
                 updateData
             )
             .then((res) => {
@@ -200,7 +208,7 @@ export const EditProfileEP = () => {
         const userID = formData._id;
         axios
             .put(
-                `http://192.168.11.61:3000/Users/ServiceProvider/UpdatePassword/${userID}`,
+                `http://192.168.11.137:3000/Users/ServiceProvider/UpdatePassword/${userID}`,
                 updateData
             )
             .then((res) => {
@@ -228,39 +236,6 @@ export const EditProfileEP = () => {
     };
     const handleFocus = () => setFocus(true);
 
-    // const renderInner = () => (
-    //     <View style={styles.panel}>
-    //         <View style={{ alignItems: "center" }}>
-    //             <Text style={styles.panelTitle}>Upload Photo</Text>
-    //             <Text style={styles.panelSubtitle}>
-    //                 Choose Your Profile Picture
-    //             </Text>
-    //         </View>
-    //         <TouchableOpacity
-    //             style={styles.panelButton}
-    //             //    onPress={takePhotoFromCamera}
-    //         >
-    //             <Text style={styles.panelButtonTitle}>Take Photo</Text>
-    //         </TouchableOpacity>
-    //         <TouchableOpacity
-    //             style={styles.panelButton}
-    //             //    onPress={choosePhotoFromLibrary}
-    //         >
-    //             <Text style={styles.panelButtonTitle}>Choose From Library</Text>
-    //         </TouchableOpacity>
-    //         <TouchableOpacity style={styles.panelButton} onPress={() => {}}>
-    //             <Text style={styles.panelButtonTitle}>Cancel</Text>
-    //         </TouchableOpacity>
-    //     </View>
-    // );
-
-    // const renderHeader = () => (
-    //     <View style={styles.header}>
-    //         <View style={styles.panelHeader}>
-    //             <View style={styles.panelHandle} />
-    //         </View>
-    //     </View>
-    // );
     return (
         <ScrollView
             showsVerticalScrollIndicator={false}
@@ -273,8 +248,6 @@ export const EditProfileEP = () => {
             <View style={styles.container}>
                 <BottomSheet
                     snapPoints={[330, 0]}
-                    // renderContent={renderInner}
-                    // renderHeader={renderHeader}
                     initialSnap={1}
                     enabledGestureInteraction={true}
                 />
@@ -290,41 +263,53 @@ export const EditProfileEP = () => {
                                     alignItems: "center",
                                 }}
                             >
-                                <ImageBackground
-                                    source={{
-                                        uri: userData.picture,
-                                    }}
-                                    style={{ height: 100, width: 100 }}
-                                    imageStyle={{ borderRadius: 15 }}
-                                >
-                                    <View
-                                        style={{
-                                            flex: 1,
-                                            justifyContent: "center",
-                                            alignItems: "center",
+                                {uploading ? (
+                                    <ActivityIndicator
+                                        size="large"
+                                        color="#008080"
+                                    />
+                                ) : (
+                                    <ImageBackground
+                                        source={{
+                                            uri: formData.picture,
                                         }}
+                                        style={{
+                                            height: 150,
+                                            width: 150,
+                                            marginBottom: 50,
+                                            marginTop: 70,
+                                        }}
+                                        imageStyle={{ borderRadius: 15 }}
                                     >
-                                        <Icon
-                                            onPress={pickImage}
-                                            name="camera"
-                                            size={35}
-                                            color="#fff"
+                                        <View
                                             style={{
-                                                opacity: 0.7,
-                                                alignItems: "center",
+                                                flex: 1,
                                                 justifyContent: "center",
-                                                borderWidth: 1,
-                                                borderColor: "#fff",
-                                                borderRadius: 10,
+                                                alignItems: "center",
                                             }}
-                                        />
-                                    </View>
-                                </ImageBackground>
+                                        >
+                                            <Icon
+                                                onPress={pickImage}
+                                                name="camera"
+                                                size={35}
+                                                color="#fff"
+                                                style={{
+                                                    opacity: 0.7,
+                                                    alignItems: "center",
+                                                    justifyContent: "center",
+                                                    borderWidth: 1,
+                                                    borderColor: "#fff",
+                                                    borderRadius: 10,
+                                                }}
+                                            />
+                                        </View>
+                                    </ImageBackground>
+                                )}
                             </View>
                         </TouchableOpacity>
                         <Text
                             style={{
-                                marginTop: 10,
+                                marginTop: 40,
                                 fontSize: 18,
                                 fontWeight: "bold",
                             }}
@@ -374,12 +359,6 @@ export const EditProfileEP = () => {
                             ]}
                         />
                     </View>
-
-                    {"userName" in errors ? (
-                        <Text style={styles.errors}> {errors.userName} </Text>
-                    ) : (
-                        <></>
-                    )}
                     <View style={styles.action}>
                         <FontAwesome
                             name="transgender"
@@ -625,6 +604,9 @@ export const EditProfileEP = () => {
 };
 
 export const EditProfileSP = () => {
+    LogBox.ignoreLogs(["timer"]);
+    LogBox.ignoreLogs(["Unhandled"]);
+
     const { storedCredentials, setStoredCredentials } =
         React.useContext(CredentialsContext);
     const userData = storedCredentials.userData;
@@ -632,6 +614,7 @@ export const EditProfileSP = () => {
     const [image, setImage] = useState(
         "https://api.adorable.io/avatars/80/abott@adorable.png"
     );
+    const [uploading, setUploading] = React.useState(false);
     const [updateData, setUpdateData] = React.useState({});
     const [formData, setData] = React.useState({});
     const [date, setDate] = useState(new Date(1598051730000));
@@ -643,7 +626,7 @@ export const EditProfileSP = () => {
     React.useEffect(() => {
         axios
             .get(
-                `http://192.168.11.61:3000/Users/ServiceProvider/Fetch/${userData._id}`
+                `http://192.168.11.137:3000/Users/ServiceProvider/Fetch/${userData._id}`
             )
             .then((res) => {
                 const data = res.data;
@@ -704,7 +687,7 @@ export const EditProfileSP = () => {
         const currentDate = selectedDate || date;
         setShow(Platform.OS === "ios");
         setUpdateData({ ...updateData, dateOfBirth: currentDate });
-        setCalender(moment(currentDate).format("MMM Do YY"));
+        setCalender(moment(currentDate).format("MMM Do YYYY"));
     };
     const showMode = (currentMode) => {
         setShow(true);
@@ -725,6 +708,7 @@ export const EditProfileSP = () => {
 
         if (!result.cancelled) {
             setFile(picked);
+            // setData({ ...formData, picture: picked });
             uploadFile();
         }
     };
@@ -747,14 +731,17 @@ export const EditProfileSP = () => {
         snapshot.on(
             storage.TaskEvent,
             () => {
-                console.log("loading");
+                setUploading(true);
             },
             (error) => {
-                console.log(error);
+                setUploading(false);
+                throw error;
                 return;
             },
             () => {
                 snapshot.snapshot.ref.getDownloadURL().then((url) => {
+                    setUploading(false);
+                    setData({ ...formData, picture: url });
                     setUpdateData({ ...updateData, picture: url });
                 });
             }
@@ -773,7 +760,7 @@ export const EditProfileSP = () => {
         const userID = formData._id;
         axios
             .put(
-                `http://192.168.11.61:3000/Users/ServiceProvider/Update/${userID}`,
+                `http://192.168.11.137:3000/Users/ServiceProvider/Update/${userID}`,
                 updateData
             )
             .then((res) => {
@@ -795,7 +782,7 @@ export const EditProfileSP = () => {
         const userID = formData._id;
         axios
             .put(
-                `http://192.168.11.61:3000/Users/ServiceProvider/UpdatePassword/${userID}`,
+                `http://192.168.11.137:3000/Users/ServiceProvider/UpdatePassword/${userID}`,
                 updateData
             )
             .then((res) => {
@@ -823,39 +810,6 @@ export const EditProfileSP = () => {
     };
     const handleFocus = () => setFocus(true);
 
-    // const renderInner = () => (
-    //     <View style={styles.panel}>
-    //         <View style={{ alignItems: "center" }}>
-    //             <Text style={styles.panelTitle}>Upload Photo</Text>
-    //             <Text style={styles.panelSubtitle}>
-    //                 Choose Your Profile Picture
-    //             </Text>
-    //         </View>
-    //         <TouchableOpacity
-    //             style={styles.panelButton}
-    //             //    onPress={takePhotoFromCamera}
-    //         >
-    //             <Text style={styles.panelButtonTitle}>Take Photo</Text>
-    //         </TouchableOpacity>
-    //         <TouchableOpacity
-    //             style={styles.panelButton}
-    //             //    onPress={choosePhotoFromLibrary}
-    //         >
-    //             <Text style={styles.panelButtonTitle}>Choose From Library</Text>
-    //         </TouchableOpacity>
-    //         <TouchableOpacity style={styles.panelButton} onPress={() => {}}>
-    //             <Text style={styles.panelButtonTitle}>Cancel</Text>
-    //         </TouchableOpacity>
-    //     </View>
-    // );
-
-    // const renderHeader = () => (
-    //     <View style={styles.header}>
-    //         <View style={styles.panelHeader}>
-    //             <View style={styles.panelHandle} />
-    //         </View>
-    //     </View>
-    // );
     return (
         <ScrollView
             showsVerticalScrollIndicator={false}
@@ -868,8 +822,6 @@ export const EditProfileSP = () => {
             <View style={styles.container}>
                 <BottomSheet
                     snapPoints={[330, 0]}
-                    // renderContent={renderInner}
-                    // renderHeader={renderHeader}
                     initialSnap={1}
                     enabledGestureInteraction={true}
                 />
@@ -885,41 +837,53 @@ export const EditProfileSP = () => {
                                     alignItems: "center",
                                 }}
                             >
-                                <ImageBackground
-                                    source={{
-                                        uri: userData.picture,
-                                    }}
-                                    style={{ height: 100, width: 100 }}
-                                    imageStyle={{ borderRadius: 15 }}
-                                >
-                                    <View
-                                        style={{
-                                            flex: 1,
-                                            justifyContent: "center",
-                                            alignItems: "center",
+                                {uploading ? (
+                                    <ActivityIndicator
+                                        size="large"
+                                        color="#008080"
+                                    />
+                                ) : (
+                                    <ImageBackground
+                                        source={{
+                                            uri: formData.picture,
                                         }}
+                                        style={{
+                                            height: 150,
+                                            width: 150,
+                                            marginBottom: 50,
+                                            marginTop: 70,
+                                        }}
+                                        imageStyle={{ borderRadius: 15 }}
                                     >
-                                        <Icon
-                                            onPress={pickImage}
-                                            name="camera"
-                                            size={35}
-                                            color="#fff"
+                                        <View
                                             style={{
-                                                opacity: 0.7,
-                                                alignItems: "center",
+                                                flex: 1,
                                                 justifyContent: "center",
-                                                borderWidth: 1,
-                                                borderColor: "#fff",
-                                                borderRadius: 10,
+                                                alignItems: "center",
                                             }}
-                                        />
-                                    </View>
-                                </ImageBackground>
+                                        >
+                                            <Icon
+                                                onPress={pickImage}
+                                                name="camera"
+                                                size={35}
+                                                color="#fff"
+                                                style={{
+                                                    opacity: 0.7,
+                                                    alignItems: "center",
+                                                    justifyContent: "center",
+                                                    borderWidth: 1,
+                                                    borderColor: "#fff",
+                                                    borderRadius: 10,
+                                                }}
+                                            />
+                                        </View>
+                                    </ImageBackground>
+                                )}
                             </View>
                         </TouchableOpacity>
                         <Text
                             style={{
-                                marginTop: 10,
+                                marginTop: 40,
                                 fontSize: 18,
                                 fontWeight: "bold",
                             }}
@@ -969,12 +933,6 @@ export const EditProfileSP = () => {
                             ]}
                         />
                     </View>
-
-                    {"userName" in errors ? (
-                        <Text style={styles.errors}> {errors.userName} </Text>
-                    ) : (
-                        <></>
-                    )}
                     <View style={styles.action}>
                         <FontAwesome
                             name="transgender"
@@ -1220,6 +1178,9 @@ export const EditProfileSP = () => {
 };
 
 export const EditProfileSS = () => {
+    LogBox.ignoreLogs(["timer"]);
+    LogBox.ignoreLogs(["Unhandled"]);
+
     const { storedCredentials, setStoredCredentials } =
         React.useContext(CredentialsContext);
     const userData = storedCredentials.userData;
@@ -1227,6 +1188,7 @@ export const EditProfileSS = () => {
     const [image, setImage] = useState(
         "https://api.adorable.io/avatars/80/abott@adorable.png"
     );
+    const [uploading, setUploading] = React.useState(false);
     const [updateData, setUpdateData] = React.useState({});
     const [formData, setData] = React.useState({});
     const [date, setDate] = useState(new Date(1598051730000));
@@ -1238,7 +1200,7 @@ export const EditProfileSS = () => {
     React.useEffect(() => {
         axios
             .get(
-                `http://192.168.11.61:3000/Users/ServiceSeeker/Fetch/${userData._id}`
+                `http://192.168.11.137:3000/Users/ServiceSeeker/Fetch/${userData._id}`
             )
             .then((res) => {
                 const data = res.data;
@@ -1299,7 +1261,7 @@ export const EditProfileSS = () => {
         const currentDate = selectedDate || date;
         setShow(Platform.OS === "ios");
         setUpdateData({ ...updateData, dateOfBirth: currentDate });
-        setCalender(moment(currentDate).format("MMM Do YY"));
+        setCalender(moment(currentDate).format("MMM Do YYYY"));
     };
     const showMode = (currentMode) => {
         setShow(true);
@@ -1320,6 +1282,7 @@ export const EditProfileSS = () => {
 
         if (!result.cancelled) {
             setFile(picked);
+            // setData({ ...formData, picture: picked });
             uploadFile();
         }
     };
@@ -1342,14 +1305,17 @@ export const EditProfileSS = () => {
         snapshot.on(
             storage.TaskEvent,
             () => {
-                console.log("loading");
+                setUploading(true);
             },
             (error) => {
-                console.log(error);
+                setUploading(false);
+                throw error;
                 return;
             },
             () => {
                 snapshot.snapshot.ref.getDownloadURL().then((url) => {
+                    setUploading(false);
+                    setData({ ...formData, picture: url });
                     setUpdateData({ ...updateData, picture: url });
                 });
             }
@@ -1368,7 +1334,7 @@ export const EditProfileSS = () => {
         const userID = formData._id;
         axios
             .put(
-                `http://192.168.11.61:3000/Users/ServiceSeeker/Update/${userID}`,
+                `http://192.168.11.137:3000/Users/ServiceSeeker/Update/${userID}`,
                 updateData
             )
             .then((res) => {
@@ -1395,7 +1361,7 @@ export const EditProfileSS = () => {
         const userID = formData._id;
         axios
             .put(
-                `http://192.168.11.61:3000/Users/ServiceSeeker/UpdatePassword/${userID}`,
+                `http://192.168.11.137:3000/Users/ServiceSeeker/UpdatePassword/${userID}`,
                 updateData
             )
             .then((res) => {
@@ -1423,39 +1389,6 @@ export const EditProfileSS = () => {
     };
     const handleFocus = () => setFocus(true);
 
-    // const renderInner = () => (
-    //     <View style={styles.panel}>
-    //         <View style={{ alignItems: "center" }}>
-    //             <Text style={styles.panelTitle}>Upload Photo</Text>
-    //             <Text style={styles.panelSubtitle}>
-    //                 Choose Your Profile Picture
-    //             </Text>
-    //         </View>
-    //         <TouchableOpacity
-    //             style={styles.panelButton}
-    //             //    onPress={takePhotoFromCamera}
-    //         >
-    //             <Text style={styles.panelButtonTitle}>Take Photo</Text>
-    //         </TouchableOpacity>
-    //         <TouchableOpacity
-    //             style={styles.panelButton}
-    //             //    onPress={choosePhotoFromLibrary}
-    //         >
-    //             <Text style={styles.panelButtonTitle}>Choose From Library</Text>
-    //         </TouchableOpacity>
-    //         <TouchableOpacity style={styles.panelButton} onPress={() => {}}>
-    //             <Text style={styles.panelButtonTitle}>Cancel</Text>
-    //         </TouchableOpacity>
-    //     </View>
-    // );
-
-    // const renderHeader = () => (
-    //     <View style={styles.header}>
-    //         <View style={styles.panelHeader}>
-    //             <View style={styles.panelHandle} />
-    //         </View>
-    //     </View>
-    // );
     return (
         <ScrollView
             showsVerticalScrollIndicator={false}
@@ -1468,8 +1401,6 @@ export const EditProfileSS = () => {
             <View style={styles.container}>
                 <BottomSheet
                     snapPoints={[330, 0]}
-                    // renderContent={renderInner}
-                    // renderHeader={renderHeader}
                     initialSnap={1}
                     enabledGestureInteraction={true}
                 />
@@ -1485,41 +1416,53 @@ export const EditProfileSS = () => {
                                     alignItems: "center",
                                 }}
                             >
-                                <ImageBackground
-                                    source={{
-                                        uri: userData.picture,
-                                    }}
-                                    style={{ height: 100, width: 100 }}
-                                    imageStyle={{ borderRadius: 15 }}
-                                >
-                                    <View
-                                        style={{
-                                            flex: 1,
-                                            justifyContent: "center",
-                                            alignItems: "center",
+                                {uploading ? (
+                                    <ActivityIndicator
+                                        size="large"
+                                        color="#008080"
+                                    />
+                                ) : (
+                                    <ImageBackground
+                                        source={{
+                                            uri: formData.picture,
                                         }}
+                                        style={{
+                                            height: 150,
+                                            width: 150,
+                                            marginBottom: 50,
+                                            marginTop: 70,
+                                        }}
+                                        imageStyle={{ borderRadius: 15 }}
                                     >
-                                        <Icon
-                                            onPress={pickImage}
-                                            name="camera"
-                                            size={35}
-                                            color="#fff"
+                                        <View
                                             style={{
-                                                opacity: 0.7,
-                                                alignItems: "center",
+                                                flex: 1,
                                                 justifyContent: "center",
-                                                borderWidth: 1,
-                                                borderColor: "#fff",
-                                                borderRadius: 10,
+                                                alignItems: "center",
                                             }}
-                                        />
-                                    </View>
-                                </ImageBackground>
+                                        >
+                                            <Icon
+                                                onPress={pickImage}
+                                                name="camera"
+                                                size={35}
+                                                color="#fff"
+                                                style={{
+                                                    opacity: 0.7,
+                                                    alignItems: "center",
+                                                    justifyContent: "center",
+                                                    borderWidth: 1,
+                                                    borderColor: "#fff",
+                                                    borderRadius: 10,
+                                                }}
+                                            />
+                                        </View>
+                                    </ImageBackground>
+                                )}
                             </View>
                         </TouchableOpacity>
                         <Text
                             style={{
-                                marginTop: 10,
+                                marginTop: 40,
                                 fontSize: 18,
                                 fontWeight: "bold",
                             }}
@@ -1846,7 +1789,7 @@ const styles = StyleSheet.create({
         width: 200,
         padding: 15,
         borderRadius: 10,
-        backgroundColor: "#FF6347",
+        backgroundColor: "#f39a6e",
         alignItems: "center",
         marginTop: 50,
         marginBottom: 50,
@@ -1863,7 +1806,6 @@ const styles = StyleSheet.create({
         shadowOffset: { width: -1, height: -3 },
         shadowRadius: 2,
         shadowOpacity: 0.4,
-        // elevation: 5,
         paddingTop: 20,
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
@@ -1918,8 +1860,6 @@ const styles = StyleSheet.create({
     textInput: {
         flex: 1,
         paddingLeft: 10,
-        // borderBottomColor: "#696969",
-        // borderBottomWidth:1
     },
     birthday: {
         color: "#696969",

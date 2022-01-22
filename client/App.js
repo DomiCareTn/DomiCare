@@ -1,14 +1,15 @@
-import 'react-native-gesture-handler';
-import React, {useState} from 'react';
+import "react-native-gesture-handler";
+import React, { useState } from "react";
 import DrawerNav from "./navigators/DrawerNavigator";
-import MainScreen from './navigators/MainScreen';
-import {StyleSheet}from 'react-native';
-import AppLoading from 'expo-app-loading';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { CredentialsContext } from './components/Authentification/CredentialsContext.js';
+import MainScreen from "./navigators/MainScreen";
+import { StyleSheet } from "react-native";
+import AppLoading from "expo-app-loading";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { CredentialsContext } from "./components/Authentification/CredentialsContext.js";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
+import OnboardingScreen from "./components/Authentification/OnBoardingScreen.js";
 import Login from "./components/Authentification/Login.js";
 import SignUpServiceSeeker from "./components/Authentification/SignUpServiceSeeker.js";
 import SignUpServiceProvider from "./components/Authentification/SignUpServiceProvider.js";
@@ -20,137 +21,167 @@ import SSSignUpGoogle from "./components/Authentification/SSSignUpGoogle.js";
 import SPSignUpGoogle from "./components/Authentification/SPSignUpGoogle.js";
 import EPSignUpGoogle from "./components/Authentification/EPSignUpGoogle.js";
 import ResetPassword from "./components/Authentification/ResetPassword.js";
-import {RefreshControl , SafeAreaView, ScrollView} from 'react-native'
+import { RefreshControl, SafeAreaView, ScrollView } from "react-native";
 const Auth = createNativeStackNavigator();
 
-
-
-
 export default function App() {
-  const [appReady, setAppReady]= useState(false);
-  const [storedCredentials, setStoredCredentials]= useState("")
-  const checkLoginCredentials = ()=>{
-    AsyncStorage
-     .getItem('domicareCredentials')
-     .then((result)=>{
-       if(result !== null){
-         setStoredCredentials(JSON.parse(result));
-       } else {
-         setStoredCredentials(null);
-       }
-     })
-     .catch(err => console.log(err));
-  }
-  if(!appReady){
+    const [appReady, setAppReady] = useState(false);
+    const [storedCredentials, setStoredCredentials] = useState("");
+    const checkLoginCredentials = () => {
+        AsyncStorage.getItem("domicareCredentials")
+            .then((result) => {
+                if (result !== null) {
+                    setStoredCredentials(JSON.parse(result));
+                } else {
+                    setStoredCredentials(null);
+                }
+            })
+            .catch((err) => console.log(err));
+    };
+    if (!appReady) {
+        return (
+            <AppLoading
+                startAsync={checkLoginCredentials}
+                onFinish={() => setAppReady(true)}
+                onError={console.warn}
+            />
+        );
+    }
+
     return (
-      <AppLoading
-      startAsync={checkLoginCredentials}
-      onFinish={()=> setAppReady(true)}
-      onError={console.warn}
-      />
-  
-    )
-  }
-  
+        <CredentialsContext.Provider
+            value={{ storedCredentials, setStoredCredentials }}
+        >
+            <NavigationContainer>
+                {storedCredentials ? (
+                    <DrawerNav />
+                ) : (
+                    <Auth.Navigator>
+                        <Auth.Screen
+                            name="OnboardingScreen"
+                            component={OnboardingScreen}
+                            options={({ route }) => ({
+                                headerBackTitleVisible: false,
+                                headerTitle: false,
+                                headerShown: false,
+                                headerTransparent: true,
+                                headerTintColor: "#fff",
+                            })}
+                        />
+                        <Auth.Screen name="Login" component={Login} />
+                        <Auth.Screen
+                            name="ForgetPassword"
+                            component={ForgetPassword}
+                            options={({ route }) => ({
+                                headerBackTitleVisible: false,
+                                headerTitle: false,
+                                headerShown: false,
+                                headerTransparent: true,
+                                headerTintColor: "#fff",
+                            })}
+                        />
+                        <Auth.Screen
+                            name="ResetPassword"
+                            component={ResetPassword}
+                            options={({ route }) => ({
+                                headerBackTitleVisible: false,
+                                headerTitle: false,
+                                headerShown: false,
+                                headerTransparent: true,
+                                headerTintColor: "#fff",
+                            })}
+                        />
+                        <Auth.Screen
+                            name="VerificationCode"
+                            component={VerificationCode}
+                            options={({ route }) => ({
+                                headerBackTitleVisible: false,
+                                headerTitle: false,
+                                headerShown: false,
+                                headerTransparent: true,
+                                headerTintColor: "#fff",
+                            })}
+                        />
+                        <Auth.Screen
+                            name="SSSignUpGoogle"
+                            component={SSSignUpGoogle}
+                            options={({ route }) => ({
+                                headerBackTitleVisible: false,
+                                headerTitle: false,
+                                headerShown: false,
+                                headerTransparent: true,
+                                headerTintColor: "#fff",
+                            })}
+                        />
+                        <Auth.Screen
+                            name="SPSignUpGoogle"
+                            component={SPSignUpGoogle}
+                            options={({ route }) => ({
+                                headerBackTitleVisible: false,
+                                headerTitle: false,
+                                headerShown: false,
+                                headerTransparent: true,
+                                headerTintColor: "#fff",
+                            })}
+                        />
+                        <Auth.Screen
+                            name="EPSignUpGoogle"
+                            component={EPSignUpGoogle}
+                            options={({ route }) => ({
+                                headerBackTitleVisible: false,
+                                headerTitle: false,
+                                headerShown: false,
+                                headerTransparent: true,
+                                headerTintColor: "#fff",
+                            })}
+                        />
 
-
-  
-
-  return (
-  
-    <CredentialsContext.Provider value={{storedCredentials, setStoredCredentials}}>
-  
-          <NavigationContainer >
-{ (storedCredentials)?(
-        <DrawerNav  />
-
-):(
-  <Auth.Navigator 
- >
-             <Auth.Screen name="Login" component={Login} />
-                <Auth.Screen
-                    name="ForgetPassword"
-                    component={ForgetPassword}
-                />
-                <Auth.Screen name="ResetPassword" component={ResetPassword} />
-                <Auth.Screen
-                    name="VerificationCode"
-                    component={VerificationCode}
-                />
-                <Auth.Screen
-                    name="SSSignUpGoogle"
-                    component={SSSignUpGoogle}
-                />
-                <Auth.Screen
-                    name="SPSignUpGoogle"
-                    component={SPSignUpGoogle}
-                />
-                <Auth.Screen
-                    name="EPSignUpGoogle"
-                    component={EPSignUpGoogle}
-                />
-
-                <Auth.Screen name="SignUpAs" component={SignUpType} />
-                <Auth.Screen
-                    name="SignUpServiceSeeker"
-                    component={SignUpServiceSeeker}
-                />
-                <Auth.Screen
-                    name="SignUpServiceProvider"
-                    component={SignUpServiceProvider}
-                />
-                <Auth.Screen
-                    name="SignUpEquipementsProvider"
-                    component={SignUpEquipementsProvider}
-                />
-   </Auth.Navigator>
-)}
-
-      </NavigationContainer>
- 
-    </CredentialsContext.Provider>
-
-
-  );
- const registerForPushNotificationsAsync=async()=> {
-    let token;
-    if (Constants.isDevice) {
-        const {status: existingStatus} = await Notifications.getPermissionsAsync();
-        let finalStatus = existingStatus;
-        if (existingStatus !== 'granted') {
-            const {status} = await Notifications.requestPermissionsAsync();
-            finalStatus = status;
-            console.log("existingStatus",existingStatus)
-        }
-        if (finalStatus !== 'granted') {
-            alert('Failed to get push token for push notification!');
-            console.log("finalStatus",finalStatus)
-            return;
-        }
-        token = (await Notifications.getExpoPushTokenAsync()).data;
-    } else {
-        alert('Must use physical device for Push Notifications');
-    }
-
-    if (Platform.OS === 'android') {
-        await Notifications.setNotificationChannelAsync('default', {
-            name: 'default',
-            showBadge: true,
-            importance: Notifications.AndroidImportance.MAX,
-            vibrationPattern: [0, 250, 250, 250],
-            lightColor: '#FE9018',
-        });
-    }
-
-    return token;
-}
+                        <Auth.Screen name="SignUpAs" component={SignUpType} />
+                        <Auth.Screen
+                            name="SignUpServiceSeeker"
+                            component={SignUpServiceSeeker}
+                            options={({ route }) => ({
+                                headerBackTitleVisible: false,
+                                headerTitle: false,
+                                headerShown: false,
+                                headerTransparent: true,
+                                headerTintColor: "#fff",
+                            })}
+                        />
+                        <Auth.Screen
+                            name="SignUpServiceProvider"
+                            component={SignUpServiceProvider}
+                            options={({ route }) => ({
+                                headerBackTitleVisible: false,
+                                headerTitle: false,
+                                headerShown: false,
+                                headerTransparent: true,
+                                headerTintColor: "#fff",
+                            })}
+                        />
+                        <Auth.Screen
+                            name="SignUpEquipementsProvider"
+                            component={SignUpEquipementsProvider}
+                            options={({ route }) => ({
+                                headerBackTitleVisible: false,
+                                headerTitle: false,
+                                headerShown: false,
+                                headerTransparent: true,
+                                headerTintColor: "#fff",
+                            })}
+                        />
+                    </Auth.Navigator>
+                )}
+            </NavigationContainer>
+        </CredentialsContext.Provider>
+    );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'red',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    container: {
+        flex: 1,
+        backgroundColor: "red",
+        alignItems: "center",
+        justifyContent: "center",
+    },
 });

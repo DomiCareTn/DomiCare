@@ -125,6 +125,12 @@ SP_UpdatePassword:(req,res)=>{
      
           })
           .catch((err)=> console.log(err))
+      },
+      SP_FetchAll : (req,res)=>{
+        ServiceProvider.find({ type: "serviceProvider" }).populate('posts')
+                        .then((users)=> res.send(users))
+                        .catch((err)=> console.log(err))
       }
+      
 }
 

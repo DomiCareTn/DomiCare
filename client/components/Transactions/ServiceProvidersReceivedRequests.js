@@ -1,42 +1,40 @@
-
-import React ,{ useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Button ,ScrollView } from 'react-native';
-import {Card} from 'react-native-shadow-cards';
-import {Avatar , NativeBaseProvider} from 'native-base';
+import React, { useState, useEffect } from "react";
+import { StyleSheet, Text, View, Button, ScrollView } from "react-native";
+import { Card } from "react-native-shadow-cards";
+import { Avatar, NativeBaseProvider } from "native-base";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CredentialsContext } from "../Authentification/CredentialsContext.js";
 import axios from "axios";
 
-
- const ReceivedRequests =()=> {
+const ReceivedRequests = () => {
     const { storedCredentials, setStoredCredentials } =
-    React.useContext(CredentialsContext);
-  const userData = storedCredentials.userData;
-     const[feed, setFeed]=useState([])
+        React.useContext(CredentialsContext);
+    const userData = storedCredentials.userData;
+    const [feed, setFeed] = useState([]);
 
-    useEffect(async() => {
-      console.log('feed',feed)
-      const _id=userData._id
-      console.log(_id)
-      try {
-        const posts = await axios.get(
-          `http://192.168.11.61:3000/Transactions/servicerequests/${_id}`
-        )
-        setFeed(posts.data)
-      }
-       catch (err){
-        console.log(err)
-       }   
-    },[])
-    const DeclineRequest = async(_id)=>{
-      try{
-        console.log("cancel",_id);  
-        await axios.delete(`http://192.168.11.61:3000/Transactions/deleterequest/${_id}`)
-      }
-      catch(err){
-        console.log(err)
-      }
-    }
+    useEffect(async () => {
+        console.log("feed", feed);
+        const _id = userData._id;
+        console.log(_id);
+        try {
+            const posts = await axios.get(
+                `http://192.168.11.137:3000/Transactions/servicerequests/${_id}`
+            );
+            setFeed(posts.data);
+        } catch (err) {
+            console.log(err);
+        }
+    }, []);
+    const DeclineRequest = async (_id) => {
+        try {
+            console.log("cancel", _id);
+            await axios.delete(
+                `http://192.168.11.137:3000/Transactions/deleterequest/${_id}`
+            );
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
     return (
         <NativeBaseProvider>
@@ -79,13 +77,13 @@ import axios from "axios";
       </ScrollView>
       </NativeBaseProvider>
     );
-}
+};
 const styles = StyleSheet.create({
-  container : {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  }
+    container: {
+        flex: 1,
+        backgroundColor: "#fff",
+        alignItems: "center",
+        justifyContent: "center",
+    },
 });
 export default ReceivedRequests;

@@ -17,6 +17,7 @@ import {
     Divider,
     useDisclose,
     Modal,
+    Image,
 } from "native-base";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CredentialsContext } from "./CredentialsContext.js";
@@ -58,7 +59,7 @@ function Login() {
     };
     const post = () => {
         axios
-            .post(`http://192.168.11.61:3000/auth/Login`, { formData })
+            .post(`http://192.168.11.137:3000/auth/Login`, { formData })
             .then((response) => {
                 let errors = {};
                 const data = response.data;
@@ -88,7 +89,7 @@ function Login() {
                 if (type == "success") {
                     const email = user.email;
                     axios
-                        .post(`http://192.168.11.61:3000/auth/GoogleLogin`, {
+                        .post(`http://192.168.11.137:3000/auth/GoogleLogin`, {
                             email,
                         })
                         .then((response) => {
@@ -132,7 +133,19 @@ function Login() {
                     </Modal.Content>
                 </Modal>
                 <Box safeArea p="2" py="8" w="120%" maxW="300">
+                    <Image
+                        source={require("../../assets/categories/logo_small.png")}
+                        style={{
+                            width: 300,
+                            height: 60,
+                            position: "absolute",
+                            top: 20,
+                            left: -30,
+                        }}
+                        alt="logo"
+                    />
                     <Heading
+                        marginTop={20}
                         size="lg"
                         fontWeight="600"
                         color="coolGray.800"

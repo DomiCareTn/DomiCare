@@ -9,17 +9,17 @@ import {
     Button,
 } from "react-native";
 import {
-  IconButton,
-  Icon,
-  Box,
-  Heading,
-  AspectRatio,
-  Image,
-  Text,
-  Center,
-  HStack,
-  Stack,
-  NativeBaseProvider,
+    IconButton,
+    Icon,
+    Box,
+    Heading,
+    AspectRatio,
+    Image,
+    Text,
+    Center,
+    HStack,
+    Stack,
+    NativeBaseProvider,
 } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
 export const Forum2 = (props) => {
@@ -27,15 +27,16 @@ export const Forum2 = (props) => {
 
     const [subjects, setData] = useState([]);
     useEffect(async () => {
-        try{const result = await axios(
-            `http://192.168.11.61:3000/savepost/savepost`
-        );
-        setData(result.data);
-      console.log("first", result.data);}
-        catch(err){
-          console.log(err);
+        try {
+            const result = await axios(
+                `http://192.168.11.137:3000/savepost/savepost`
+            );
+            setData(result.data);
+            console.log("first", result.data);
+        } catch (err) {
+            console.log(err);
         }
-    },[]);
+    }, []);
     console.log("sub", subjects);
     return (
         <View>

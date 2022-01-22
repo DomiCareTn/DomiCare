@@ -50,7 +50,7 @@ function VerificationCode() {
         const fetchedEmail = route.params.email;
         axios
             .delete(
-                `http://192.168.11.61:3000/auth/DeleteCodeVerification/${fetchedEmail}`
+                `http://192.168.11.137:3000/auth/DeleteCodeVerification/${fetchedEmail}`
             )
             .catch((err) => console.log(err));
     };
@@ -59,7 +59,7 @@ function VerificationCode() {
         const fetchedEmail = route.params.email;
         axios
             .get(
-                `http://192.168.11.61:3000/auth/FetchCodeVerification/${fetchedEmail}`
+                `http://192.168.11.137:3000/auth/FetchCodeVerification/${fetchedEmail}`
             )
             .then((res) => setData({ ...formData, Hash_code: res.data.code }))
             .catch((err) => console.log(err));
