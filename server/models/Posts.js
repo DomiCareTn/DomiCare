@@ -31,7 +31,16 @@ const Posts = mongoose.model(
     availability: {
       type: Date,
     },
-    prescription_img: {
+    startDate:{
+      type: Date
+    },
+    endDate:{
+      type: Date
+    },
+    Adress:{
+      type: String
+    },
+    file: {
       type: String,
     },
 

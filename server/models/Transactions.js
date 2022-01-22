@@ -3,12 +3,14 @@ const mongoose = require("mongoose");
 const Transactions = mongoose.model(
   "Transactions",
   mongoose.Schema({
-    senderId: {
+    type:{
+      type :String
+    },
+    seekerId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "ServiceSeeker",
-    },
-    
-    receiverId: {
+    }, 
+    providerId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "ServiceProvider",
     },
@@ -21,6 +23,7 @@ const Transactions = mongoose.model(
     },
     status: {
       type: String,
+      default:"pending"
     },
     details: {
       type: String,
@@ -31,15 +34,11 @@ const Transactions = mongoose.model(
     review: {
       type: String,
     },
-    serviceDate: {
-      type: Date,
-    },
-
-    Prescription: {
+      selectedStartDate: {type:Date},
+      selectedEndDate :{type:Date},
+    file: {
       type: String,
     },
-
-  
   })
 );
 module.exports = Transactions;

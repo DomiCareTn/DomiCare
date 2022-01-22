@@ -5,7 +5,6 @@ import {
   DrawerItem,
 } from "@react-navigation/drawer";
 import React from "react";
-import EquipementsFeed from "./components/EquipementsFeed.js";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CredentialsContext } from "./components/Authentification/CredentialsContext.js";
 import Home from "./components/Home.js";
@@ -30,7 +29,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import SeekerRequest from "./components/SeekerRequest.js";
 import userEquipements from "./components/userEquipements";
 import Report from "./components/report.js";
-
+// import EquipementsFetch2 from "./components/EquipementsFetch2.js";
 import { IPAdress } from "@env";
 const Drawer = createDrawerNavigator();
 const Router = () => {
@@ -86,7 +85,9 @@ const Router = () => {
         }}
       >
         <Drawer.Screen name="Home" component={Home} />
-        <Drawer.Screen name="Equipementsfetch" component={Equipmentsfetch} />
+        {/* <Drawer.Screen name="EquipementsFetch2" component={EquipementsFetch2} /> */}
+
+        <Drawer.Screen name="Equipements Feed" component={Equipmentsfetch} />
         <Drawer.Screen
           name="EquipementsProviderProfile"
           component={EquipementsProviderProfile}

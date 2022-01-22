@@ -78,11 +78,11 @@ async function deleteProductById(req, res, next) {
        .catch(err => next(err));
    },
    update_one:(req, res)=>{
-     const {ownerId,name, price,description,reference,city,delivery,availability, transactionType} = req.body.formData;
+     const {ownerId,name, price,description,reference,city,delivery,availability,transactionType,quantity} = req.body.formData;
              console.log("id",{_id:req.params.equipementsId});
              console.log("data",req.body.formData[0])
         Equipement.findOneAndUpdate({'_id' : [
-          req.body.formData[0]._id]},{ownerId,name, price,description,reference,city,delivery,availability, transactionType},{new:true})
+          req.body.formData[0]._id]},{ownerId,name, price,description,reference,city,delivery,availability, transactionType,quantity},{new:true})
           .then(user=>res.send(user))
           .catch(err => (console.log(err)));
       }, 

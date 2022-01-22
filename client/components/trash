@@ -1,0 +1,1280 @@
+// ////////////////home
+// // import React ,{useState,useEffect} from 'react'
+// // // import { View, Text , Image , Button , StyleSheet } from 'react-native'
+// // import AsyncStorage from '@react-native-async-storage/async-storage';
+// // import { CredentialsContext } from './Authentification/CredentialsContext.js';
+// // import axios from 'axios'
+// // import {localhost} from "@env";
+// // import {
+// //   StyleSheet,
+// //   Text,
+// //   View,
+// //   Image,
+// //   TouchableOpacity,
+// //   TextInput,
+// //   Button
+// // } from 'react-native';
+
+// // const EquipementsProviderProfile = ({navigation}) => {
+// //   const [formData, setData] = React.useState({});
+// //   const {storedCredentials,setStoredCredentials}=React.useContext(CredentialsContext)
+// //   const  userData = storedCredentials;
+// //   // console.log("userData:",userData);
+// //   // console.log(userData.userData._id);
+// //   useEffect(() => {
+// //     axios.get(`http://192.168.11.203:3000/editprofile/fetch/${userData.userData._id}`)
+// //         .then(res => {
+// //           console.log("res in useEffect",res);
+// //           setData(res.data) 
+// //         })
+// //         .catch(err => {
+// //             console.log(err);
+// //         })
+// // }, []);
+// //   var editprofile = () => {
+// //     navigation.navigate("EditProfile");
+// // };
+// // var myEquipements = () => {
+// //   navigation.navigate("userEquipements");
+// // };
+
+// //     return (
+// //       <View style={styles.container}>
+// //           <View style={styles.header}></View>
+// //           <Image style={styles.avatar} source={{uri: 'https://bootdey.com/img/Content/avatar/avatar6.png'}}/>
+// //           <View style={styles.body}>
+// //             <View style={styles.bodyContent}>
+// //               <Text style={styles.name}>{formData.firstName} {formData.lastName}</Text>
+// //               <Text style={styles.info}>{formData.city}/{formData.adress}</Text>
+// //               <Text style={styles.description}>My Email: {formData.email}</Text>
+// //               <Text style={styles.description}>My Contact: {formData.phoneNumber}</Text>
+// //               <Text style={styles.description}>{formData.gender}</Text>
+// //               <Text style={styles.description}>{formData.dateOfBirth}</Text>
+// //               <TouchableOpacity style={styles.buttonContainer}>
+// //                 <Text onPress={editprofile}>Update</Text>  
+// //                 <Button onPress={editprofile} >Update</Button>
+// //               </TouchableOpacity>
+// //               {formData.type==="equipementsProvider"?
+// //               <TouchableOpacity style={styles.buttonContainer}>
+// //                 <View>
+// //                 <Text onPress={myEquipements}>My Equipements</Text> 
+// //                 <Button onPress={myEquipements} >My Equipements</Button>
+// //                 </View>
+                
+// //                 </TouchableOpacity>
+// //                 :null}
+// //             </View>
+// //         </View>
+// //       </View>
+// //     );
+  
+// // }
+
+// // const styles = StyleSheet.create({
+// //   header:{
+// //     backgroundColor: "#00BFFF",
+// //     height:200,
+// //   },
+// //   avatar: {
+// //     width: 130,
+// //     height: 130,
+// //     borderRadius: 63,
+// //     borderWidth: 4,
+// //     borderColor: "white",
+// //     marginBottom:10,
+// //     alignSelf:'center',
+// //     position: 'absolute',
+// //     marginTop:130
+// //   },
+// //   name:{
+// //     fontSize:22,
+// //     color:"#FFFFFF",
+// //     fontWeight:'600',
+// //   },
+// //   body:{
+// //     marginTop:70,
+// //   },
+// //   bodyContent: {
+// //     flex: 1,
+// //     alignItems: 'center',
+// //     padding:30,
+// //   },
+// //   name:{
+// //     fontSize:28,
+// //     color: "#696969",
+// //     fontWeight: "600"
+// //   },
+// //   info:{
+// //     fontSize:16,
+// //     color: "#00BFFF",
+// //     marginTop:10
+// //   },
+// //   description:{
+// //     fontSize:16,
+// //     color: "#696969",
+// //     marginTop:22,
+// //     textAlign: 'center'
+// //   },
+// //   buttonContainer: {
+// //     marginTop:10,
+// //     height:45,
+// //     flexDirection: 'row',
+// //     justifyContent: 'center',
+// //     alignItems: 'center',
+// //     marginBottom:70,
+// //     width:250,
+// //     borderRadius:30,
+// //     backgroundColor: "#00BFFF",
+// //   },
+// // });
+// // // const EquipementsProviderProfile = () => {
+
+// // //   const {storedCredentials,setStoredCredentials}=React.useContext(CredentialsContext)
+// // //   const  userData = storedCredentials;
+// // //   console.log("userData:",userData);
+  
+// // //   return (
+// // //     <View>
+// // //     <View style={styles.container}>
+// // //       <Image style={styles.cardImage}>{userData.userData.picture}</Image>
+// // //       <Text style={styles.itemVue}>first name: {userData.userData.firstName}</Text>
+// // //       <Text style={styles.itemVue}>last name: {userData.userData.lastName}</Text>
+// // //       <Text style={styles.itemVue}>email: {userData.userData.email}</Text>
+// // //       <Text style={styles.itemVue}>phone number: {userData.userData.phoneNumber}</Text>
+// // //       <Text style={styles.itemVue}>address: {userData.userData.adress}</Text>
+// // //       <Text style={styles.itemVue}>city: {userData.userData.city}</Text>
+// // //       <Text style={styles.itemVue}>gender: {userData.userData.gender}</Text>
+// // //       <Text style={styles.itemVue}>dateOfBirth: {userData.userData.dateOfBirth}</Text>
+// // //     </View>
+// // //     <Button>Update my profile</Button>
+// // //     </View>
+// // //   )
+// // // }
+// // // const styles = StyleSheet.create({
+// // //   container: {
+// // //     flex:1,
+// // //     backgroundColor:'#fff',
+// // //     paddingTop:40,
+// // //     paddingHorizontal:20
+// // //   },
+// // //   cardImage:{
+// // //     width:'50%',
+// // //     height:100,
+// // //     resizeMode:'cover'
+  
+// // // },
+// // // itemVue:{
+// // //   marginTop:24,
+// // //   padding: 30,
+// // //   backgroundColor: 'pink',
+// // //   fontSize:24
+// // // }
+// // // });
+
+
+// // export default EquipementsProviderProfile
+
+// //////////////Equipements providers profile
+
+// // import React ,{useState,useEffect} from 'react'
+// // // import { View, Text , Image , Button , StyleSheet } from 'react-native'
+// // import AsyncStorage from '@react-native-async-storage/async-storage';
+// // import { CredentialsContext } from './Authentification/CredentialsContext.js';
+// // import axios from 'axios'
+// // import {localhost} from "@env";
+// // import {
+// //   StyleSheet,
+// //   Text,
+// //   View,
+// //   Image,
+// //   TouchableOpacity,
+// //   TextInput,
+// //   Button
+// // } from 'react-native';
+
+// // const EquipementsProviderProfile = ({navigation}) => {
+// //   const [formData, setData] = React.useState({});
+// //   const {storedCredentials,setStoredCredentials}=React.useContext(CredentialsContext)
+// //   const  userData = storedCredentials;
+// //   // console.log("userData:",userData);
+// //   // console.log(userData.userData._id);
+// //   useEffect(() => {
+// //     axios.get(`http://192.168.11.203:3000/editprofile/fetch/${userData.userData._id}`)
+// //         .then(res => {
+// //           console.log("res in useEffect",res);
+// //           setData(res.data) 
+// //         })
+// //         .catch(err => {
+// //             console.log(err);
+// //         })
+// // }, []);
+// //   var editprofile = () => {
+// //     navigation.navigate("EditProfile");
+// // };
+// // var myEquipements = () => {
+// //   navigation.navigate("userEquipements");
+// // };
+
+// //     return (
+// //       <View style={styles.container}>
+// //           <View style={styles.header}></View>
+// //           <Image style={styles.avatar} source={{uri: 'https://bootdey.com/img/Content/avatar/avatar6.png'}}/>
+// //           <View style={styles.body}>
+// //             <View style={styles.bodyContent}>
+// //               <Text style={styles.name}>{formData.firstName} {formData.lastName}</Text>
+// //               <Text style={styles.info}>{formData.city}/{formData.adress}</Text>
+// //               <Text style={styles.description}>My Email: {formData.email}</Text>
+// //               <Text style={styles.description}>My Contact: {formData.phoneNumber}</Text>
+// //               <Text style={styles.description}>{formData.gender}</Text>
+// //               <Text style={styles.description}>{formData.dateOfBirth}</Text>
+// //               <TouchableOpacity style={styles.buttonContainer}>
+// //                 <Text onPress={editprofile}>Update</Text>  
+// //                 <Button onPress={editprofile} >Update</Button>
+// //               </TouchableOpacity>
+// //               {formData.type==="equipementsProvider"?
+// //               <TouchableOpacity style={styles.buttonContainer}>
+// //                 <View>
+// //                 <Text onPress={myEquipements}>My Equipements</Text> 
+// //                 <Button onPress={myEquipements} >My Equipements</Button>
+// //                 </View>
+                
+// //                 </TouchableOpacity>
+// //                 :null}
+// //             </View>
+// //         </View>
+// //       </View>
+// //     );
+  
+// // }
+
+// // const styles = StyleSheet.create({
+// //   header:{
+// //     backgroundColor: "#00BFFF",
+// //     height:200,
+// //   },
+// //   avatar: {
+// //     width: 130,
+// //     height: 130,
+// //     borderRadius: 63,
+// //     borderWidth: 4,
+// //     borderColor: "white",
+// //     marginBottom:10,
+// //     alignSelf:'center',
+// //     position: 'absolute',
+// //     marginTop:130
+// //   },
+// //   name:{
+// //     fontSize:22,
+// //     color:"#FFFFFF",
+// //     fontWeight:'600',
+// //   },
+// //   body:{
+// //     marginTop:70,
+// //   },
+// //   bodyContent: {
+// //     flex: 1,
+// //     alignItems: 'center',
+// //     padding:30,
+// //   },
+// //   name:{
+// //     fontSize:28,
+// //     color: "#696969",
+// //     fontWeight: "600"
+// //   },
+// //   info:{
+// //     fontSize:16,
+// //     color: "#00BFFF",
+// //     marginTop:10
+// //   },
+// //   description:{
+// //     fontSize:16,
+// //     color: "#696969",
+// //     marginTop:22,
+// //     textAlign: 'center'
+// //   },
+// //   buttonContainer: {
+// //     marginTop:10,
+// //     height:45,
+// //     flexDirection: 'row',
+// //     justifyContent: 'center',
+// //     alignItems: 'center',
+// //     marginBottom:70,
+// //     width:250,
+// //     borderRadius:30,
+// //     backgroundColor: "#00BFFF",
+// //   },
+// // });
+// // // const EquipementsProviderProfile = () => {
+
+// // //   const {storedCredentials,setStoredCredentials}=React.useContext(CredentialsContext)
+// // //   const  userData = storedCredentials;
+// // //   console.log("userData:",userData);
+  
+// // //   return (
+// // //     <View>
+// // //     <View style={styles.container}>
+// // //       <Image style={styles.cardImage}>{userData.userData.picture}</Image>
+// // //       <Text style={styles.itemVue}>first name: {userData.userData.firstName}</Text>
+// // //       <Text style={styles.itemVue}>last name: {userData.userData.lastName}</Text>
+// // //       <Text style={styles.itemVue}>email: {userData.userData.email}</Text>
+// // //       <Text style={styles.itemVue}>phone number: {userData.userData.phoneNumber}</Text>
+// // //       <Text style={styles.itemVue}>address: {userData.userData.adress}</Text>
+// // //       <Text style={styles.itemVue}>city: {userData.userData.city}</Text>
+// // //       <Text style={styles.itemVue}>gender: {userData.userData.gender}</Text>
+// // //       <Text style={styles.itemVue}>dateOfBirth: {userData.userData.dateOfBirth}</Text>
+// // //     </View>
+// // //     <Button>Update my profile</Button>
+// // //     </View>
+// // //   )
+// // // }
+// // // const styles = StyleSheet.create({
+// // //   container: {
+// // //     flex:1,
+// // //     backgroundColor:'#fff',
+// // //     paddingTop:40,
+// // //     paddingHorizontal:20
+// // //   },
+// // //   cardImage:{
+// // //     width:'50%',
+// // //     height:100,
+// // //     resizeMode:'cover'
+  
+// // // },
+// // // itemVue:{
+// // //   marginTop:24,
+// // //   padding: 30,
+// // //   backgroundColor: 'pink',
+// // //   fontSize:24
+// // // }
+// // // });
+
+
+// // export default EquipementsProviderProfile
+
+// /////////////////////Home page
+
+// // import React from "react";
+// // import { View, Image, StyleSheet, ScrollView } from "react-native";
+
+// // import Swiper from "react-native-swiper/src";
+
+// // const HomeScreen = ({ navigation }) => {
+// //     const theme = useTheme();
+// //     const { storedCredentials, setStoredCredentials } =
+// //         React.useContext(CredentialsContext);
+// //     const userData = storedCredentials;
+// //     console.log("userData :", userData);
+
+// //     const clearLogin = () => {
+// //         AsyncStorage.removeItem("domicareCredentials")
+// //             .then(() => {
+// //                 setStoredCredentials("");
+// //             })
+// //             .catch((error) => console.log(error));
+// //     };
+// //     const profileType = () => {
+// //        if (userData.userData.type === "equipementsProvider" || userData.userData.type === "serviceProvider" ) {
+// //            return navigation.navigate("EquipementsProviderProfile");
+// //         } else return;
+// //     };
+// //     return (
+// //         <ScrollView style={styles.container}>
+// //             <View style={styles.sliderContainer}>
+// //                 <Swiper
+// //                     autoplay
+// //                     horizontal={false}
+// //                     height={200}
+// //                     activeDotColor="#14b8a6"
+// //                 >
+// //                     <View style={styles.slide}>
+// //                         <Image
+// //                             source={{
+// //                                 uri: "https://i.pinimg.com/originals/88/55/04/8855045af2589b1353f620b2b1235e10.jpg",
+// //                             }}
+// //                             resizeMode="cover"
+// //                             style={styles.sliderImage}
+// //                         />
+// //                     </View>
+// //                     <View style={styles.slide}>
+// //                         <Image
+// //                             source={{
+// //                                 uri: "https://www.konicaminolta.co.th/wp-content/uploads/2019/10/Website_Konica-54.jpg",
+// //                             }}
+// //                             resizeMode="cover"
+// //                             style={styles.sliderImage}
+// //                         />
+// //                     </View>
+// //                     <View style={styles.slide}>
+// //                         <Image
+// //                             source={require("../assets/wa.png")}
+// //                             resizeMode="cover"
+// //                             style={styles.sliderImage}
+// //                         />
+// //                     </View>
+// //                 </Swiper>
+// //             </View>
+
+// //             <View style={styles.categoryContainer}>
+// //                 <TouchableOpacity
+// //                     style={styles.categoryBtn}
+// //                     onPress={() => navigation.navigate("ServiceProvidersProfiles",userData)}
+// //                 >
+// //                     <View style={styles.categoryIcon}>
+// //                         <Ionicons
+// //                             name="medical-sharp"
+// //                             size={35}
+// //                             color="white"
+// //                         />
+// //                     </View>
+// //                     <Text style={styles.categoryBtnTxt}>
+// //                         Services Providers Profiles
+// //                     </Text>
+// //                 </TouchableOpacity>
+
+// //                 <TouchableOpacity style={styles.categoryBtn}>
+// //                     <View style={styles.categoryIcon}>
+// //                         <Ionicons
+// //                             name="medical-sharp"
+// //                             size={35}
+// //                             color="white"
+// //                             onPress={() =>
+// //                                 navigation.navigate("Equipements Feed", userData)
+// //                             }
+// //                         />
+// //                     </View>
+// //                     <Text style={styles.categoryBtnTxt}>Forum</Text>
+// //                 </TouchableOpacity>
+                
+// //                 <TouchableOpacity style={styles.categoryBtn}>
+// //                     <View style={styles.categoryIcon}>
+// //                         <Ionicons
+// //                             name="chatbubbles-sharp"
+// //                             size={35}
+// //                             color="white"
+// //                             onPress={() =>
+// //                                 navigation.navigate("ServiceSeekersPosts", userData)
+// //                             }
+// //                         />
+// //                     </View>
+// //                     <Text style={styles.categoryBtnTxt}>ServiceSeekersPosts</Text>
+// //                 </TouchableOpacity>
+// //                 <TouchableOpacity style={styles.categoryBtn}>
+// //                     <View style={styles.categoryIcon}>
+// //                         <Ionicons
+// //                             name="chatbubbles-sharp"
+// //                             size={35}
+// //                             color="white"
+// //                             onPress={() =>
+// //                                 navigation.navigate("ServiceSeekersPosts", userData)
+// //                             }
+// //                         />
+// //                     </View>
+// //                     <Text style={styles.categoryBtnTxt}>ServiceSeekersPosts</Text>
+// //                 </TouchableOpacity>
+// //                 <TouchableOpacity style={styles.categoryBtn}>
+// //                     <View style={styles.categoryIcon}>
+// //                         <Ionicons
+// //                             name="chatbubbles-sharp"
+// //                             size={35}
+// //                             color="white"
+// //                             onPress={() =>
+// //                                 navigation.navigate("ServiceProvidersReceivedRequests", userData)
+// //                             }
+// //                         />
+// //                     </View>
+// //                     <Text style={styles.categoryBtnTxt}>ServiceProvidersReceivedRequests</Text>
+// //                 </TouchableOpacity>
+// //                 <TouchableOpacity style={styles.categoryBtn}>
+// //                     <View style={styles.categoryIcon}>
+// //                         <Ionicons
+// //                             name="chatbubbles-sharp"
+// //                             size={35}
+// //                             color="white"
+// //                             onPress={() =>
+// //                                 navigation.navigate("ServiceProvidersSendedOffers", userData)
+// //                             }
+// //                         />
+// //                     </View>
+// //                     <Text style={styles.categoryBtnTxt}>ServiceProvidersSendedOffers</Text>
+// //                 </TouchableOpacity>
+// //                 <TouchableOpacity style={styles.categoryBtn}>
+// //                     <View style={styles.categoryIcon}>
+// //                         <Ionicons
+// //                             name="chatbubbles-sharp"
+// //                             size={35}
+// //                             color="white"
+// //                             onPress={() =>
+// //                                 navigation.navigate("ServiceProvidersReceivedOffers", userData)
+// //                             }
+// //                         />
+// //                     </View>
+// //                     <Text style={styles.categoryBtnTxt}>ServiceProvidersReceivedOffers</Text>
+// //                 </TouchableOpacity>
+// //                 <TouchableOpacity style={styles.categoryBtn}>
+// //                     <View style={styles.categoryIcon}>
+// //                         <Ionicons
+// //                             name="chatbubbles-sharp"
+// //                             size={35}
+// //                             color="white"
+// //                             onPress={() =>
+// //                                 navigation.navigate("ServiceSeekerSendedRequests", userData)
+// //                             }
+// //                         />
+// //                     </View>
+// //                     <Text style={styles.categoryBtnTxt}>ServiceSeekerSendedRequests</Text>
+// //                 </TouchableOpacity>
+                
+
+// //                 {/* <TouchableOpacity style={styles.categoryBtn} onPress={() => {}}>
+// //                     <View style={styles.categoryIcon}>
+// //                         <Ionicons
+// //                             name="medkit-sharp"
+// //                             size={35}
+// //                             color="white"
+// //                             onPress={() =>
+// //                                 navigation.navigate("Equipements Feed")
+// //                             }
+// //                         />
+// //                     </View>
+// //                     <Text style={styles.categoryBtnTxt}>Equipements</Text>
+// //                 </TouchableOpacity>
+// //             </View> */}
+// //             {/* <View style={[styles.categoryContainer, { marginTop: 10 }]}>
+// //                 <TouchableOpacity
+// //                     style={styles.categoryBtn}
+// //                     onPress={() => navigation.navigate("shareservice")}
+// //                 >
+// //                     <View style={styles.categoryIcon}>
+// //                         <Ionicons name="documents" size={35} color="white" />
+// //                     </View>
+// //                     <Text style={styles.categoryBtnTxt}>Posts</Text>
+// //                 </TouchableOpacity> */}
+
+// //                 {storedCredentials ? (
+// //                     <>
+// //                         <TouchableOpacity
+// //                             style={styles.categoryBtn}
+// //                             onPress={profileType }
+// //                         >
+// //                             <View style={styles.categoryIcon}>
+// //                                 <Ionicons
+// //                                     name="person"
+// //                                     size={35}
+// //                                     color="white"
+// //                                 />
+// //                             </View>
+// //                             <Text style={styles.categoryBtnTxt}>Profil</Text>
+// //                         </TouchableOpacity>
+// //                     </>
+// //                 ) : (
+// //                     <></>
+// //                 )}
+
+// //                 {storedCredentials ? (
+// //                     <>
+// //                         <TouchableOpacity
+// //                             style={styles.categoryBtn}
+// //                             onPress={clearLogin}
+// //                         >
+// //                             <View style={styles.categoryIcon}>
+// //                                 <Ionicons
+// //                                     name="log-out"
+// //                                     size={35}
+// //                                     color="white"
+// //                                 />
+// //                             </View>
+// //                             <Text style={styles.categoryBtnTxt}>Logout</Text>
+// //                         </TouchableOpacity>
+// //                     </>
+// //                 ) : (
+// //                     <>
+// //                         <TouchableOpacity
+// //                             style={styles.categoryBtn}
+// //                             onPress={() => navigation.navigate("Login")}
+// //                         >
+// //                             <View style={styles.categoryIcon}>
+// //                                 <Ionicons
+// //                                     name="log-in-sharp"
+// //                                     size={35}
+// //                                     color="white"
+// //                                 />
+// //                             </View>
+// //                             <Text style={styles.categoryBtnTxt}>Login</Text>
+// //                         </TouchableOpacity>
+// //                     </>
+// //                 )}
+// //             </View>
+// //         </ScrollView>
+// //     );
+// // };
+
+// // export default HomeScreen;
+
+// // const styles = StyleSheet.create({
+// //     container: {
+// //         flex: 1,
+// //         backgroundColor: "white",
+// //     },
+// //     sliderContainer: {
+// //         height: 200,
+// //         width: "100%",
+// //         marginBottom: 50,
+// //         justifyContent: "center",
+// //         alignSelf: "center",
+// //         borderRadius: 8,
+// //     },
+
+// //     slide: {
+// //         flex: 1,
+// //         justifyContent: "center",
+// //         backgroundColor: "transparent",
+// //         borderRadius: 8,
+// //     },
+// //     sliderImage: {
+// //         height: "100%",
+// //         width: "100%",
+// //         alignSelf: "center",
+// //         borderRadius: 8,
+// //     },
+// // });
+// import React, { useState, useEffect } from "react";
+// import { Picker } from "@react-native-picker/picker";
+// import axios from "axios";
+// import { CredentialsContext } from "./Authentification/CredentialsContext.js";
+// import { Avatar, Title, Paragraph, LeftContent } from "react-native-paper";
+// import Swal from "sweetalert2";
+// import FontAwesome from "react-native-vector-icons/FontAwesome";
+// import Feather from "react-native-vector-icons/Feather";
+// import { Card, Button, Icon } from "react-native-elements";
+// import {
+//   StyleSheet,
+//   Text,
+//   View,
+//   Image,
+//   TouchableOpacity,
+//   TextInput,
+//   SafeAreaView,
+//   ScrollView,
+//   Alert,
+//   Dimensions,
+// } from "react-native";
+// import { localhost } from "@env";
+
+// const myEquipements = ({ navigation }) => {
+//   const [text, onChangeText] = React.useState("Useless Text");
+//   const [number, onChangeNumber] = React.useState(null);
+//   const [selectedtype, setSelectedtype] = useState("");
+//   const [selecteddelivery, setselecteddelivery] = useState("");
+//   const [selectedavailability, setselectedavailability] = useState("");
+//   const [selectedValue, setSelectedValue] = useState("");
+//   const [clicked, setClicked] = useState(false);
+//   const [clicked2, setClicked2] = useState(false);
+//   const [formData, setData] = React.useState({});
+//   const [myData, setmyData] = React.useState([]);
+//   const { storedCredentials, setStoredCredentials } =
+//     React.useContext(CredentialsContext);
+//   const userData = storedCredentials;
+//   const [isModalVisible, setModalVisible] = useState(false);
+
+//   const toggleModal = () => {
+//     setModalVisible(!isModalVisible);
+//   };
+
+//   useEffect(() => {
+//     axios
+//       .get(`http://192.168.11.203:3000/Equipements/${userData.userData._id}`)
+//       .then((res) => {
+//         setmyData(res.data);
+//         console.log("res.data", res.data);
+//       })
+//       .catch((err) => {
+//         console.log(err);
+//       });
+//   }, []);
+
+//   const getEquip = () => {
+//     axios
+//       .get(`http://192.168.11.203:3000/Equipements/equip/${formData._id}`)
+//       .then((res) => {
+//         console.log("getEquip", res.data);
+//       })
+//       .then(() => EditEquip())
+//       .catch((err) => {
+//         console.log(err);
+//       });
+//   };
+
+//   const fetchData = () => {
+//     axios
+//       .get(`http://192.168.11.203:3000/Equipements/${userData.userData._id}`)
+//       .then((res) => {
+//         setmyData(res.data);
+//         console.log("res.data", res.data);
+//       })
+//       .catch((err) => {
+//         console.log(err);
+//       });
+//   };
+
+//   const saveEquipement = () => {
+//     console.log("ownerId", formData.ownerId);
+//     console.log("formData", formData);
+//     axios
+//       .post(`http://192.168.11.203:3000/Equipements/saveEquip`, { formData })
+//       .then((response) => {
+//         console.log("saveEquipement", response);
+//         console.log("response.data", response.data);
+//       })
+//       .then(() => alert("Equipement added successfully!"))
+//       .then(() => home())
+//       .catch(() => {
+//         fetchData();
+//       })
+//       .catch((error) => console.log(error));
+//   };
+//   const myDelete = () => {
+//     console.log("ownerId", formData.ownerId);
+//     axios
+//       .delete(`http://192.168.11.203:3000/Equipements/${myData.ownerId}`)
+//       .catch((error) => {
+//         console.log(error);
+//       });
+//   };
+
+//   const deleteItem = () => {
+//     myDelete();
+//     alert("Item Deleted Successfully!");
+//     fetchData();
+//   };
+
+//   const myAlert = () => {
+//     const swalWithBootstrapButtons = Swal.mixin({
+//       customClass: {
+//         confirmButton: "btn btn-success",
+//         cancelButton: "btn btn-danger",
+//       },
+//       buttonsStyling: false,
+//     });
+
+//     swalWithBootstrapButtons
+//       .fire({
+//         title: "Are you sure?",
+//         text: "You won't be able to revert this!",
+//         icon: "warning",
+//         showCancelButton: true,
+//         confirmButtonText: "Yes, delete it!",
+//         cancelButtonText: "No, cancel!",
+//         reverseButtons: true,
+//       })
+//       .then((result) => {
+//         if (result.isConfirmed) {
+//           myDelete();
+//           swalWithBootstrapButtons
+//             .fire("Deleted!", "Your file has been deleted.", "success")
+//             .then(() => home());
+//         } else if (
+//           /* Read more about handling dismissals below */
+
+//           result.dismiss ===
+//           Swal.DismissReason.cancel.then(() => home()).then(() => fetchData())
+//         ) {
+//           swalWithBootstrapButtons.fire(
+//             "Cancelled",
+//             "Your imaginary file is safe :)",
+//             "error"
+//           );
+//         }
+//       });
+//   };
+//   var EditEquip = () => {
+//     navigation.navigate("Edit Equipement");
+//   };
+//   var home = () => {
+//     navigation.navigate("Home");
+//   };
+//   return (
+//     <View>
+//       {clicked === false ? (
+//         <ScrollView>
+//           <Button
+//             icon={
+//               <Icon
+//                 name="heartbeat"
+//                 type="font-awesome"
+//                 color="#f50"
+//                 iconStyle={{ marginRight: 10 }}
+//               />
+//             }
+//             buttonStyle={{
+//               borderRadius: 30,
+//               marginLeft: 80,
+//               marginRight: 0,
+//               marginTop: 70,
+//               width: 250,
+//               height: 50,
+//               justifyContent: "center",
+//               // position: "absolute",
+//               bottom: 20,
+//             }}
+//             title="Add Equipement"
+//             onPress={() => setClicked(true)}
+//           />
+//           {myData.map((item, key) => {
+//             return (
+//               <View style={styles.itemVue}key={key} >
+//                 <View >
+//                   <View >
+//                     <Image
+//                       style={styles.cardImage}
+//                       source={{ uri: item.picture }}
+//                     />
+//                     <Text style={styles.titleStyle}>{item.name}</Text>
+//                     <Text style={styles.categoryStyle}>
+//                       Price : {item.price + " TND"}
+//                     </Text>
+//                     <Text style={styles.categoryStyle}>
+//                       Quantity : {item.quantity}
+//                     </Text>
+//                     <Text style={styles.categoryStyle}>
+//                       Description : {item.description}
+//                     </Text>
+//                     <Text style={styles.categoryStyle}>City : {item.city}</Text>
+//                     <Text style={styles.categoryStyle}>
+//                       Delivery : {item.delivery}
+//                     </Text>
+//                     <Text style={styles.categoryStyle}>
+//                       Transaction Type : {item.transactionType}
+//                     </Text>
+//                     {item.availability === "Available" ? (
+//                       <Text style={styles.categoryStyle}>Available</Text>
+//                     ) : (
+//                       <Text style={styles.categoryStyle}>Not Available</Text>
+//                     )}
+//                     <View style={styles.test}>
+//                       <Button
+//                         icon={
+//                           <Icon
+//                             name="closecircle"
+//                             color="#ffffff"
+//                             iconStyle={{ marginRight: 10 }}
+//                           />
+//                         }
+//                         style={
+//                           (styles.ButtonStyle,
+//                           { paddingBottom: 30, width: 120 })
+//                         }
+//                         title="Delete"
+//                         onPress={deleteItem}
+//                       />
+//                       <Button
+//                         icon={
+//                           <Icon
+//                             name="code"
+//                             color="#ffffff"
+//                             iconStyle={{ marginRight: 10 }}
+//                           />
+//                         }
+//                         style={
+//                           (styles.ButtonStyle,
+//                           { paddingBottom: 30, width: 110 })
+//                         }
+//                         title="Update"
+//                         onPress={getEquip}
+//                       />
+//                     </View>
+//                   </View>
+//                 </View>
+//               </View>
+//             );
+//           })}
+//         </ScrollView>
+//       ) : (
+//         <SafeAreaView
+//           style={{
+//             display: "flex",
+//             justifyContent: "center",
+//             // borderRadius: 15,
+//             // backgroundColor: "#1edcc7",
+
+//             // margin: 30,
+//             // width: 300,
+//           }}
+//         >
+//           <Text
+//             style={{
+//               marginBottom: 15,
+//               marginTop: 170,
+//               fontSize: 20,
+//               fontWeight: "500",
+//               marginLeft: 110,
+//             }}
+//           >
+//             Add An Equipement
+//           </Text>
+//           <Picker
+//             selectedtype={selectedtype}
+//             style={{
+//               height: 30,
+//               borderRadius: 15,
+//               width: 200,
+//               marginLeft: 110,
+//               margin: 6,
+//             }}
+//             onValueChange={(TypeValue, TypeIndex) => {
+//               console.log(TypeValue);
+//               setData({
+//                 ...formData,
+//                 transactionType: TypeValue,
+//                 ownerId: userData.userData._id,
+//               });
+//             }}
+//           >
+//             <Picker.Item label="Transaction Type" value="" />
+//             <Picker.Item label="For Rent" value="For Rent" />
+//             <Picker.Item label="For Sale" value="For Sale" />
+//           </Picker>
+
+//           <Picker
+//             selecteddelivery={selecteddelivery}
+//             style={{
+//               height: 0,
+//               borderRadius: 15,
+//               width: 200,
+//               marginLeft: 110,
+//               margin: 6,
+//               shadowColor: "black",
+//               shadowRadius: 20,
+//             }}
+//             onValueChange={(DeliveryValue, DeliveryIndex) => {
+//               console.log(DeliveryValue);
+//               setData({ ...formData, delivery: DeliveryValue });
+//             }}
+//           >
+//             <Picker.Item label="select Delivery" value="" />
+//             <Picker.Item label="with delivery" value="with delivery" />
+//             <Picker.Item label="without delivery" value="without delivery" />
+//           </Picker>
+//           <Picker
+//             selectedavailability={selectedavailability}
+//             style={{
+//               height: 30,
+//               borderRadius: 15,
+//               width: 200,
+//               marginLeft: 110,
+//               margin: 6,
+//             }}
+//             onValueChange={(AvailabilityValue, AvailabilityIndex) => {
+//               console.log(AvailabilityValue);
+//               setData({ ...formData, availability: AvailabilityValue });
+//             }}
+//           >
+//             <Picker.Item label="select availability" value="" />
+//             <Picker.Item label="Available" value="Available" />
+//             <Picker.Item label="Not Available" value="Not Available" />
+//           </Picker>
+//           <Picker
+//             selectedValue={selectedValue}
+//             style={{
+//               height: 30,
+//               borderRadius: 15,
+//               width: 200,
+//               marginLeft: 110,
+//               margin: 6,
+//             }}
+//             onValueChange={(cityValue, cityIndex) => {
+//               setData({ ...formData, city: cityValue });
+//             }}
+//           >
+//             <Picker.Item label="select city" value="" />
+//             <Picker.Item label="Ariana" value="Ariana" />
+//             <Picker.Item label="Ben Arous" value="Ben Arous" />
+//             <Picker.Item label="Tunis" value="Tunis" />
+//             <Picker.Item label="Sousse" value="Sousse" />
+//             <Picker.Item label="Monastir" value="Monastir" />
+//             <Picker.Item label="Sfax" value="Sfax" />
+//             <Picker.Item label="Beja" value="Beja" />
+//             <Picker.Item label="Benzart" value="Benzart" />
+//             <Picker.Item label="Mahdia" value="Mahdia" />
+//             <Picker.Item label="kairouan" value="kairouan" />
+//             <Picker.Item label="Sidi Bouzid" value="Sidi Bouzid" />
+//             <Picker.Item label="Zaghouane" value="Zaghouane" />
+//             <Picker.Item label="Mednine" value="Mednine" />
+//             <Picker.Item label="Gabes" value="Gabes" />
+//             <Picker.Item label="Kebili" value="Kebili" />
+//             <Picker.Item label="Gasserine" value="Gasserine" />
+//             <Picker.Item label="Jendouba" value="Jendouba" />
+//             <Picker.Item label="Kef" value="Kef" />
+//             <Picker.Item label="Siliana" value="Siliana" />
+//             <Picker.Item label="Tozeur" value="Tozeur" />
+//             <Picker.Item label="Tataouine" value="Tataouine" />
+//             <Picker.Item label="Manouba" value="Manouba" />
+//             <Picker.Item label="Gafsa" value="Gafsa" />
+//             <Picker.Item label="Nabeul" value="Nabeul" />
+//           </Picker>
+//           <View style={styles.action}>
+//             <FontAwesome
+//               name="medkit"
+//               color="#0aada8"
+//               size={20}
+//               style={{ marginTop: 10, marginLeft: 35 }}
+//             />
+//             <TextInput
+//               style={{
+//                 height: 29,
+//                 backgroundColor: "rgb(248,248,248)",
+//                 // borderRadius: 15,
+//                 width: 280,
+//                 marginLeft: 15,
+//                 justifyContent: "center",
+//                 flexDirection: "row",
+//                 display: "flex",
+//                 alignItems: "center",
+//                 margin: 6,
+//                 padding: 5,
+//               }}
+//               onChangeText={(value) => setData({ ...formData, name: value })}
+//               placeholder="name"
+//             />
+//           </View>
+//           <View style={styles.action}>
+//             <FontAwesome
+//               name="money"
+//               color="#0aada8"
+//               size={20}
+//               style={{ marginTop: 10, marginLeft: 35 }}
+//             />
+//             <TextInput
+//               style={{
+//                 height: 29,
+//                 backgroundColor: "rgb(248,248,248)",
+//                 // borderRadius: 15,
+//                 width: 280,
+//                 marginLeft: 15,
+//                 justifyContent: "center",
+//                 flexDirection: "row",
+//                 display: "flex",
+//                 alignItems: "center",
+//                 margin: 6,
+//                 padding: 5,
+//               }}
+//               onChangeText={(value) => setData({ ...formData, price: value })}
+//               placeholder="price"
+//             />
+//           </View>
+//           <View style={styles.action}>
+//             <FontAwesome
+//               name="money"
+//               color="#0aada8"
+//               size={20}
+//               style={{ marginTop: 10, marginLeft: 35 }}
+//             />
+//             <TextInput
+//               style={{
+//                 height: 29,
+//                 backgroundColor: "rgb(248,248,248)",
+//                 // borderRadius: 15,
+//                 width: 280,
+//                 marginLeft: 15,
+//                 justifyContent: "center",
+//                 flexDirection: "row",
+//                 display: "flex",
+//                 alignItems: "center",
+//                 margin: 6,
+//                 padding: 5,
+//               }}
+//               onChangeText={(value) =>
+//                 setData({ ...formData, quantity: value })
+//               }
+//               placeholder="Quantity"
+//             />
+//           </View>
+//           <View style={styles.action}>
+//             <FontAwesome
+//               name="book"
+//               color="#0aada8"
+//               size={20}
+//               style={{ marginTop: 10, marginLeft: 35 }}
+//             />
+//             <TextInput
+//               style={{
+//                 height: 29,
+//                 backgroundColor: "rgb(248,248,248)",
+//                 // borderRadius: 15,
+//                 width: 280,
+//                 marginLeft: 15,
+//                 justifyContent: "center",
+//                 flexDirection: "row",
+//                 display: "flex",
+//                 alignItems: "center",
+//                 margin: 6,
+//                 padding: 5,
+//               }}
+//               onChangeText={(value) =>
+//                 setData({ ...formData, description: value })
+//               }
+//               placeholder="description"
+//             />
+//           </View>
+//           <View style={styles.action}>
+//             <FontAwesome
+//               name="folder-open"
+//               color="#0aada8"
+//               size={20}
+//               style={{ marginTop: 10, marginLeft: 35 }}
+//             />
+//             <TextInput
+//               style={{
+//                 height: 29,
+//                 backgroundColor: "rgb(248,248,248)",
+//                 // borderRadius: 15,
+//                 width: 280,
+//                 marginLeft: 15,
+//                 justifyContent: "center",
+//                 flexDirection: "row",
+//                 display: "flex",
+//                 alignItems: "center",
+//                 margin: 6,
+//                 padding: 5,
+//               }}
+//               onChangeText={(value) =>
+//                 setData({ ...formData, reference: value })
+//               }
+//               placeholder="reference"
+//             />
+//           </View>
+//           <View style={styles.action}>
+//             <FontAwesome
+//               name="image"
+//               color="#0aada8"
+//               size={20}
+//               style={{ marginTop: 10, marginLeft: 35 }}
+//             />
+//             <TextInput
+//               style={{
+//                 height: 29,
+//                 backgroundColor: "rgb(248,248,248)",
+//                 // borderRadius: 15,
+//                 width: 280,
+//                 marginLeft: 15,
+//                 justifyContent: "center",
+//                 flexDirection: "row",
+//                 display: "flex",
+//                 alignItems: "center",
+//                 margin: 6,
+//                 padding: 5,
+//               }}
+//               placeholder="add image"
+//               onChangeText={(value) => setData({ ...formData, picture: value })}
+//             />
+//           </View>
+//           <View style={styles.SubmitButton}>
+//             <Button
+//               color="#841584"
+//               backgroundColor="#03A9F4"
+//               title="Submit"
+//               style={{
+//                 height: 30,
+//                 width: 100,
+//                 marginLeft: 120,
+//                 borderRadius: 15,
+//                 marginBottom: 20,
+//                 marginTop: 10,
+//                 color: "#008080",
+//                 backgroundColor: "#03A9F4",
+//               }}
+//               onPress={saveEquipement}
+//             />
+//           </View>
+//         </SafeAreaView>
+//       )}
+//     </View>
+//   );
+// };
+
+// const devicewidth = Math.round(Dimensions.get("window").width);
+// const radius = 20;
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     paddingTop: 30,
+//     paddingHorizontal: 20,
+//   },
+//   cardImage: {
+//     width: devicewidth - 90,
+//     height: 220,
+//     borderTopLeftRadius: radius,
+//     borderTopRightRadius: 25,
+//     borderBottomRightRadius: radius,
+//     borderBottomLeftRadius: radius,
+//     opacity: 0.9,
+//     alignContent: "center",
+//     alignSelf: "center",
+//   },
+//   itemVue: {
+//     paddingTop: 15,
+//     marginTop: 15,
+//     width: devicewidth - 60,
+//     backgroundColor: "#F5F5F5",
+
+//     shadowColor: "#000",
+//     shadowOffset: {
+//       width: 0,
+//       height: 12,
+//     },
+//     shadowOpacity: 0.58,
+//     shadowRadius: 16.0,
+//     elevation: 24,
+//     height: 460,
+//     borderRadius: radius,
+//     alignContent: "center",
+//     alignSelf:"center",
+//   },
+//   titleStyle: {
+//     fontSize: 17,
+//     fontWeight: "700",
+//     alignContent: "center",
+//     alignSelf: "center",
+//   },
+//   categoryStyle: {
+//     fontWeight: "200",
+//     alignContent: "center",
+//     alignSelf: "center",
+//   },
+//   sProvider: {
+//     // marginHorizontal:10,
+//   },
+//   ButtonStyle: {
+//     paddingBottom: 30,
+//     // backgroundColor:"black",
+//     // padding:0,
+//     // borderRadius: 30,
+//     marginLeft: 5,
+//     marginRight: 5,
+//     marginTop: 10,
+
+//     height: 35,
+//     justifyContent: "space-between",
+//   },
+//   test: {
+//     display: "flex",
+//     flexDirection: "row",
+//     justifyContent: "space-around",
+//     // flexWrap:"no-wrap",
+//   },
+//   SubmitButton: {
+//     display: "flex",
+//     flexDirection: "row",
+//     justifyContent: "space-around",
+//   },
+//   action: {
+//     flexDirection: "row",
+//     marginTop: 6,
+//     marginRight: 20,
+//     marginBottom: 10,
+//     borderBottomWidth: 0.2,
+//     borderBottomColor: "#696969",
+//     paddingBottom: 5,
+//   },
+// });
+
+// export default myEquipements;

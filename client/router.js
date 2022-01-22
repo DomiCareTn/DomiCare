@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
-import EquipementsFeed from "./components/EquipementsFeed.js";
+import Essai from "./components/Essai.js"
 import Report from "./components/report.js"
 import Home from "./components/Home.js";
 import Login from "./components/Authentification/Login.js";
@@ -27,8 +27,22 @@ import { NavigationContainer } from "@react-navigation/native";
 import SeekerRequest  from "./components/SeekerRequest.js";
 import userEquipements from "./components/userEquipements.js"
 import EditEquipement from "./components/EditEquipement.js"
-// import Test from "./components/Collapsibles.js";
-import HomeScreen from "./components/HomeScreen.js"
+import ServicesRequests from "./components/ServicesRequests.js";
+// import HomeScreen from "./components/HomeScreen.js"
+// ***************************************************************
+import ServiceProvidersProfiles from"./components/Posts/ServiceProvidersProfiles.js"
+import ServiceSeekerAddPost from "./components/Posts/ServiceSeekerAddPost.js"
+import ServiceSeekersPosts from "./components/Posts/ServiceSeekersPosts.js"
+import ReceivedRequests from "./components/Transactions/ServiceProvidersReceivedRequests.js"
+import ServiceProvidersSendedOffers from "./components/Transactions/ServiceProvidersSendedOffers.js"
+import ServiceSeekerReceivedOffers from "./components/Transactions/ServiceSeekerReceivedOffers.js"
+import ServiceSeekerSendARequest from "./components/Transactions/ServiceSeekerSendARequest.js"
+import ServiceSeekerSendedRequests from "./components/Transactions/ServiceSeekerSendedRequests.js"
+
+
+
+// ***************************************************************
+
 
 const Stack = createNativeStackNavigator();
 const Router = () => {
@@ -65,11 +79,12 @@ const Router = () => {
             linking={linking}
         >
             <Stack.Navigator>
-            
+            {/* <Stack.Screen name="EquipementsFetch2" component={EquipementsFetch2} /> */}
+
             <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen name="HomeScreen" component={HomeScreen} />
+            {/* <Stack.Screen name="HomeScreen" component={HomeScreen} /> */}
                 <Stack.Screen
-                    name="Equipementsfetch"
+                    name="Equipements Feed"
                     component={Equipmentsfetch}
                 />
                 <Stack.Screen name="Edit Equipement" component={EditEquipement} />
@@ -79,6 +94,8 @@ const Router = () => {
                 <Stack.Screen name="Forum2" component={Forum2} />
                 <Stack.Screen name="ForumPost" component={ForumPost} />
                 <Stack.Screen name="AddBlog" component={AddBlog} />
+                <Stack.Screen name="Essai" component={Essai} />
+                <Stack.Screen name="ServicesRequests" component={ServicesRequests} />
                 <Stack.Screen
                     name="serviceProvidersList"
                     component={serviceProvidersList}
@@ -137,7 +154,47 @@ const Router = () => {
                     component={Test}
              
                 /> */}
-
+                  <Stack.Screen
+                    name="ServiceProvidersProfiles"
+                    component={ServiceProvidersProfiles}
+             
+                />
+                <Stack.Screen
+                    name="ServiceSeekerAddPost"
+                    component={ServiceSeekerAddPost}
+             
+                />
+                
+                <Stack.Screen
+                    name="ServiceSeekersPosts"
+                    component={ServiceSeekersPosts}
+             
+                />
+                <Stack.Screen
+                    name="ServiceProvidersReceivedRequests"
+                    component={ReceivedRequests}
+             
+                />
+                 <Stack.Screen
+                    name="ServiceProvidersSendedOffers"
+                    component={ServiceProvidersSendedOffers}
+                    
+                />
+                 <Stack.Screen
+                    name="ServiceSeekerReceivedOffers"
+                    component={ServiceSeekerReceivedOffers}
+                    
+                />
+                <Stack.Screen
+                    name="ServiceSeekerSendARequest"
+                    component={ServiceSeekerSendARequest}
+                    ServiceSeekerSendedRequests
+                />
+                <Stack.Screen
+                    name="ServiceSeekerSendedRequests"
+                    component={ServiceSeekerSendedRequests}
+                    
+                />
 
 
 

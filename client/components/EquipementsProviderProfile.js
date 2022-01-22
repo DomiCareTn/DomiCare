@@ -3,6 +3,7 @@ import React ,{useState,useEffect} from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CredentialsContext } from './Authentification/CredentialsContext.js';
 import axios from 'axios'
+import {localhost} from "@env";
 import {
   StyleSheet,
   Text,
@@ -20,7 +21,7 @@ const EquipementsProviderProfile = ({navigation}) => {
   // console.log("userData:",userData);
   // console.log(userData.userData._id);
   useEffect(() => {
-    axios.get(`http://192.168.11.73:3000/editprofile/fetch/${userData.userData._id}`)
+    axios.get(`http://localhost:3000/editprofile/fetch/${userData.userData._id}`)
         .then(res => {
           console.log("res in useEffect",res);
           setData(res.data) 

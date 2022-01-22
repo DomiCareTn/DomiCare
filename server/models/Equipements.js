@@ -25,6 +25,9 @@ const Equipement = mongoose.model(
     },
     availability: {
       type: String},
+      quantity: {
+        type:String
+      },
     ownerId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "ServiceProvider"

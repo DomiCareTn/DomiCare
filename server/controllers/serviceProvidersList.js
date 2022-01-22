@@ -5,12 +5,8 @@ const sp = require ('../models/Posts.js')
 
 module.exports = {
 	find_all_serviceProviders: async (req, res) => {
-		
 		try {
-			const serviceP = await ServiceProvider.find({ type: "serviceProvider" }).populate('posts')
-			console.log(res)
-			
-			
+			const serviceP = await ServiceProvider.find({ type: "serviceProvider" }).populate('posts')	
 			res.send(serviceP);
 		} catch (err) {
 			res.send(err);

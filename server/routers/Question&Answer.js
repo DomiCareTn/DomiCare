@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const QuestAns = require("../controllers/Forum");
-
 router.route("/savepost")
     .get(QuestAns.find_All)
   .post(QuestAns.create_One) 
@@ -13,6 +12,4 @@ router.route("/findcomments/:id")
 
 router.route("/reply")
  .post(QuestAns.Reply)
-
-
 module.exports = router;
