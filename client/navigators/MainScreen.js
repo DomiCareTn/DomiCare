@@ -17,13 +17,11 @@ import {
     EditProfileSP,
     EditProfileEP,
 } from "../components/EditProfiles";
-
 import Report from "../components/report.js";
 import ForumPost from "../components/ForumPost.js";
 import AddBlog from "../components/AddBlog.js";
 import Forum2 from "../components/forum2.js";
 import Equipmentsfetch from "../components/Equipementsfetch.js";
-// import MyEquipements from "../components/MyEquipements.js"
 import { CredentialsContext } from "../components/Authentification/CredentialsContext.js";
 import { Avatar } from "react-native-paper";
 import { View } from "react-native-animatable";
@@ -33,7 +31,6 @@ const NotificationStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
 const QAStack = createStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
-
 
 import ServiceProvidersProfiles from "../components/Posts/ServiceProvidersProfiles.js";
 import ServiceSeekerAddPost from "../components/Posts/ServiceSeekerAddPost.js";
@@ -68,19 +65,19 @@ const MainTabScreen = () => {
                     ),
                 }}
             />
- 
+
             <Tab.Screen
-      name="Q/A"
-      component={QAStackScreen}
-      options={{
-        tabBarLabel: 'Forum',
-        tabBarColor: '#008080',
-        tabBarIcon: ({color}) => (
-          <Icon name="chatbubbles" color={color} size={26} />
-        ),
-      }}
-    />
-               <Tab.Screen
+                name="Q/A"
+                component={QAStackScreen}
+                options={{
+                    tabBarLabel: "Forum",
+                    tabBarColor: "#008080",
+                    tabBarIcon: ({ color }) => (
+                        <Icon name="chatbubbles" color={color} size={26} />
+                    ),
+                }}
+            />
+            <Tab.Screen
                 name="Notifications Screen"
                 component={NotificationStackScreen}
                 options={{
@@ -118,7 +115,6 @@ const HomeStackScreen = ({ navigation }) => {
                 },
             }}
         >
-        
             <HomeStack.Screen
                 name="Home"
                 component={HomeScreen}
@@ -173,43 +169,171 @@ const HomeStackScreen = ({ navigation }) => {
             <HomeStack.Screen
                 name="Forum2"
                 component={Forum2}
-                options={({ route }) => ({
-                    headerBackTitleVisible: false,
-                    headerTitle: false,
-                    headerTransparent: true,
-                    headerTintColor: "#fff",
-                })}
+                options={{
+                    title: "Forum",
+                    headerLeft: () => (
+                        <View style={{ marginLeft: 10 }}>
+                            <Icon.Button
+                                name="ios-menu"
+                                size={25}
+                                color="white"
+                                backgroundColor="#008080"
+                                onPress={() => navigation.openDrawer()}
+                            />
+                        </View>
+                    ),
+                    headerRight: () => (
+                        <View style={{ flexDirection: "row", marginRight: 10 }}>
+                            {/* <Icon.Button
+                                name="ios-search"
+                                size={25}
+                                color="white"
+                                backgroundColor="#008080"
+                                onPress={() => {}}
+                            /> */}
+                            <TouchableOpacity
+                                style={{ paddingHorizontal: 10, marginTop: 5 }}
+                                onPress={() => {
+                                    navigation.navigate("Profile Screen");
+                                }}
+                            >
+                                <Avatar.Image
+                                    source={{
+                                        uri: userData.picture,
+                                    }}
+                                    size={35}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    ),
+                }}
             />
             <HomeStack.Screen
                 name="ForumPost"
                 component={ForumPost}
-                options={({ route }) => ({
-                    headerBackTitleVisible: false,
-                    headerTitle: false,
-                    headerTransparent: true,
-                    headerTintColor: "#fff",
-                })}
+                options={{
+                    title: "Post",
+                    headerLeft: () => (
+                        <View style={{ marginLeft: 10 }}>
+                            <Icon.Button
+                                name="ios-menu"
+                                size={25}
+                                color="white"
+                                backgroundColor="#008080"
+                                onPress={() => navigation.openDrawer()}
+                            />
+                        </View>
+                    ),
+                    headerRight: () => (
+                        <View style={{ flexDirection: "row", marginRight: 10 }}>
+                            {/* <Icon.Button
+                                name="ios-search"
+                                size={25}
+                                color="white"
+                                backgroundColor="#008080"
+                                onPress={() => {}}
+                            /> */}
+                            <TouchableOpacity
+                                style={{ paddingHorizontal: 10, marginTop: 5 }}
+                                onPress={() => {
+                                    navigation.navigate("Profile Screen");
+                                }}
+                            >
+                                <Avatar.Image
+                                    source={{
+                                        uri: userData.picture,
+                                    }}
+                                    size={35}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    ),
+                }}
             />
             <HomeStack.Screen
                 name="AddBlog"
                 component={AddBlog}
-                options={({ route }) => ({
-                    headerBackTitleVisible: false,
-                    headerTitle: false,
-                    headerTransparent: true,
-                    headerTintColor: "#fff",
-                })}
+                options={{
+                    title: "Add Post",
+                    headerLeft: () => (
+                        <View style={{ marginLeft: 10 }}>
+                            <Icon.Button
+                                name="ios-menu"
+                                size={25}
+                                color="white"
+                                backgroundColor="#008080"
+                                onPress={() => navigation.openDrawer()}
+                            />
+                        </View>
+                    ),
+                    headerRight: () => (
+                        <View style={{ flexDirection: "row", marginRight: 10 }}>
+                            {/* <Icon.Button
+                                name="ios-search"
+                                size={25}
+                                color="white"
+                                backgroundColor="#008080"
+                                onPress={() => {}}
+                            /> */}
+                            <TouchableOpacity
+                                style={{ paddingHorizontal: 10, marginTop: 5 }}
+                                onPress={() => {
+                                    navigation.navigate("Profile Screen");
+                                }}
+                            >
+                                <Avatar.Image
+                                    source={{
+                                        uri: userData.picture,
+                                    }}
+                                    size={35}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    ),
+                }}
             />
 
             <HomeStack.Screen
                 name="Report"
                 component={Report}
-                options={({ route }) => ({
-                    headerBackTitleVisible: false,
-                    headerTitle: false,
-                    headerTransparent: true,
-                    headerTintColor: "#fff",
-                })}
+                options={{
+                    title: "Report",
+                    headerLeft: () => (
+                        <View style={{ marginLeft: 10 }}>
+                            <Icon.Button
+                                name="ios-menu"
+                                size={25}
+                                color="white"
+                                backgroundColor="#008080"
+                                onPress={() => navigation.openDrawer()}
+                            />
+                        </View>
+                    ),
+                    headerRight: () => (
+                        <View style={{ flexDirection: "row", marginRight: 10 }}>
+                            {/* <Icon.Button
+                                name="ios-search"
+                                size={25}
+                                color="white"
+                                backgroundColor="#008080"
+                                onPress={() => {}}
+                            /> */}
+                            <TouchableOpacity
+                                style={{ paddingHorizontal: 10, marginTop: 5 }}
+                                onPress={() => {
+                                    navigation.navigate("Profile Screen");
+                                }}
+                            >
+                                <Avatar.Image
+                                    source={{
+                                        uri: userData.picture,
+                                    }}
+                                    size={35}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    ),
+                }}
             />
 
             <HomeStack.Screen
@@ -464,48 +588,47 @@ const QAStackScreen = ({ navigation }) => (
             },
         }}
     >
-
-         <QAStack.Screen
-                name="Forum2"
-                component={Forum2}
-                options={{
-                    headerLeft: () => (
-                        <Icon.Button
-                            name="ios-menu"
-                            size={25}
-                            backgroundColor="#008080"
-                            onPress={() => navigation.openDrawer()}
-                        />
-                    ),
-                }}
-            />
-            <QAStack.Screen
-                name="ForumPost"
-                component={ForumPost}
-                options={{
-                    headerLeft: () => (
-                        <Icon.Button
-                            name="ios-menu"
-                            size={25}
-                            backgroundColor="#008080"
-                            onPress={() => navigation.openDrawer()}
-                        />
-                    ),
-                }}
-            />
-            <QAStack.Screen
-                name="AddBlog"
-                component={AddBlog}
-                options={{
-                    headerLeft: () => (
-                        <Icon.Button
-                            name="ios-menu"
-                            size={25}
-                            backgroundColor="#008080"
-                            onPress={() => navigation.openDrawer()}
-                        />
-                    ),
-                }}
-            />
+        <QAStack.Screen
+            name="Forum2"
+            component={Forum2}
+            options={{
+                headerLeft: () => (
+                    <Icon.Button
+                        name="ios-menu"
+                        size={25}
+                        backgroundColor="#008080"
+                        onPress={() => navigation.openDrawer()}
+                    />
+                ),
+            }}
+        />
+        <QAStack.Screen
+            name="ForumPost"
+            component={ForumPost}
+            options={{
+                headerLeft: () => (
+                    <Icon.Button
+                        name="ios-menu"
+                        size={25}
+                        backgroundColor="#008080"
+                        onPress={() => navigation.openDrawer()}
+                    />
+                ),
+            }}
+        />
+        <QAStack.Screen
+            name="AddBlog"
+            component={AddBlog}
+            options={{
+                headerLeft: () => (
+                    <Icon.Button
+                        name="ios-menu"
+                        size={25}
+                        backgroundColor="#008080"
+                        onPress={() => navigation.openDrawer()}
+                    />
+                ),
+            }}
+        />
     </QAStack.Navigator>
 );
