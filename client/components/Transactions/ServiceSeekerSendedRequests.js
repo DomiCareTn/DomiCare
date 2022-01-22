@@ -17,7 +17,7 @@ const SendedRequests = () => {
             console.log("req");
             const _id = userData._id;
             const offers = await axios.get(
-                `http://192.168.11.137:3000/Transactions/sendedrequests/${_id}`
+                `http://192.168.11.61:3000/Transactions/sendedrequests/${_id}`
             );
             setFeed(offers.data);
         } catch (err) {
@@ -25,12 +25,12 @@ const SendedRequests = () => {
         }
     }, []);
 
-    const CancelRequest = async (_id) => {
+    const CancelRequest = async (e) => {
         try {
             console.log("cancel", _id);
 
             await axios.delete(
-                `http://192.168.11.137:3000/Transactions/deleterequest/${_id}`
+                `http://192.168.11.61:3000/Transactions/deleterequest/${e._id}`
             );
         } catch (err) {
             console.log(err);
@@ -57,7 +57,7 @@ const SendedRequests = () => {
           <Text>Speciality</Text>
           <Text>Sent At:{e.createdAt}</Text>
           <Button
-            onPress={()=>{CancelRequest(e._id)}}
+            onPress={()=>{CancelRequest(e)}}
             title="Cancel the request"
             color="teal"
             accessibilityLabel="Learn more about this purple button"

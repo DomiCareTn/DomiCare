@@ -15,12 +15,12 @@ const AddBlog = (props) => {
 
     const SavePost = (post) => {
         axios
-            .post(`http://192.168.11.137:3000/savepost/savepost`, { post })
+            .post(`http://192.168.11.61:3000/savepost/savepost`, { post })
             .then((err, res) => {
                 if (err) {
                     console.log(err);
                 } else {
-                    console.log(res);
+                    console.log(res.data);
                     navigation.navigate("Forum");
                 }
             });
@@ -31,10 +31,10 @@ const AddBlog = (props) => {
                 h={500}
                 placeholder="Text Area Placeholder"
                 w={400}
-                onChange={(e) =>
+                onChange={(text) =>
                     setpost({
                         owner: userData,
-                        content: e.target.value,
+                        content: text,
                         type: "post",
                     })
                 }
