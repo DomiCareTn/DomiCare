@@ -126,7 +126,7 @@ function SignUp() {
 
     const post = () => {
         axios
-            .post(`http://192.168.11.137:3000/auth/EPSignUp`, { formData })
+            .post(`http://192.168.11.61:3000/auth/EPSignUp`, { formData })
             .then((response) => {
                 let errors = {};
                 const data = response.data;

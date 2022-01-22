@@ -11,16 +11,28 @@ const SendedOffers = () => {
         React.useContext(CredentialsContext);
     const userData = storedCredentials.userData;
     const [feed, setFeed] = useState([]);
+    const [offer,setOffer] = useState({})
     useEffect(async () => {
         console.log("sended offers");
 
         const _id = userData._id;
 
         const offers = await axios.get(
-            `http://192.168.11.137:3000/Transactions/sendedoffers/${_id}`
+            `http://192.168.11.61:3000/Transactions/sendedoffers/${_id}`
         );
         setFeed(offers.data);
     }, []);
+
+    const CancelOffer= async(e)=>{
+        try{const offer =await axios.delete(
+            `http://192.168.11.61:3000/Transactions/Canceloffers/${e._id}`,{e}
+        )
+        setOffer(offer.data)
+    }
+        catch(err){
+            console.log(err);
+        }
+    }
     return (
         <NativeBaseProvider>
             <ScrollView>
@@ -43,16 +55,13 @@ const SendedOffers = () => {
                                 <Text>lastName</Text>
                                 <Text>Gender</Text>
                                 <Text>Speciality</Text>
+
                                 <Button
-                                    onPress={() => {}}
-                                    title="Accept"
+                                    onPress={() => {
+                                        CancelOffer(e._id);
+                                    }}
+                                    title="Cancel"
                                     color="teal"
-                                    accessibilityLabel="Learn more about this purple button"
-                                />
-                                <Button
-                                    onPress={() => {}}
-                                    title="Decline"
-                                    color="Red"
                                     accessibilityLabel="Learn more about this purple button"
                                 />
                             </Card>

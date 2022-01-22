@@ -49,10 +49,10 @@ const ForumPost = (props) => {
         try {
             const _id = props.route.params._id;
             const post = await axios.get(
-                `http://192.168.11.137:3000/savepost/findpost/${_id}`
+                `http://192.168.11.61:3000/savepost/findpost/${_id}`
             );
             const com = await axios.get(
-                `http://192.168.11.137:3000/savepost/findcomments/${_id}`
+                `http://192.168.11.61:3000/savepost/findcomments/${_id}`
             );
 
             setpost(post.data);
@@ -67,7 +67,7 @@ const ForumPost = (props) => {
             const _id = props.route.params._id;
 
             const comment = await axios.post(
-                `http://192.168.11.137:3000/savepost/savepost`,
+                `http://192.168.11.61:3000/savepost/savepost`,
                 {
                     owner: { _id: userData._id, name: userData.firstName },
                     postId: singlepost._id,
@@ -76,7 +76,7 @@ const ForumPost = (props) => {
                 }
             );
             const recom = await axios.get(
-                `http://192.168.11.137:3000/savepost/findcomments/${_id}`
+                `http://192.168.11.61:3000/savepost/findcomments/${_id}`
             );
             setcomments(recom.data);
         } catch (err) {
@@ -87,7 +87,7 @@ const ForumPost = (props) => {
         try {
             const id = subcomment;
             const reply = await axios.post(
-                `http://192.168.11.137:3000/savepost/reply`,
+                `http://192.168.11.61:3000/savepost/reply`,
                 {
                     rep: {
                         owner: { _id: userData._id, name: userData.firstName },
@@ -98,7 +98,7 @@ const ForumPost = (props) => {
             );
             const _id = props.route.params._id;
             const recomm = await axios.get(
-                `http://192.168.11.137:3000/savepost/findcomments/${_id}`
+                `http://192.168.11.61:3000/savepost/findcomments/${_id}`
             );
             setcomments(recomm.data);
         } catch (err) {
@@ -119,7 +119,7 @@ const ForumPost = (props) => {
                 action = "déc";
             }
             const post = await axios.put(
-                `http://192.168.11.137:3000/savepost/savepost`,
+                `http://192.168.11.61:3000/savepost/savepost`,
                 {
                     userid,
                     postid,
@@ -217,8 +217,8 @@ const ForumPost = (props) => {
                                                     value={value}
                                                     variant="rounded"
                                                     placeholder="..."
-                                                    onChange={() =>
-                                                        handleChange(value)
+                                                    onChange={(text) =>
+                                                        handleChange(text)
                                                     }
                                                     w={{
                                                         md: "25%",

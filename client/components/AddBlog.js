@@ -28,7 +28,7 @@ const AddBlog = (props) => {
                 if (err) {
                     console.log(err);
                 } else {
-                    console.log(res);
+                    console.log(res.data);
                     navigation.navigate("Forum");
                 }
             });
