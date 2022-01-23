@@ -144,7 +144,7 @@ const ForumPost = (props) => {
             />
 
             <Text> {singlepost.title}</Text>
-            <Text> By:{singlepost.owner}</Text>
+            <Text> By:{singlepost.owner.userName}</Text>
             <Text>Posted At : {singlepost.createdAt}</Text>
             <Text> {singlepost.content}</Text>
             <Text> {participants.length}Likes</Text>
