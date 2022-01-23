@@ -109,10 +109,46 @@ module.exports = {
         type:req.body.type
       });
       
-      const transaction=await Transactions.findByIdAndDelete({ _id: req.params._id });
-      res.send(notification,transaction);
+      const transaction=await Transactions.findByIdAndUpdate({ _id: req.params._id },{status:"Cancelled"});
+      res.send();
     } catch (error) {
       console.log(error);
     }
   },
+  CancelOffer :async(req,res)=>{
+    try{
+      const notification=await Notifications.create({
+        providerId:req.body.provider_id,
+        seekerId:req.body.seekerId,
+        createdAt:req.body.createdAt,
+        content:req.body.content,
+        type:req.body.type
+      });
+      const cancelledOffer=await Transactions.findByIdAndUpdate({_id:req.params._id},{status:"Cancelled"})
+      res.send(cancelledOffer)
+    }
+    catch(err){
+      console.log(err);
+    }
+  },
+acceptrequest: async (req, res) => {
+    console.log("cancel");
+
+    try {
+      const notification=await Notifications.create({
+        providerId:req.body.provider_id,
+        seekerId:req.body.seekerId,
+        createdAt:req.body.createdAt,
+        content:req.body.content,
+        type:req.body.type
+      });
+      
+      const transaction=await Transactions.findByIdAndUpdate({ _id: req.params._id },{status:"Confirmed"});
+      res.send();
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  
+ 
 };
