@@ -2,35 +2,12 @@ const QuestAns = require("../models/Question&Answers");
 
 module.exports = {
 
-  create_One: async (req, res, next) => {
-    console.log('comment req body',req.body)
-    const { 
-      postId,
-      owner,
-      title,
-      content,
-      likesCount,
-      comments,
-      type} =
-      req.body;
-    
-    try {
-      const Quest = await QuestAns.create({
-        postId,
-        owner,
-        title,
-        content,
-        likesCount,
-        comments,
-        type
-      });
-      console.log('res',Quest)
-      res.status(200).json(Quest);
-    } 
-    
-    catch (error) {
-      next(error);
-    }
+  create_One:  (req, res) => {
+    console.log('testing',req.body)
+    const obj = req.body.obj
+    QuestAns.create(obj)
+    .then((post)=> res.send(post))
+    .catch((err)=> console.log(err))
   },
   find_All: async (req, res, next) => {
     try {

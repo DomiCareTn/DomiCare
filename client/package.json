@@ -12,7 +12,6 @@
     "build:tailwind": "tailwindcss --input input.css --output tailwind.css --no-autoprefixer && tailwind-rn",
     "dev:tailwind": "concurrently \"tailwindcss --input input.css --output tailwind.css --no-autoprefixer --watch\" \"tailwind-rn --watch\"",
     "postinstall": "patch-package"
-    
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "~1.15.0",
@@ -69,12 +68,14 @@
     "react-native-screens": "~3.10.1",
     "react-native-select-dropdown": "^1.6.0",
     "react-native-shadow-cards": "^1.0.2",
+    "react-native-skeleton-placeholder": "^5.0.0",
     "react-native-snap-carousel": "^3.9.1",
     "react-native-sticky-parallax-header": "^0.4.1",
     "react-native-swiper": "^1.6.0",
     "react-native-web": "^0.17.5",
     "react-navigation": "^4.4.4",
     "reanimated-bottom-sheet": "^1.0.0-alpha.22",
+    "styled-components": "^5.3.3",
     "sweetalert2": "^11.3.4"
   },
   "devDependencies": {

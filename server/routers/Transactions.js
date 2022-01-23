@@ -16,5 +16,10 @@ router.route("/OfferMyService")
   router.route("/sendedrequests/:_id")
   .get(Transactions.GetSendedRequests)
   router.route("/deleterequest/:_id")
-  .delete(Transactions.DeleteRequest)
+  .put(Transactions.DeleteRequest)
+  router.route("/Canceloffers/:_id")
+  .delete(Transactions.CancelOffer)
+  router.route("/acceptrequest/:_id")
+   .put(Transactions.acceptrequest)
+   
 module.exports = router;
