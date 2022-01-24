@@ -46,7 +46,7 @@ module.exports = {
 
     get_all_posts: async(req,res) => {
         try {
-           const posts = await Posts.find({})
+           const posts = await Posts.find({}).populate("serviceSeeker_id")
             res.send(posts)
         
     }
@@ -68,7 +68,7 @@ module.exports = {
     },
     get_reports: async (req, res) => {
         try {
-            const reports = await report.find({})
+            const reports = await report.find({}).populate('list_report.report_id').exec()
              res.send(reports)
          
      }
@@ -215,6 +215,18 @@ module.exports = {
         res.send(err)
     }
         
+    },
+    verify_User: async (req, res) => {
+        
+        const id = req.params.id
+        console.log(id);
+        
+        try {
+            const verify = await ServiceProvider.findByIdAndUpdate(id,{verified:true})
+            res.send({verify})
+         }
+        catch(err){console.log(err);
+        }
     },
 
         

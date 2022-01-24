@@ -32,10 +32,12 @@ router.route("/banned/:id")
   .patch(AdminController.bann_UserSS)
   router.route("/unbannedSS/:id")
   .patch(AdminController.unbann_UserSS)
-  // router.route("/findss/:id")
-  // .get(AdminController.find_One)
+
   router.route("/admins")
-  .get(AdminController.get_all_admins)
+    .get(AdminController.get_all_admins)
+  router.route("/verify/:id")
+  .patch(AdminController.verify_User)
+
   
  
 
