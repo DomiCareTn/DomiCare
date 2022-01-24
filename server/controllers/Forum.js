@@ -1,12 +1,30 @@
 const QuestAns = require("../models/Question&Answers");
 
 module.exports = {
-
+  Delete:(req,res)=>{
+    QuestAns.deleteOne({_id: req.params.postID})
+    .then(()=> QuestAns.find({type:"Quest"}).sort({createdAt: -1}).exec()
+    .then((Quests)=> res.send(Quests))
+    )
+    .catch((err)=> console.log(err))
+  },
+  DeleteComment:(req,res)=>{
+    
+    QuestAns.deleteOne({_id: req.params.commentID})
+    .then(()=>{
+      QuestAns.find({type:"comment", postId:req.params.postID}).sort({createdAt: -1}).exec()
+              .then((result)=>{
+                console.log(result)
+                res.send(result)})
+              .catch((err)=> console.log(err))
+    })
+    .catch((err)=> console.log(err))
+  },
   create_One:  (req, res) => {
-    console.log('testing',req.body)
     const obj = req.body.obj
-    QuestAns.create(obj)
-    .then((post)=> res.send(post))
+    QuestAns.create(req.body.obj)
+    .then(()=> QuestAns.find({type:"Quest"}).sort({createdAt: -1}).exec()
+    .then((Quests)=> res.send(Quests)))
     .catch((err)=> console.log(err))
   },
   find_All: async (req, res, next) => {
@@ -29,7 +47,6 @@ module.exports = {
     }
   },
   find_One: async (req, res, next) => {
-    console.log(req.params.id)
     try {
       
       const postFound = await QuestAns.findById({ _id: req.params.id });
@@ -40,7 +57,6 @@ module.exports = {
     }
   },
   update_One: async (req, res, next) => {
-    console.log("request", req.body);
     try {
       const event = await QuestAns.findByIUpdate(
         { _id: req.body._id },
@@ -53,7 +69,6 @@ module.exports = {
     }
   },
   Reply: async (req, res, next) => {
-    console.log("request", req.body.rep);
     try {
       const event = await QuestAns.findByIdAndUpdate(
         
@@ -67,7 +82,6 @@ module.exports = {
     }
   },
   remove_One: async (req, res, next) => {
-    console.log('deletepost',req.body)
     try {
       const removedEvent = await QuestAns.delete({_id: req.body._id});
       res.status(200).json(removedEvent);

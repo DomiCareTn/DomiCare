@@ -11,28 +11,29 @@ const SendedOffers = () => {
         React.useContext(CredentialsContext);
     const userData = storedCredentials.userData;
     const [feed, setFeed] = useState([]);
-    const [offer,setOffer] = useState({})
+    const [offer, setOffer] = useState({});
     useEffect(async () => {
         console.log("sended offers");
 
         const _id = userData._id;
 
         const offers = await axios.get(
-            `http://192.168.11.61:3000/Transactions/sendedoffers/${_id}`
+            `http://192.168.121.162:3000/Transactions/sendedoffers/${_id}`
         );
         setFeed(offers.data);
     }, []);
 
-    const CancelOffer= async(e)=>{
-        try{const offer =await axios.delete(
-            `http://192.168.11.61:3000/Transactions/Canceloffers/${e._id}`,{e}
-        )
-        setOffer(offer.data)
-    }
-        catch(err){
+    const CancelOffer = async (e) => {
+        try {
+            const offer = await axios.delete(
+                `http://192.168.121.162:3000/Transactions/Canceloffers/${e._id}`,
+                { e }
+            );
+            setOffer(offer.data);
+        } catch (err) {
             console.log(err);
         }
-    }
+    };
     return (
         <NativeBaseProvider>
             <ScrollView>

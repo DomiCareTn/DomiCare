@@ -1,10 +1,9 @@
-import React ,{useState,useEffect} from 'react'
-import { View, Text,TextInput,Button } from 'react-native'
-import {Picker} from "@react-native-picker/picker"
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { CredentialsContext } from './Authentification/CredentialsContext.js';
-import axios from 'axios'
-
+import React, { useState, useEffect } from "react";
+import { View, Text, TextInput, Button } from "react-native";
+import { Picker } from "@react-native-picker/picker";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { CredentialsContext } from "./Authentification/CredentialsContext.js";
+import axios from "axios";
 
 const EditEquipement = ({ navigation }) => {
     const [text, onChangeText] = React.useState("Useless Text");
@@ -27,7 +26,7 @@ const EditEquipement = ({ navigation }) => {
         console.log("test1 : ", userData.userData._id);
         axios
             .get(
-                `http://192.168.11.61:3000/Equipements/${userData.userData._id}`
+                `http://192.168.121.162:3000/Equipements/${userData.userData._id}`
             ) ///Equipements/${userData.userData._id}
             .then((res) => {
                 var user = res.data;
@@ -42,7 +41,7 @@ const EditEquipement = ({ navigation }) => {
     const fetchData = () => {
         axios
             .get(
-                `http://192.168.11.61:3000/Equipements/${userData.userData._id}`
+                `http://192.168.121.162:3000/Equipements/${userData.userData._id}`
             )
             .then((res) => {
                 // console.log("equipement id",res);
@@ -60,7 +59,7 @@ const EditEquipement = ({ navigation }) => {
         console.log("test formData :", formData[0]);
         axios
             .put(
-                `http://192.168.11.61:3000/Equipements/update/${formData[0]._id}`,
+                `http://192.168.121.162:3000/Equipements/update/${formData[0]._id}`,
                 { formData }
             )
             .then((res) => {

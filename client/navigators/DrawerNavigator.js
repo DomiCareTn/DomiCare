@@ -10,7 +10,6 @@ import React from "react";
 import { CredentialsContext } from "../components/Authentification/CredentialsContext.js";
 import MainTabScreen from "./MainScreen.js";
 import ForumPost from "../components/ForumPost.js";
-import AddBlog from "../components/AddBlog.js";
 import Equipmentsfetch from "../components/Equipementsfetch.js";
 import Report from "../components/report.js";
 
