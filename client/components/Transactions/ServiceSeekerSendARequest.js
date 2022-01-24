@@ -1,14 +1,21 @@
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
-import React, { useState,useEffect } from "react";
-import axios from 'axios';
+import {
+    View,
+    StyleSheet,
+    ScrollView,
+    Alert,
+    Picker,
+    Image,
+    Text,
+    TouchableOpacity,
+    SafeAreaView,
+} from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-
-
-import { View, StyleSheet,  ScrollView, Alert, Picker, Image, Text, TouchableOpacity ,SafeAreaView} from "react-native";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-import { CredentialsContext } from '../Authentification/CredentialsContext.js';
-import { useNavigation } from "@react-navigation/native"
+import { CredentialsContext } from "../Authentification/CredentialsContext.js";
+import { useNavigation } from "@react-navigation/native";
 import { storage } from "../../.firebase_config.js";
 import * as ImagePicker from "expo-image-picker";
 import {
@@ -43,16 +50,19 @@ const SeekerRequest = (props) => {
     const type = "request";
     const post = () => {
         axios
-            .post(`http://192.168.11.61:3000/Transactions/seekersendrequest`, {
-                type,
-                details,
-                address,
-                file,
-                seekerId,
-                providerId,
-                selectedStartDate,
-                selectedEndDate,
-            })
+            .post(
+                `http://192.168.121.162:3000/Transactions/seekersendrequest`,
+                {
+                    type,
+                    details,
+                    address,
+                    file,
+                    seekerId,
+                    providerId,
+                    selectedStartDate,
+                    selectedEndDate,
+                }
+            )
             .then((res) => console.log(res))
             .catch((err) => console.log(err));
         console.log("hello", details, address, Prescription);

@@ -17,7 +17,7 @@ const SendedRequests = () => {
             console.log("req");
             const _id = userData._id;
             const offers = await axios.get(
-                `http://192.168.11.61:3000/Transactions/sendedrequests/${_id}`
+                `http://192.168.121.162:3000/Transactions/sendedrequests/${_id}`
             );
             setFeed(offers.data);
         } catch (err) {
@@ -30,7 +30,7 @@ const SendedRequests = () => {
             console.log("cancel", _id);
 
             await axios.delete(
-                `http://192.168.11.61:3000/Transactions/deleterequest/${e._id}`
+                `http://192.168.121.162:3000/Transactions/deleterequest/${e._id}`
             );
         } catch (err) {
             console.log(err);
@@ -39,34 +39,41 @@ const SendedRequests = () => {
     return (
         <NativeBaseProvider>
             <ScrollView>
-      {feed.map((e,key)=>{
-        console.log("req",e);
-        return(
-      <View style={styles.container} key={key}>
-        <Card style={{padding: 10, margin: 10}}>
-        
-        <Avatar
-          bg="green.500"
-          size="md"
-          source={{
-            uri: e.providerId.picture,
-          }}
-        >
-            </Avatar>
-            <Text> Request sent to: {e.providerId.firstName} {e.providerId.lastName}</Text>
-          <Text>Speciality</Text>
-          <Text>Sent At:{e.createdAt}</Text>
-          <Button
-            onPress={()=>{CancelRequest(e)}}
-            title="Cancel the request"
-            color="teal"
-            accessibilityLabel="Learn more about this purple button"
-          />
-
-        </Card>
-      </View>)})}
-      </ScrollView>
-      </NativeBaseProvider>
+                {feed.map((e, key) => {
+                    console.log("req", e);
+                    return (
+                        <View style={styles.container} key={key}>
+                            <Card style={{ padding: 10, margin: 10 }}>
+                                <Avatar
+                                    bg="green.500"
+                                    size="md"
+                                    source={{
+                                        uri: e.providerId.picture,
+                                    }}
+                                ></Avatar>
+                                <Text>
+                                    {" "}
+                                    Request sent to: {
+                                        e.providerId.firstName
+                                    }{" "}
+                                    {e.providerId.lastName}
+                                </Text>
+                                <Text>Speciality</Text>
+                                <Text>Sent At:{e.createdAt}</Text>
+                                <Button
+                                    onPress={() => {
+                                        CancelRequest(e);
+                                    }}
+                                    title="Cancel the request"
+                                    color="teal"
+                                    accessibilityLabel="Learn more about this purple button"
+                                />
+                            </Card>
+                        </View>
+                    );
+                })}
+            </ScrollView>
+        </NativeBaseProvider>
     );
 };
 const styles = StyleSheet.create({

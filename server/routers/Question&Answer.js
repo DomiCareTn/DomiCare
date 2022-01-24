@@ -12,4 +12,8 @@ router.route("/findcomments/:id")
 
 router.route("/reply")
  .post(QuestAns.Reply)
+ router.route("/delete/:postID")
+ .delete(QuestAns.Delete)
+ router.route("/deleteComment/:commentID/:postID")
+ .delete(QuestAns.DeleteComment)
 module.exports = router;
