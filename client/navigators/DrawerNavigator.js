@@ -12,7 +12,8 @@ import MainTabScreen from "./MainScreen.js";
 import ForumPost from "../components/ForumPost.js";
 import Equipmentsfetch from "../components/Equipementsfetch.js";
 import Report from "../components/report.js";
-
+import MyEquipements from "../components/MyEquipements.js"
+import EditEquipement from "../components/EditEquipement.js";
 import CustomDrawer from "../navigators/CustomDrawer";
 import ServiceProvidersProfiles from "../components/Posts/ServiceProvidersProfiles.js";
 import ServiceSeekerAddPosts from "../components/Posts/ServiceSeekerAddPost.js";
@@ -212,6 +213,14 @@ const DrawerNav = () => {
             <EP.Screen
                 name="Equipementsfetch"
                 component={Equipmentsfetch}
+            />
+               <EP.Screen
+                name="My Equipements"
+                component={MyEquipements}
+            />
+            <EP.Screen
+                name="Edit Equipement"
+                component={EditEquipement}
             />
             <EP.Screen
                 name="Home Care Agents"

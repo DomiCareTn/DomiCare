@@ -49,7 +49,6 @@ const userEquipements = ({ navigation }) => {
                 `http://192.168.121.162:3000/Equipements/${userData.userData._id}`
             )
             .then((res) => {
-                // console.log("equipement id",res);
                 setmyData(res.data);
                 console.log("res.data", res.data);
             })
@@ -64,8 +63,6 @@ const userEquipements = ({ navigation }) => {
                 `http://192.168.121.162:3000/Equipements/equip/${formData._id}`
             )
             .then((res) => {
-                // console.log("equipement id",res);
-                // setmyData(res.data)
                 console.log("getEquip", res.data);
             })
             .then(() => EditEquip())
@@ -80,7 +77,6 @@ const userEquipements = ({ navigation }) => {
                 `http://192.168.121.162:3000/Equipements/${userData.userData._id}`
             )
             .then((res) => {
-                // console.log("equipement id",res);
                 setmyData(res.data);
                 console.log("res.data", res.data);
             })
