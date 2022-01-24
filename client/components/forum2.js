@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import moment from "moment";
 import { useNavigation } from "@react-navigation/native";
 import {
     SafeAreaView,
@@ -9,17 +10,17 @@ import {
     Button,
 } from "react-native";
 import {
-  IconButton,
-  Icon,
-  Box,
-  Heading,
-  AspectRatio,
-  Image,
-  Text,
-  Center,
-  HStack,
-  Stack,
-  NativeBaseProvider,
+    IconButton,
+    Icon,
+    Box,
+    Heading,
+    AspectRatio,
+    Image,
+    Text,
+    Center,
+    HStack,
+    Stack,
+    NativeBaseProvider,
 } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
 export const Forum2 = (props) => {
@@ -27,20 +28,25 @@ export const Forum2 = (props) => {
 
     const [subjects, setData] = useState([]);
     useEffect(async () => {
-        try{const result = await axios(
-            `http://192.168.11.61:3000/savepost/savepost`
-        );
-        setData(result.data);
-      console.log("first", result.data);}
-        catch(err){
-          console.log(err);
+        try {
+            const result = await axios.get(
+                `http://192.168.11.137:3000/savepost/savepost`
+            );
+            // console.log(result.data)
+            setData(result.data);
+        } catch (err) {
+            console.log(err);
         }
-    },[]);
-    console.log("sub", subjects);
+    }, []);
     return (
         <View>
             <SafeAreaView style={styles.container}>
-                <ScrollView>
+                <ScrollView   showsVerticalScrollIndicator={false}
+            _contentContainerStyle={{
+                px: "20px",
+                mb: "4",
+                minW: "80",
+            }}>
                     {subjects.map((item, key) => {
                         return (
                             <Box
@@ -48,6 +54,8 @@ export const Forum2 = (props) => {
                                 maxW="2000"
                                 rounded="lg"
                                 overflow="hidden"
+                                marginTop={30}
+                                marginBottom={30}
                                 borderColor="coolGray.200"
                                 borderWidth="1"
                                 _dark={{
@@ -63,31 +71,15 @@ export const Forum2 = (props) => {
                                 }}
                             >
                                 <Box>
-                                    <AspectRatio w="100%" ratio={16 / 9}>
+                                    {/* <AspectRatio w="100%" ratio={16 / 9}>
                                         <Image
                                             source={{
                                                 uri: "https://www.holidify.com/images/cmsuploads/compressed/Bangalore_citycover_20190613234056.jpg",
                                             }}
                                             alt="image"
                                         />
-                                    </AspectRatio>
-                                    <Center
-                                        bg="violet.500"
-                                        _dark={{
-                                            bg: "violet.400",
-                                        }}
-                                        _text={{
-                                            color: "warmGray.50",
-                                            fontWeight: "700",
-                                            fontSize: "xs",
-                                        }}
-                                        position="absolute"
-                                        bottom="0"
-                                        px="3"
-                                        py="1.5"
-                                    >
-                                        PHOTOS
-                                    </Center>
+                                    </AspectRatio> */}
+                                
                                 </Box>
                                 <Stack p="4" space={3}>
                                     <Stack space={2}>
@@ -97,23 +89,21 @@ export const Forum2 = (props) => {
                                         <Text
                                             fontSize="xs"
                                             _light={{
-                                                color: "violet.500",
+                                                color: "#f39a6e",
                                             }}
                                             _dark={{
-                                                color: "violet.400",
+                                                color: "#f39a6e",
                                             }}
                                             fontWeight="500"
                                             ml="-0.5"
                                             mt="-1"
                                         >
-                                            {item.owner}
+                                            {item.owner.userName}
                                         </Text>
                                     </Stack>
                                     <Text fontWeight="400">{item.content}</Text>
                                     <HStack
-                                        alignItems="center"
-                                        space={4}
-                                        justifyContent="space-between"
+                                     
                                     >
                                         <HStack alignItems="center">
                                             <Text
@@ -123,11 +113,19 @@ export const Forum2 = (props) => {
                                                 }}
                                                 fontWeight="400"
                                             >
-                                                {item.createdAt}
-                                                {item.numberOfComments} Comments
-                                                {item.participants.length} Likes
-                                                <Button
-                                                    title="continue reading"
+                                                {moment( item.createdAt).fromNow() +'    ' }
+                                                {item.comments.length} Comments
+                                                {'    ' + item.participants.length} Likes
+                                            </Text>
+                                       
+                                        </HStack>
+                                      
+                                    </HStack>
+                                    <View style={[{ width: "50%", marginLeft: 80, marginTop: 20}]}>
+                                    <Button
+                                            color="#008080"
+                                           width="100"
+                                                    title="Answer"
                                                     backgroundColor="white"
                                                     onPress={() =>
                                                         navigation.navigate(
@@ -136,9 +134,8 @@ export const Forum2 = (props) => {
                                                         )
                                                     }
                                                 ></Button>
-                                            </Text>
-                                        </HStack>
-                                    </HStack>
+                                    </View>
+                                 
                                 </Stack>
                             </Box>
                         );

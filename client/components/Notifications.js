@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import axios from 'axios';
+import React, { Component, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -23,6 +24,12 @@ export default class NotificationsScreen extends Component {
         {id:7, image: "https://bootdey.com/img/Content/avatar/avatar5.png", name:"The googler",      text:"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.", attachment:""},
       ]
     }
+  }
+  componentDidMount(){
+    axios.get(`http://192.168.11.61:3000/notifications`).then((res)=>{
+      console.log(res.data);
+      this.setState(res.data)
+    })
   }
 
   render() {

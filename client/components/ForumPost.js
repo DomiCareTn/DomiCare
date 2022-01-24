@@ -29,9 +29,9 @@ const ForumPost = (props) => {
     const [shouldShow, setShouldShow] = useState(false);
     const [shouldshow, setshouldshow] = useState(false);
 
-    const handleChange = (event) => {
-        console.log(event.target.value);
-         setValue(event.target.value);
+    const handleChange = (text) => {
+        console.log(text);
+        setValue(text);
     };
     const navigation = useNavigation();
     const [singlepost, setpost] = useState({});
@@ -43,91 +43,94 @@ const ForumPost = (props) => {
         React.useContext(CredentialsContext);
     const userData = storedCredentials;
 
-    useEffect(async() => {
-        
-           try {const _id = props.route.params._id;
+    useEffect(async () => {
+        console.log("useeffect", userData);
+
+        try {
+            const _id = props.route.params._id;
             const post = await axios.get(
                 `http://192.168.11.61:3000/savepost/findpost/${_id}`
             );
             const com = await axios.get(
                 `http://192.168.11.61:3000/savepost/findcomments/${_id}`
             );
-           
+
             setpost(post.data);
             setparticipants(post.data.participants);
-            setcomments(com.data);}
-      catch(err){
-        console.log(err);
-      }
-        
+            setcomments(com.data);
+        } catch (err) {
+            console.log(err);
+        }
     }, []);
     const Comment = async () => {
-       try {const _id = props.route.params._id;
+        try {
+            const _id = props.route.params._id;
 
-        const comment = await axios.post(
-            `http://192.168.11.61:3000/savepost/savepost`,
-            {
-                owner: { _id: userData._id, name: userData.firstName },
-                postId: singlepost._id,
-                content: value,
-                type: "comment",
-            }
-        );
-        const recom = await axios.get(
-            `http://192.168.11.61:3000/savepost/findcomments/${_id}`
-        );
-        setcomments(recom.data);}
-        catch(err){
-          console.log(err);
+            const comment = await axios.post(
+                `http://192.168.11.61:3000/savepost/savepost`,
+                {
+                    owner: { _id: userData._id, name: userData.firstName },
+                    postId: singlepost._id,
+                    content: value,
+                    type: "comment",
+                }
+            );
+            const recom = await axios.get(
+                `http://192.168.11.61:3000/savepost/findcomments/${_id}`
+            );
+            setcomments(recom.data);
+        } catch (err) {
+            console.log(err);
         }
     };
     const replyto = async () => {
-        try{const id = subcomment;
-        const reply = await axios.post(
-            `http://192.168.11.61:3000/savepost/reply`,
-            {
-                rep: {
-                    owner: { _id: userData._id, name: userData.firstName },
-                    commentid: id,
-                    content: value,
-                },
-            }
-        );
-        const _id = props.route.params._id;
-        const recomm = await axios.get(
-            `http://192.168.11.61:3000/savepost/findcomments/${_id}`
-        );
-        setcomments(recomm.data);}
-        catch(err){
-          console.log(err);
+        try {
+            const id = subcomment;
+            const reply = await axios.post(
+                `http://192.168.11.61:3000/savepost/reply`,
+                {
+                    rep: {
+                        owner: { _id: userData._id, name: userData.firstName },
+                        commentid: id,
+                        content: value,
+                    },
+                }
+            );
+            const _id = props.route.params._id;
+            const recomm = await axios.get(
+                `http://192.168.11.61:3000/savepost/findcomments/${_id}`
+            );
+            setcomments(recomm.data);
+        } catch (err) {
+            console.log(err);
         }
     };
 
     const Like = async () => {
-      console.log("first");
-      try { const userid = userData._id;
+        const userid = userData.userData._id;
         const postid = singlepost._id;
-        let action = "";
-        var index = singlepost.participants.indexOf(userid);
-        if (index == -1) {
-            action = "inc";
-
-        } else {
-            action = "déc";
-        }
-        const post = await axios.put(
-            `http://192.168.11.61:3000/savepost/savepost`,
-            {
-                userid,
-                postid,
-                action,
+        console.log("first", userid);
+        try {
+            let action = "";
+            var index = singlepost.participants.indexOf(userid);
+            if (index == -1) {
+                action = "inc";
+            } else {
+                action = "déc";
             }
-        );
+            const post = await axios.put(
+                `http://192.168.11.61:3000/savepost/savepost`,
+                {
+                    userid,
+                    postid,
+                    action,
+                }
+            );
 
-        setpost(post.data);
-        setparticipants(post.data.participants);}
-        catch(err){
-          console.log(err);
+            setpost(post.data);
+            setparticipants(post.data.participants);
+        } catch (err) {
+            console.log(err);
         }
     };
 
@@ -141,7 +144,7 @@ const ForumPost = (props) => {
             />
 
             <Text> {singlepost.title}</Text>
-            <Text> By:{singlepost.owner}</Text>
+            <Text> By:{singlepost.owner.userName}</Text>
             <Text>Posted At : {singlepost.createdAt}</Text>
             <Text> {singlepost.content}</Text>
             <Text> {participants.length}Likes</Text>
@@ -156,9 +159,8 @@ const ForumPost = (props) => {
                     value={value}
                     variant="rounded"
                     placeholder="Round"
-                    onChange={handleChange}
+                    onChangeText={(text) => handleChange(text)}
                     w={{
-                    
                         md: "25%",
                     }}
                     InputRightElement={
@@ -198,14 +200,13 @@ const ForumPost = (props) => {
                                                     return (
                                                         <View key={key}>
                                                             <Text>
-                                                                {" "}
-                                                                {reply.owner.name}{" "}
+                                                                {
+                                                                    reply.owner
+                                                                        .name
+                                                                }
                                                             </Text>
                                                             <Text>
-                                                                {" "}
-                                                                {
-                                                                    reply.content
-                                                                }{" "}
+                                                                {reply.content}
                                                             </Text>
                                                         </View>
                                                     );
@@ -216,9 +217,10 @@ const ForumPost = (props) => {
                                                     value={value}
                                                     variant="rounded"
                                                     placeholder="..."
-                                                    onChange={handleChange}
+                                                    onChange={(text) =>
+                                                        handleChange(text)
+                                                    }
                                                     w={{
-                                                        width: 500,
                                                         md: "25%",
                                                     }}
                                                     InputRightElement={

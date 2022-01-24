@@ -13,18 +13,20 @@ import ForumPost from "../components/ForumPost.js";
 import AddBlog from "../components/AddBlog.js";
 import Equipmentsfetch from "../components/Equipementsfetch.js";
 import Report from "../components/report.js";
-
+import MyEquipements from "../components/MyEquipements.js"
+import EditEquipement from "../components/EditEquipement.js";
 import CustomDrawer from "../navigators/CustomDrawer";
-import ServiceProvidersProfiles from "../components/Posts/ServiceProvidersProfiles.js"
-import ServiceSeekerAddPosts from "../components/Posts/ServiceSeekerAddPost.js"
-import ServiceSeekersPosts from "../components/Posts/ServiceSeekersPosts.js"
-import ServiceProvidersReceivedRequests from "../components/Transactions/ServiceProvidersReceivedRequests.js"
-import ServiceProvidersSendedOffers from "../components/Transactions/ServiceProvidersSendedOffers.js"
-import ServiceSeekerReceivedOffers from "../components/Transactions/ServiceSeekerReceivedOffers.js"
-import ServiceSeekerSendARequests from "../components/Transactions/ServiceSeekerSendARequest.js"
-import ServiceSeekerSendedRequests from "../components/Transactions/ServiceSeekerSendedRequests.js"
+import ServiceProvidersProfiles from "../components/Posts/ServiceProvidersProfiles.js";
+import ServiceSeekerAddPosts from "../components/Posts/ServiceSeekerAddPost.js";
+import ServiceSeekersPosts from "../components/Posts/ServiceSeekersPosts.js";
+import ServiceProvidersReceivedRequests from "../components/Transactions/ServiceProvidersReceivedRequests.js";
+import ServiceProvidersSendedOffers from "../components/Transactions/ServiceProvidersSendedOffers.js";
+import ServiceSeekerReceivedOffers from "../components/Transactions/ServiceSeekerReceivedOffers.js";
+import ServiceSeekerSendARequests from "../components/Transactions/ServiceSeekerSendARequest.js";
+import ServiceSeekerSendedRequests from "../components/Transactions/ServiceSeekerSendedRequests.js";
 import Forum2 from "../components/forum2.js";
 import AServiceSeekerPosts from "../components/Posts/AServiceSeekerPosts.js";
+import Push from "../components/PushNotification.js"
 
 
 
@@ -83,8 +85,12 @@ const DrawerNav = () => {
             >
 
 <Drawer.Screen  name="Main" component={MainTabScreen} />
+<Drawer.Screen
+                name="Push"
+                component={Push}
+            />
             <Drawer.Screen
-                name="Equipementsfetch"
+                name="Equipements"
                 component={Equipmentsfetch}
             />
             <Drawer.Screen
@@ -208,6 +214,14 @@ const DrawerNav = () => {
             <EP.Screen
                 name="Equipementsfetch"
                 component={Equipmentsfetch}
+            />
+               <EP.Screen
+                name="My Equipements"
+                component={MyEquipements}
+            />
+            <EP.Screen
+                name="Edit Equipement"
+                component={EditEquipement}
             />
             <EP.Screen
                 name="Home Care Agents"

@@ -1,4 +1,6 @@
 const Transactions = require("../models/Transactions");
+const Notifications = require ("../models/Notifications");
+const e = require("express");
 module.exports = {
   CreateServiceSeekerRequest: async (req, res) => {
     const {
@@ -89,7 +91,7 @@ module.exports = {
       const offers = await Transactions.find({
         type: "request",
         seekerId: req.params._id,
-      }).populate("seekerId")
+      }).populate("providerId")
       res.send(offers);
     } catch (err) {
       res.send(err);
@@ -99,10 +101,54 @@ module.exports = {
     console.log("cancel");
 
     try {
-      await Transactions.findByIdAndDelete({ _id: req.params._id });
-      res.send("Request Successfully cancelled");
+      const notification=await Notifications.create({
+        providerId:req.body.provider_id,
+        seekerId:req.body.seekerId,
+        createdAt:req.body.createdAt,
+        content:req.body.content,
+        type:req.body.type
+      });
+      
+      const transaction=await Transactions.findByIdAndUpdate({ _id: req.params._id },{status:"Cancelled"});
+      res.send();
     } catch (error) {
       console.log(error);
     }
   },
+  CancelOffer :async(req,res)=>{
+    try{
+      const notification=await Notifications.create({
+        providerId:req.body.provider_id,
+        seekerId:req.body.seekerId,
+        createdAt:req.body.createdAt,
+        content:req.body.content,
+        type:req.body.type
+      });
+      const cancelledOffer=await Transactions.findByIdAndUpdate({_id:req.params._id},{status:"Cancelled"})
+      res.send(cancelledOffer)
+    }
+    catch(err){
+      console.log(err);
+    }
+  },
+acceptrequest: async (req, res) => {
+    console.log("cancel");
+
+    try {
+      const notification=await Notifications.create({
+        providerId:req.body.provider_id,
+        seekerId:req.body.seekerId,
+        createdAt:req.body.createdAt,
+        content:req.body.content,
+        type:req.body.type
+      });
+      
+      const transaction=await Transactions.findByIdAndUpdate({ _id: req.params._id },{status:"Confirmed"});
+      res.send();
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  
+ 
 };
