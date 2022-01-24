@@ -53,7 +53,7 @@ connection.once("open", () => {
 app.use("/Equipements", Equipements);
 app.use("/serviceProvidersList",serviceProvidersList)
 app.use("/ServiceSeeker", ServiceSeeker);
-app.use("/savepost",QuestAns)
+app.use("/post",QuestAns)
 app.use("/admin",admin)
 app.use("/auth", auth);
 app.use("/ServiceProvider", ServiceProvider);

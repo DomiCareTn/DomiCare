@@ -3,7 +3,6 @@ const ServiceSeeker =require("../models/ServiceSeeker.js")
 const bcrypt = require("bcrypt");
 module.exports = {
   SS_find_One: (req,res)=>{
-    console.log(req.params.userId)
     const userId = req.params.userId
     ServiceSeeker.findById({_id : userId})
     .then((user)=>{
@@ -17,7 +16,6 @@ module.exports = {
     .catch((err)=> console.log(err))
   },
   SP_find_One: (req,res)=>{
-    console.log(req.params.userId)
     const userId = req.params.userId
     ServiceProvider.findById({_id : userId})
     .then((user)=>{
@@ -80,9 +78,7 @@ module.exports = {
     const data = req.body
     ServiceSeeker.findOne({ _id: req.params.userId })
     .then((user)=> {
-     console.log(user)
     
-    console.log(user.password)
             bcrypt.compare(data.oldPassword ,user.password)
             .then((success)=>{
                 if(success){
@@ -106,9 +102,7 @@ SP_UpdatePassword:(req,res)=>{
   const data = req.body
   ServiceProvider.findOne({ _id: req.params.userId })
   .then((user)=> {
-   console.log(user)
   
-  console.log(user.password)
           bcrypt.compare(data.oldPassword ,user.password)
           .then((success)=>{
               if(success){

@@ -29,6 +29,7 @@ const QuestAns = mongoose.model(
     },
     comments: {
       type: Array,
+      default:[]
     },
     type: {
       type: String,

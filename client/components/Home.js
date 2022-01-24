@@ -125,7 +125,7 @@ const HomeScreen = () => {
 
     React.useEffect(() => {
         axios
-            .get(`http://192.168.11.61:3000/Users/ServiceProvider/Fetch/`)
+            .get(`http://192.168.121.162:3000/Users/ServiceProvider/Fetch/`)
             .then((res) => {
                 const data = res.data;
                 setData(data);
@@ -134,7 +134,7 @@ const HomeScreen = () => {
                 console.log(error);
             });
         axios
-            .get(`http://192.168.11.61:3000/Equipements`)
+            .get(`http://192.168.121.162:3000/Equipements`)
             .then((result) => {
                 const data = result.data;
                 setEquipements(data);
