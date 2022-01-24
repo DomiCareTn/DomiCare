@@ -196,7 +196,7 @@ function SignUp() {
 
     const post = () => {
         axios
-            .post(`http://192.168.121.162:3000/auth/SPSignUp`, { formData })
+            .post(`http://192.168.119.162:3000/auth/SPSignUp`, { formData })
             .then((response) => {
                 let errors = {};
                 const data = response.data;

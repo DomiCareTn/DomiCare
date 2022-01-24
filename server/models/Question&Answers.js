@@ -27,9 +27,9 @@ const QuestAns = mongoose.model(
     participants:{
       type:Array ,default:[]
     },
-    comments: {
-      type: Array,
-      default:[]
+    commentsCount: {
+      type: Number,
+      default:0
     },
     type: {
       type: String,
