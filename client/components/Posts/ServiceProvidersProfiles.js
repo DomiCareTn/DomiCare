@@ -9,7 +9,7 @@ import {
     Picker,
     Image,
     Text,
-    TouchableOpacity,
+    Dimensions
 } from "react-native";
 import axios from "axios";
 import { Card, Icon } from "react-native-elements";
@@ -26,7 +26,7 @@ const serviceProvidersList = ({ navigation }) => {
     useEffect(async () => {
         try {
             const result = await axios.get(
-                `http://192.168.11.61:3000/Posts/serviceProvidersList`
+                `http://192.168.1.14:3000/Posts/serviceProvidersList`
             );
             setSProviders(result.data);
             setData(result.data);
@@ -117,63 +117,47 @@ const serviceProvidersList = ({ navigation }) => {
 
             <ScrollView>
                 <View style={styles.container}>
-                    <Card style={styles.card}>
-                        <Card.Title>Service Providers</Card.Title>
-                        <Card.Divider />
-                        {ServiceProviders.map((u, i) => {
+                   
+                        {ServiceProviders.map((u, key) => {
                             return (
-                                <View key={i} style={styles.user}>
-                                    <Image
-                                        style={styles.image}
-                                        resizeMode="cover"
-                                        source={{
-                                            uri: "https://i.pinimg.com/originals/6e/ff/53/6eff53e82b80fb5dd7614d5ba054f144.jpg",
-                                        }}
-                                    />
-                                    <Text style={styles.name}>
-                                        {" "}
-                                        firstName : {u.firstName}
-                                    </Text>
-                                    <Text style={styles.name}>
-                                        {" "}
-                                        lastName : {u.lastName}
-                                    </Text>
-                                    <Text style={styles.name}>
-                                        {" "}
-                                        Position : {u.speciality}
-                                    </Text>
-                                    <Text style={styles.name}>
-                                        {" "}
-                                        City : {u.city}
-                                    </Text>
-                                    <Text style={styles.name}>
-                                        {" "}
-                                        Gender : {u.gender}
-                                    </Text>
-                                    <Text style={styles.name}>
-                                        {" "}
-                                        Services : {u.posts}
-                                    </Text>
-                                    <AirbnbRating style={styles.airbnbRating} />
-                                    <Button
-                                        title="Ask for service"
-                                        onPress={() =>
-                                            navigation.navigate(
-                                                "ServiceSeekerSendARequest",
-                                                u
-                                            )
-                                        }
-                                    />
-                                </View>
+                                <View key={key} style={styles.itemVue}>
+                                <Image style={styles.cardImage} source={{ uri: u.picture }} />
+                                    <Text style={styles.titleStyle}>{u.firstName} {u.lastName}</Text>
+                                    <Text style={styles.categoryStyle}>
+                                  speciality : {u.speciality}
+                                </Text>
+                                
+                                <Text style={styles.categoryStyle}>
+                                  availability : {u.availability}
+                                </Text>
+                               
+                                    <AirbnbRating size={20} style={styles.airbnbRating} />
+                                    
+                                    <Button colorScheme="teal" title="Ask for service"
+                                    width={50}
+                                    onPress={() =>
+                                        navigation.navigate(
+                                            "ServiceSeekerSendARequest",
+                                            u
+                                        )
+                                    }
+                                />
+                                   
+                              
+                              
+                              </View>
                             );
                         })}
-                    </Card>
+                
                 </View>
             </ScrollView>
+ 
         </View>
+        
     );
 };
-
+const devicewidth = Math.round(Dimensions.get("window").width);
+const radius = 20;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -189,15 +173,61 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         marginBottom: 50,
     },
-
-    image: {
-        borderRadius: 100,
-        width: 90,
-        height: 90,
-        marginRight: 10,
+    buttonStyle: {
+        color: 'red',
+        marginTop: 20,
+        padding: 20,
+        backgroundColor: 'green'
     },
+
+  
+    cardImage: {
+    width: 100,
+        height: 100,
+        borderRadius: 100,
+    
+    borderTopLeftRadius: radius,
+    borderTopRightRadius: 25,
+    borderBottomRightRadius: radius,
+    borderBottomLeftRadius: radius,
+    opacity: 0.9,
+    alignContent: "center",
+    alignSelf: "center",
+  },
+  itemVue: {
+    paddingTop: 15,
+    marginTop: 25,
+    width: devicewidth - 60,
+    backgroundColor: "#F5F5F5",
+
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 12,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 1.84,
+
+    elevation: 30,
+
+    height: 380,
+    marginLeft: 10,
+    borderRadius: radius,
+  },
+  titleStyle: {
+    fontSize: 17,
+    fontWeight: "700",
+    alignContent: "center",
+    alignSelf: "center",
+  },
+  categoryStyle: {
+    fontWeight: "200",
+    alignContent: "center",
+    alignSelf: "center",
+  },
     airbnbRating: {
         marginRight: 20,
+       
     },
     name: {
         fontSize: 20,

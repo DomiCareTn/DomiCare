@@ -25,7 +25,7 @@ export const ProfileServiceSeeker = () => {
     React.useEffect(() => {
         axios
             .get(
-                `http://192.168.11.57:3000/Users/ServiceSeeker/Fetch/${userData._id}`
+                `http://192.168.1.14:3000/Users/ServiceSeeker/Fetch/${userData._id}`
             )
             .then((res) => {
                 const data = res.data;
@@ -143,7 +143,7 @@ export const ProfileServiceProvider = () => {
     React.useEffect(() => {
         axios
             .get(
-                `http://192.168.11.57:3000/Users/ServiceProvider/Fetch/${userData._id}`
+                `http://192.168.1.14:3000/Users/ServiceProvider/Fetch/${userData._id}`
             )
             .then((res) => {
                 const data = res.data;
@@ -286,7 +286,7 @@ export const ProfileEquipementsProvider = () => {
     React.useEffect(() => {
         axios
             .get(
-                `http://192.168.11.57:3000/Users/ServiceProvider/Fetch/${userData._id}`
+                `http://192.168.1.14:3000/Users/ServiceProvider/Fetch/${userData._id}`
             )
             .then((res) => {
                 const data = res.data;

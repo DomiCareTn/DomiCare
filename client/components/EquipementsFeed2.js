@@ -16,7 +16,7 @@ const EquipementsFeed2 = () => {
     const [Equipements, setEquipements] = useState([]);
     useEffect(() => {
         axios
-            .get("http://192.168.11.57:19006/Equipements")
+            .get("http://192.168.1.14:19006/Equipements")
             .then((res) => {
                 console.log("res", res);
                 setEquipements(res.data);
