@@ -6,7 +6,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import HomeScreen from "../components/Home.js";
-import NotificationsScreen from "../components/Notifications.js";
+import {NotificationsScreen} from "../components/Notifications.js";
 import {
     ProfileServiceSeeker,
     ProfileServiceProvider,
@@ -19,7 +19,6 @@ import {
 } from "../components/EditProfiles";
 import Report from "../components/report.js";
 import ForumPost from "../components/ForumPost.js";
-import AddBlog from "../components/AddBlog.js";
 import Forum2 from "../components/forum2.js";
 import Equipmentsfetch from "../components/Equipementsfetch.js";
 import { CredentialsContext } from "../components/Authentification/CredentialsContext.js";
@@ -250,48 +249,7 @@ const HomeStackScreen = ({ navigation }) => {
                     ),
                 }}
             />
-            <HomeStack.Screen
-                name="AddBlog"
-                component={AddBlog}
-                options={{
-                    title: "Add Post",
-                    headerLeft: () => (
-                        <View style={{ marginLeft: 10 }}>
-                            <Icon.Button
-                                name="ios-menu"
-                                size={25}
-                                color="white"
-                                backgroundColor="#008080"
-                                onPress={() => navigation.openDrawer()}
-                            />
-                        </View>
-                    ),
-                    headerRight: () => (
-                        <View style={{ flexDirection: "row", marginRight: 10 }}>
-                            {/* <Icon.Button
-                                name="ios-search"
-                                size={25}
-                                color="white"
-                                backgroundColor="#008080"
-                                onPress={() => {}}
-                            /> */}
-                            <TouchableOpacity
-                                style={{ paddingHorizontal: 10, marginTop: 5 }}
-                                onPress={() => {
-                                    navigation.navigate("Profile Screen");
-                                }}
-                            >
-                                <Avatar.Image
-                                    source={{
-                                        uri: userData.picture,
-                                    }}
-                                    size={35}
-                                />
-                            </TouchableOpacity>
-                        </View>
-                    ),
-                }}
-            />
+         
 
             <HomeStack.Screen
                 name="Report"
@@ -399,6 +357,7 @@ const NotificationStackScreen = ({ navigation }) => (
                 ),
             }}
         />
+     
     </NotificationStack.Navigator>
 );
 
@@ -616,19 +575,6 @@ const QAStackScreen = ({ navigation }) => (
                 ),
             }}
         />
-        <QAStack.Screen
-            name="AddBlog"
-            component={AddBlog}
-            options={{
-                headerLeft: () => (
-                    <Icon.Button
-                        name="ios-menu"
-                        size={25}
-                        backgroundColor="#008080"
-                        onPress={() => navigation.openDrawer()}
-                    />
-                ),
-            }}
-        />
+  
     </QAStack.Navigator>
 );

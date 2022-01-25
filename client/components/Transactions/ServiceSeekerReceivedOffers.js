@@ -15,30 +15,29 @@ const ReceivedOffers = () => {
         try {
             const _id = userData._id;
             const offers = await axios.get(
-                `http://192.168.11.61:3000/Transactions/serviceoffers/:${_id}`
+                `http://192.168.119.162:3000/Transactions/serviceoffers/:${_id}`
             );
             setFeed(offers.data);
         } catch (error) {
             console.log(error);
         }
     }, []);
-    const AcceptOffer = async (e)=>{
-        try{
+    const AcceptOffer = async (e) => {
+        try {
             await axios.put(
-                `http://192.168.11.61:3000/Transactions/Acceptarequest/${e._id}`,
+                `http://192.168.119.162:3000/Transactions/Acceptarequest/${e._id}`,
                 { e }
-            )
-        }
-        catch(err){
+            );
+        } catch (err) {
             console.log(err);
         }
-    }
+    };
     const RejectOffer = async (e) => {
         try {
             console.log("cancel", _id);
             await axios.put(
-                `http://192.168.11.61:3000/Transactions/deleterequest/${e._id}`,{e}
-                
+                `http://192.168.119.162:3000/Transactions/deleterequest/${e._id}`,
+                { e }
             );
         } catch (err) {
             console.log(err);
@@ -67,7 +66,9 @@ const ReceivedOffers = () => {
                                 <Text>Gender</Text>
                                 <Text>Speciality</Text>
                                 <Button
-                                    onPress={() => {AcceptOffer(e)}}
+                                    onPress={() => {
+                                        AcceptOffer(e);
+                                    }}
                                     title="Accept"
                                     color="teal"
                                     accessibilityLabel="Learn more about this purple button"

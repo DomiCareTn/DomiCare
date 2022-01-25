@@ -38,7 +38,7 @@ const SeekerRequest = (props) => {
         console.log("create a post");
 
         axios
-            .post(`http://192.168.11.61:3000/Posts/CreateServiceSeekerPost`, {
+            .post(`http://192.168.119.162:3000/Posts/CreateServiceSeekerPost`, {
                 details,
                 address,
                 file,

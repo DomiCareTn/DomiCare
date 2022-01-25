@@ -6,7 +6,6 @@ module.exports = {
     FindAllServiceProviders:(req,res)=>{
         ServiceProviders.find({type:"serviceProvider"})
                 .then((result)=>{
-                  console.log('FindAllServiceProviders', result)
                   res.send(result)})
                 .catch((err)=>console.log(err))
       },    
@@ -14,7 +13,6 @@ module.exports = {
         
         Posts.find({type:"request"}).populate("serviceSeeker_id")
                 .then((result)=>{
-                  console.log('FindAllServiceSeekerPosts', result)
                   res.send(result)})
                 .catch((err)=>console.log(err))
       },
@@ -22,7 +20,6 @@ module.exports = {
         
         Posts.find({serviceSeeker_id:req.params._id})
                 .then((result)=>{
-                  console.log('FindAllServiceSeekerPosts', result)
                   res.send(result)})
                 .catch((err)=>console.log(err))
       },

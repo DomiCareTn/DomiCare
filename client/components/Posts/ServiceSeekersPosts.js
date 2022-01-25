@@ -8,7 +8,6 @@ import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import moment from "moment";
 
-
 const ServicesRequests = () => {
     const [feed, setFeed] = useState([]);
     const { storedCredentials, setStoredCredentials } =
@@ -20,7 +19,7 @@ const ServicesRequests = () => {
         console.log("feed", feed);
         try {
             const posts = await axios.get(
-                `http://192.168.11.61:3000/Posts/servicesrequests`
+                `http://192.168.119.162:3000/Posts/servicesrequests`
             );
             setFeed(posts.data);
         } catch (err) {
@@ -34,7 +33,7 @@ const ServicesRequests = () => {
         const type = "offer";
 
         const offer = await axios.post(
-            `http://192.168.11.61:3000/Transactions/OfferMyService`,
+            `http://192.168.119.162:3000/Transactions/OfferMyService`,
             { type, postid, providerId, seekerId }
         );
     };

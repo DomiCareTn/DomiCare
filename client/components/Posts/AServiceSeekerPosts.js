@@ -20,7 +20,7 @@ const AServiceSeekerPosts = () => {
         const _id = userData._id;
         try {
             const posts = await axios.get(
-                `http://192.168.11.61:3000/Posts/AServiceSeekerPosts/${_id}`
+                `http://192.168.119.162:3000/Posts/AServiceSeekerPosts/${_id}`
             );
             setFeed(posts.data);
         } catch (err) {
@@ -30,7 +30,7 @@ const AServiceSeekerPosts = () => {
     const Delete = async (e) => {
         const _id = e._id;
         const offer = await axios.delete(
-            `http://192.168.11.61:3000/Transactions/deleteapost/${_id}`,
+            `http://192.168.119.162:3000/Transactions/deleteapost/${_id}`,
             { type, postid, providerId, seekerId }
         );
     };
