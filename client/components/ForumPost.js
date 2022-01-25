@@ -69,10 +69,10 @@ const ForumPost = (props) => {
         try {
             const _id = props.route.params._id;
             const post = await axios.get(
-                `http://192.168.121.162:3000/post/findpost/${_id}`
+                `http://192.168.1.18:3000/post/findpost/${_id}`
             );
             const com = await axios.get(
-                `http://192.168.121.162:3000/post/findcomments/${_id}`
+                `http://192.168.1.18:3000/post/findcomments/${_id}`
             );
             setpost(post.data);
             setpostOwner(post.data.owner);
@@ -104,10 +104,10 @@ const ForumPost = (props) => {
             type: "comment",
            }
             const comment = await axios.post(
-                `http://192.168.121.162:3000/post/savepost`, {obj})
+                `http://192.168.1.18:3000/post/savepost`, {obj})
                 setValue('')
             const recom = await axios.get(
-                `http://192.168.121.162:3000/post/findcomments/${_id}`
+                `http://192.168.1.18:3000/post/findcomments/${_id}`
             );
             setcomments(recom.data);
         } catch (err) {
@@ -118,7 +118,7 @@ const ForumPost = (props) => {
         try {
             const id = subcomment;
             const reply = await axios.post(
-                `http://192.168.121.162:3000/post/reply`,
+                `http://192.168.1.18:3000/post/reply`,
                 {
                     rep: {
                         owner: { _id: userData._id, name: userData.firstName },
@@ -129,7 +129,7 @@ const ForumPost = (props) => {
             );
             const _id = props.route.params._id;
             const recomm = await axios.get(
-                `http://192.168.121.162:3000/post/findcomments/${_id}`
+                `http://192.168.1.18:3000/post/findcomments/${_id}`
             );
             setcomments(recomm.data);
         } catch (err) {
@@ -150,7 +150,7 @@ const ForumPost = (props) => {
                 setLike(false);
             }
             const post = await axios.put(
-                `http://192.168.121.162:3000/post/savepost`,
+                `http://192.168.1.18:3000/post/savepost`,
                 {
                     userid,
                     postid,
@@ -267,7 +267,7 @@ const ForumPost = (props) => {
           style: "cancel"
         },
         { text: "Confirm", onPress: () => {
-            axios.delete(`http://192.168.121.162:3000/post/Delete/${id}`)
+            axios.delete(`http://192.168.1.18:3000/post/Delete/${id}`)
                   .then(()=> navigation.navigate('Forum2'))
                   .catch((err)=> console.log(err) )
         } }
@@ -287,7 +287,7 @@ const ForumPost = (props) => {
         { text: "Confirm", onPress: () => {
             const postID = props.route.params._id;
 
-            axios.delete(`http://192.168.121.162:3000/post/deleteComment/${id}/${postID}`)
+            axios.delete(`http://192.168.1.18:3000/post/deleteComment/${id}/${postID}`)
                   .then((res)=> setcomments(res.data))
                   .catch((err)=> console.log(err) )
         } }

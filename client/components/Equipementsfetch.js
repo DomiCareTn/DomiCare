@@ -22,7 +22,7 @@ const Equipementsfetch = () => {
 
     useEffect(() => {
         axios
-            .get("http://192.168.121.162:3000/Equipements")
+            .get("http://192.168.1.18:3000/Equipements")
             .then((res) => {
                 setEquipements(res.data);
                 setmyData(res.data);
@@ -88,7 +88,7 @@ const Equipementsfetch = () => {
     };
 
     var apihandler = () => {
-        const url = "http://192.168.121.162:3000/Equipements";
+        const url = "http://192.168.1.18:3000/Equipements";
         fetch(url)
             .then((res) => res.json())
             .then((resJson) => {

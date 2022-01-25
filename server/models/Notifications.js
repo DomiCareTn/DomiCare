@@ -19,7 +19,6 @@ const Notifications = mongoose.model(
     content: {
       type: String
     },
-    
     type: {
       type: String,
     },

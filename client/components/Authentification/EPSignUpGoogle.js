@@ -63,7 +63,7 @@ function EPSignUpGoogle() {
             phoneNumber: formData.phoneNumber,
         };
         axios
-            .post(`http:/192.168.121.162:3000/auth/EPSignUpGoogle`, { obj })
+            .post(`http:/192.168.1.18:3000/auth/EPSignUpGoogle`, { obj })
             .then((res) => {
                 console.log(res.data);
                 if (res.data === "email already exists") {

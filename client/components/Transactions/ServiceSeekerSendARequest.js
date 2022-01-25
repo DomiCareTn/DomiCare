@@ -51,7 +51,7 @@ const SeekerRequest = (props) => {
     const post = () => {
         axios
             .post(
-                `http://192.168.121.162:3000/Transactions/seekersendrequest`,
+                `http://192.168.1.18:3000/Transactions/seekersendrequest`,
                 {
                     type,
                     details,

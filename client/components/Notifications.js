@@ -70,7 +70,7 @@ export default class NotificationsScreen extends Component {
         };
     }
     componentDidMount() {
-        axios.get(`http://192.168.121.162:3000/notifications`).then((res) => {
+        axios.get(`http://192.168.1.18:3000/notifications`).then((res) => {
             console.log(res.data);
             this.setState(res.data);
         });

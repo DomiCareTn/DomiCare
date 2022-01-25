@@ -17,7 +17,7 @@ const SendedRequests = () => {
             console.log("req");
             const _id = userData._id;
             const offers = await axios.get(
-                `http://192.168.121.162:3000/Transactions/sendedrequests/${_id}`
+                `http://192.168.1.18:3000/Transactions/sendedrequests/${_id}`
             );
             setFeed(offers.data);
         } catch (err) {
@@ -30,7 +30,7 @@ const SendedRequests = () => {
             console.log("cancel", _id);
 
             await axios.delete(
-                `http://192.168.121.162:3000/Transactions/deleterequest/${e._id}`
+                `http://192.168.1.18:3000/Transactions/deleterequest/${e._id}`
             );
         } catch (err) {
             console.log(err);
