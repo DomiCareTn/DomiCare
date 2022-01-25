@@ -126,7 +126,7 @@ function SPSignUpGoogle() {
             certificate: formData.certificate,
         };
         axios
-            .post(`http://192.168.121.162:3000/auth/SPSignUpGoogle`, { obj })
+            .post(`http://192.168.119.162:3000/auth/SPSignUpGoogle`, { obj })
             .then((res) => {
                 if (res.data === "email already exists") {
                     onOpen();
