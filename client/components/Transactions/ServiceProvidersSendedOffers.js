@@ -18,7 +18,7 @@ const SendedOffers = () => {
         const _id = userData._id;
 
         const offers = await axios.get(
-            `http://192.168.121.162:3000/Transactions/sendedoffers/${_id}`
+            `http://192.168.119.162:3000/Transactions/sendedoffers/${_id}`
         );
         setFeed(offers.data);
     }, []);
@@ -26,7 +26,7 @@ const SendedOffers = () => {
     const CancelOffer = async (e) => {
         try {
             const offer = await axios.delete(
-                `http://192.168.121.162:3000/Transactions/Canceloffers/${e._id}`,
+                `http://192.168.119.162:3000/Transactions/Canceloffers/${e._id}`,
                 { e }
             );
             setOffer(offer.data);

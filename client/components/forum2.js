@@ -19,7 +19,7 @@ import {
     Platform,
     TouchableWithoutFeedback,
     Keyboard,
-    KeyboardAvoidingView
+    KeyboardAvoidingView,
 } from "react-native";
 import {
     IconButton,
@@ -50,7 +50,7 @@ export const Forum2 = (props) => {
     useEffect(() => {
         const unsubscribe = navigation.addListener("focus", () => {
             axios
-                .get(`http://192.168.121.162:3000/post/savepost`)
+                .get(`http://192.168.119.162:3000/post/savepost`)
                 .then((result) => setData(result.data))
                 .catch((err) => console.log(err));
         });
@@ -68,7 +68,7 @@ export const Forum2 = (props) => {
                 text: "Confirm",
                 onPress: () => {
                     axios
-                        .delete(`http://192.168.121.162:3000/post/Delete/${id}`)
+                        .delete(`http://192.168.119.162:3000/post/Delete/${id}`)
                         .then((result) => setData(result.data))
                         .catch((err) => console.log(err));
                 },
@@ -82,7 +82,7 @@ export const Forum2 = (props) => {
             type: "Quest",
         };
         axios
-            .post(`http://192.168.121.162:3000/post/savepost`, { obj })
+            .post(`http://192.168.119.162:3000/post/savepost`, { obj })
             .then((res) => {
                 setModalVisible(!modalVisible);
 
@@ -103,7 +103,6 @@ export const Forum2 = (props) => {
                     }}
                 >
                     <View style={styles.centeredView}>
-    
                         <Modal
                             animationType="slide"
                             transparent={true}
@@ -276,7 +275,7 @@ export const Forum2 = (props) => {
                                                 {moment(
                                                     item.createdAt
                                                 ).fromNow() + "    "}
-                                                {item.comments.length} Comments
+                                                {item.commentsCount} Comments
                                                 {"    " +
                                                     item.participants
                                                         .length}{" "}
