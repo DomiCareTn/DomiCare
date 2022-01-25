@@ -1,15 +1,21 @@
 const mongoose = require("mongoose");
 
+// 
 const Notifications = mongoose.model(
   "Notifications",
   new mongoose.Schema({
-    provider_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "ServiceProvider",
+    sender: {
+      type: Object
     },
-    seeker_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "ServiceSeeker",
+    receiver_id: {
+      type: String
+    },
+    seen:{
+      type:Boolean,
+      default: false
+    },
+    postId:{
+      type: String
     },
     createdAt: {
       type: Date,

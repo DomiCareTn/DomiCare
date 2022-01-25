@@ -19,7 +19,7 @@ import {
     Platform,
     TouchableWithoutFeedback,
     Keyboard,
-    KeyboardAvoidingView
+    KeyboardAvoidingView,
 } from "react-native";
 import {
     IconButton,
@@ -59,7 +59,7 @@ const ForumPost = (props) => {
     const [subcomment, setsubcomment] = useState({});
     const [focus, setfocus] = useState(false);
     const [like, setLike] = useState(false);
-    const [text, setText] = useState('');
+    const [text, setText] = useState("");
 
     const { storedCredentials, setStoredCredentials } =
         React.useContext(CredentialsContext);
@@ -69,45 +69,46 @@ const ForumPost = (props) => {
         try {
             const _id = props.route.params._id;
             const post = await axios.get(
-                `http://192.168.1.18:3000/post/findpost/${_id}`
+                `http://192.168.164.210:3000/post/findpost/${_id}`
             );
             const com = await axios.get(
-                `http://192.168.1.18:3000/post/findcomments/${_id}`
+                `http://192.168.164.210:3000/post/findcomments/${_id}`
             );
             setpost(post.data);
             setpostOwner(post.data.owner);
             setparticipants(post.data.participants);
             setcomments(com.data);
             const userid = userData._id;
-            if (singlepost.participants.indexOf(userid) !== -1) {
+            if (post.data.participants.indexOf(userid) !== -1) {
                 setLike(true);
             }
         } catch (err) {
             console.log(err);
         }
-        
-        
-    }, []);
-   
+    }, [navigation]);
+
     const Comment = async () => {
-        
         try {
             const _id = props.route.params._id;
-            const obj={  owner: {
-                _id: userData._id,
-                firstName: userData.firstName,
-                lastName: userData.lastName,
-                picture: userData.picture,
-            },
-            postId: singlepost._id,
-            content: value,
-            type: "comment",
-           }
+            const postOwner = singlepost.owner._id;
+            const obj = {
+                owner: {
+                    _id: userData._id,
+                    firstName: userData.firstName,
+                    lastName: userData.lastName,
+                    picture: userData.picture,
+                },
+                postId: singlepost._id,
+                content: value,
+                type: "comment",
+            };
             const comment = await axios.post(
-                `http://192.168.1.18:3000/post/savepost`, {obj})
-                setValue('')
+                `http://192.168.164.210:3000/post/createComment/${postOwner}`,
+                { obj }
+            );
+            setValue("");
             const recom = await axios.get(
-                `http://192.168.1.18:3000/post/findcomments/${_id}`
+                `http://192.168.164.210:3000/post/findcomments/${_id}`
             );
             setcomments(recom.data);
         } catch (err) {
@@ -118,7 +119,7 @@ const ForumPost = (props) => {
         try {
             const id = subcomment;
             const reply = await axios.post(
-                `http://192.168.1.18:3000/post/reply`,
+                `http://192.168.164.210:3000/post/reply`,
                 {
                     rep: {
                         owner: { _id: userData._id, name: userData.firstName },
@@ -129,7 +130,7 @@ const ForumPost = (props) => {
             );
             const _id = props.route.params._id;
             const recomm = await axios.get(
-                `http://192.168.1.18:3000/post/findcomments/${_id}`
+                `http://192.168.164.210:3000/post/findcomments/${_id}`
             );
             setcomments(recomm.data);
         } catch (err) {
@@ -150,7 +151,7 @@ const ForumPost = (props) => {
                 setLike(false);
             }
             const post = await axios.put(
-                `http://192.168.1.18:3000/post/savepost`,
+                `http://192.168.164.210:3000/post/savepost`,
                 {
                     userid,
                     postid,
@@ -165,7 +166,15 @@ const ForumPost = (props) => {
         }
     };
 
-    const ListItem = ({ photo, content, fullName, createdAt, onPress, owner_id,postId }) => {
+    const ListItem = ({
+        photo,
+        content,
+        fullName,
+        createdAt,
+        onPress,
+        owner_id,
+        postId,
+    }) => {
         return (
             <View
                 style={{
@@ -178,25 +187,19 @@ const ForumPost = (props) => {
                     marginRight: 10,
                 }}
             >
-                 {userData._id === owner_id ? (
-                                            <TouchableOpacity
-                                                style={{
-                                                    position: "absolute",
-                                                    right: 5,
-                                                    top: 5,
-                                                    marginBottom: 10,
-                                                }}
-                                                onPress={() =>
-                                                    DeleteCommentAlert(postId)
-                                                }
-                                            >
-                                                <FontAwesome
-                                                    name="trash"
-                                                    size={20}
-                                                    color="#696969"
-                                                />
-                                            </TouchableOpacity>
-                                        ) : null}
+                {userData._id === owner_id ? (
+                    <TouchableOpacity
+                        style={{
+                            position: "absolute",
+                            right: 5,
+                            top: 5,
+                            marginBottom: 10,
+                        }}
+                        onPress={() => DeleteCommentAlert(postId)}
+                    >
+                        <FontAwesome name="trash" size={20} color="#696969" />
+                    </TouchableOpacity>
+                ) : null}
                 <View
                     style={{
                         flexDirection: "row",
@@ -257,44 +260,45 @@ const ForumPost = (props) => {
     };
 
     const DeleteAlert = (id) =>
-    Alert.alert(
-      "Alert!",
-      "Are you sure you want to delete this post?",
-      [
-        {
-          text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel"
-        },
-        { text: "Confirm", onPress: () => {
-            axios.delete(`http://192.168.1.18:3000/post/Delete/${id}`)
-                  .then(()=> navigation.navigate('Forum2'))
-                  .catch((err)=> console.log(err) )
-        } }
-      ]
-    );
-    
-    const DeleteCommentAlert = (id) =>
-    Alert.alert(
-      "Alert!",
-      "Are you sure you want to delete this comment?",
-      [
-        {
-          text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel"
-        },
-        { text: "Confirm", onPress: () => {
-            const postID = props.route.params._id;
+        Alert.alert("Alert!", "Are you sure you want to delete this post?", [
+            {
+                text: "Cancel",
+                onPress: () => console.log("Cancel Pressed"),
+                style: "cancel",
+            },
+            {
+                text: "Confirm",
+                onPress: () => {
+                    axios
+                        .delete(`http://192.168.164.210:3000/post/Delete/${id}`)
+                        .then(() => navigation.navigate("Forum2"))
+                        .catch((err) => console.log(err));
+                },
+            },
+        ]);
 
-            axios.delete(`http://192.168.1.18:3000/post/deleteComment/${id}/${postID}`)
-                  .then((res)=> setcomments(res.data))
-                  .catch((err)=> console.log(err) )
-        } }
-      ]
-    );
-    
-    
+    const DeleteCommentAlert = (id) =>
+        Alert.alert("Alert!", "Are you sure you want to delete this comment?", [
+            {
+                text: "Cancel",
+                onPress: () => console.log("Cancel Pressed"),
+                style: "cancel",
+            },
+            {
+                text: "Confirm",
+                onPress: () => {
+                    const postID = props.route.params._id;
+
+                    axios
+                        .delete(
+                            `http://192.168.164.210:3000/post/deleteComment/${id}/${postID}`
+                        )
+                        .then((res) => setcomments(res.data))
+                        .catch((err) => console.log(err));
+                },
+            },
+        ]);
+
     return (
         //         <NativeBaseProvider>
         //             <Image
@@ -447,22 +451,32 @@ const ForumPost = (props) => {
                                     backgroundColor: "gray.50",
                                 }}
                             >
-                                      {userData._id === singlepostOwner._id?(
-                                            <TouchableOpacity style={{    position:"absolute",
-                                            right:10 , top:10 , marginBottom:10} } onPress={()=>DeleteAlert(singlepost._id)}>
-                                                   <FontAwesome
-                                               name="trash"
-                                               size={20}
-                                               color="#696969"
-                                               
-                                           
-                                           />
-                                            </TouchableOpacity>
-                                            
-                                        ): null}
+                                {userData._id === singlepostOwner._id ? (
+                                    <TouchableOpacity
+                                        style={{
+                                            position: "absolute",
+                                            right: 10,
+                                            top: 10,
+                                            marginBottom: 10,
+                                        }}
+                                        onPress={() =>
+                                            DeleteAlert(singlepost._id)
+                                        }
+                                    >
+                                        <FontAwesome
+                                            name="trash"
+                                            size={20}
+                                            color="#696969"
+                                        />
+                                    </TouchableOpacity>
+                                ) : null}
                                 <Stack p="4" space={3}>
-                                    <Stack space={2} >
-                                        <Heading size="md" ml="-1" style={{marginTop:20}}>
+                                    <Stack space={2}>
+                                        <Heading
+                                            size="md"
+                                            ml="-1"
+                                            style={{ marginTop: 20 }}
+                                        >
                                             {singlepost.title}
                                         </Heading>
                                         <Text
@@ -564,7 +578,6 @@ const ForumPost = (props) => {
                                 </Stack>
                                 <Divider />
                                 {shouldShow ? (
-                            
                                     <Input
                                         value={value}
                                         // variant="rounded"
@@ -578,9 +591,9 @@ const ForumPost = (props) => {
                                         }}
                                         InputRightElement={
                                             <TouchableOpacity
-                                                onPress={() =>{
-                                                    Comment()
-                                                } }
+                                                onPress={() => {
+                                                    Comment();
+                                                }}
                                             >
                                                 <Feather
                                                     name="plus-square"
@@ -591,7 +604,6 @@ const ForumPost = (props) => {
                                             </TouchableOpacity>
                                         }
                                     />
-                     
                                 ) : null}
 
                                 <ScrollView nestedScrollEnabled={true}>

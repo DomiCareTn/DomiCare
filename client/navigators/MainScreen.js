@@ -6,7 +6,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import HomeScreen from "../components/Home.js";
-import NotificationsScreen from "../components/Notifications.js";
+import {NotificationsScreen} from "../components/Notifications.js";
 import {
     ProfileServiceSeeker,
     ProfileServiceProvider,
@@ -357,6 +357,7 @@ const NotificationStackScreen = ({ navigation }) => (
                 ),
             }}
         />
+     
     </NotificationStack.Navigator>
 );
 
