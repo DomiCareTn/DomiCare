@@ -15,11 +15,7 @@ const ReceivedOffers = () => {
         try {
             const _id = userData._id;
             const offers = await axios.get(
-<<<<<<< HEAD
-                `http://192.168.1.18:3000/Transactions/serviceoffers/:${_id}`
-=======
                 `http://192.168.164.210:3000/Transactions/serviceoffers/:${_id}`
->>>>>>> 2ad4232321d85618e89f70889d2a5f165bf7eaf8
             );
             setFeed(offers.data);
         } catch (error) {
