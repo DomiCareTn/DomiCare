@@ -68,7 +68,7 @@ module.exports = {
     },
     get_reports: async (req, res) => {
         try {
-            const reports = await report.find({}).populate('onModel.enum')
+            const reports = await report.find({}).populate("reporterId")
              res.send(reports)
          
      }

@@ -16,7 +16,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CredentialsContext } from "./Authentification/CredentialsContext.js";
 import { useNavigation } from "@react-navigation/native";
 
-export default () => {
+export default Report =() => {
     const navigation = useNavigation();
     const { storedCredentials, setStoredCredentials } =
         React.useContext(CredentialsContext);
@@ -46,7 +46,7 @@ export default () => {
         userData.userData.type === undefined
             ? (reqS["onModel"] = "ServiceSeeker")
             : (reqS["onModel"] = "ServiceProvider");
-        Axios.post("http://192.168.119.162:3000/reports", reqS)
+        Axios.post("http://192.168.164.81:3000/reports", reqS)
             .then(() => {
                 console.log(userData);
                 setTimeout(() => {

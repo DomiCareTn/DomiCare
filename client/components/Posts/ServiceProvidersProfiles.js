@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { localhost } from "@env";
+
+
 import {
     View,
     StyleSheet,
@@ -9,13 +11,20 @@ import {
     Picker,
     Image,
     Text,
-    Dimensions
+    Dimensions,
+    TouchableOpacity,
+    TouchableHighlight
+
 } from "react-native";
 import axios from "axios";
-import { Card, Icon } from "react-native-elements";
+import { Card } from "react-native-elements";
+
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+
 import { Rating, AirbnbRating } from "react-native-ratings";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+// import { TouchableHighlight } from "react-native-gesture-handler";
 
 const serviceProvidersList = ({ navigation }) => {
     const [selectedValue, setSelectedValue] = useState("");
@@ -26,7 +35,7 @@ const serviceProvidersList = ({ navigation }) => {
     useEffect(async () => {
         try {
             const result = await axios.get(
-                `http://192.168.1.14:3000/Posts/serviceProvidersList`
+                `http://192.168.164.81:3000/Posts/serviceProvidersList`
             );
             setSProviders(result.data);
             setData(result.data);
@@ -131,20 +140,31 @@ const serviceProvidersList = ({ navigation }) => {
                                   availability : {u.availability}
                                 </Text>
                                
-                                    <AirbnbRating size={20} style={styles.airbnbRating} />
-                                    
-                                    <Button colorScheme="teal" title="Ask for service"
+                                    <AirbnbRating size={20} style={styles.airbnbRating}/>
+                                    <TouchableOpacity style={{ height: 40,width:150, marginTop: 30,marginLeft: 90 }}>
+                                    <Button
+                                         onPress={() =>
+                                            navigation.navigate(
+                                                "ServiceSeekerSendARequest",
+                                                u
+                                            )
+                                        }
+                                        color="teal" title="Ask for service"
                                     width={50}
-                                    onPress={() =>
-                                        navigation.navigate(
-                                            "ServiceSeekerSendARequest",
-                                            u
-                                        )
-                                    }
-                                />
+                                   
+                                        />
+                                       <Button  onPress={() => navigation.navigate("report", u)} title = "hello" /> 
+                       
+                                        {/* <Icon
+                                            name="flag-outline" color="black" size={30} style={{ marginTop:-300, marginLeft: -60 }} title="report" /> */}
+                     
+
+                                    </TouchableOpacity>
+                              
+
                                    
                               
-                              
+                                
                               </View>
                             );
                         })}

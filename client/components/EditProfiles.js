@@ -52,11 +52,7 @@ export const EditProfileEP = () => {
     React.useEffect(() => {
         axios
             .get(
-<<<<<<< HEAD
-                `http://192.168.1.14:3000/Users/ServiceProvider/Fetch/${userData._id}`
-=======
-                `http://192.168.119.162:3000/Users/ServiceProvider/Fetch/${userData._id}`
->>>>>>> 2ad4232321d85618e89f70889d2a5f165bf7eaf8
+                `http://192.168.164.81:3000/Users/ServiceProvider/Fetch/${userData._id}`
             )
             .then((res) => {
                 const data = res.data;
@@ -190,11 +186,7 @@ export const EditProfileEP = () => {
         const userID = formData._id;
         axios
             .put(
-<<<<<<< HEAD
-                `http://192.168.1.14:3000/Users/ServiceProvider/Update/${userID}`,
-=======
-                `http://192.168.119.162:3000/Users/ServiceProvider/Update/${userID}`,
->>>>>>> 2ad4232321d85618e89f70889d2a5f165bf7eaf8
+                `http://192.168.164.81:3000/Users/ServiceProvider/Update/${userID}`,
                 updateData
             )
             .then((res) => {
@@ -216,11 +208,7 @@ export const EditProfileEP = () => {
         const userID = formData._id;
         axios
             .put(
-<<<<<<< HEAD
-                `http://192.168.1.14:3000/Users/ServiceProvider/UpdatePassword/${userID}`,
-=======
-                `http://192.168.119.162:3000/Users/ServiceProvider/UpdatePassword/${userID}`,
->>>>>>> 2ad4232321d85618e89f70889d2a5f165bf7eaf8
+                `http://192.168.164.81:3000/Users/ServiceProvider/UpdatePassword/${userID}`,
                 updateData
             )
             .then((res) => {
@@ -638,11 +626,7 @@ export const EditProfileSP = () => {
     React.useEffect(() => {
         axios
             .get(
-<<<<<<< HEAD
-                `http://192.168.1.14:3000/Users/ServiceProvider/Fetch/${userData._id}`
-=======
-                `http://192.168.119.162:3000/Users/ServiceProvider/Fetch/${userData._id}`
->>>>>>> 2ad4232321d85618e89f70889d2a5f165bf7eaf8
+                `http://192.168.164.81:3000/Users/ServiceProvider/Fetch/${userData._id}`
             )
             .then((res) => {
                 const data = res.data;
@@ -776,11 +760,7 @@ export const EditProfileSP = () => {
         const userID = formData._id;
         axios
             .put(
-<<<<<<< HEAD
-                `http://192.168.1.14:3000/Users/ServiceProvider/Update/${userID}`,
-=======
-                `http://192.168.119.162:3000/Users/ServiceProvider/Update/${userID}`,
->>>>>>> 2ad4232321d85618e89f70889d2a5f165bf7eaf8
+                `http://192.168.164.81:3000/Users/ServiceProvider/Update/${userID}`,
                 updateData
             )
             .then((res) => {
@@ -802,11 +782,7 @@ export const EditProfileSP = () => {
         const userID = formData._id;
         axios
             .put(
-<<<<<<< HEAD
-                `http://192.168.1.14:3000/Users/ServiceProvider/UpdatePassword/${userID}`,
-=======
-                `http://192.168.119.162:3000/Users/ServiceProvider/UpdatePassword/${userID}`,
->>>>>>> 2ad4232321d85618e89f70889d2a5f165bf7eaf8
+                `http://192.168.164.81:3000/Users/ServiceProvider/UpdatePassword/${userID}`,
                 updateData
             )
             .then((res) => {
@@ -1224,11 +1200,7 @@ export const EditProfileSS = () => {
     React.useEffect(() => {
         axios
             .get(
-<<<<<<< HEAD
-                `http://192.168.1.14:3000/Users/ServiceSeeker/Fetch/${userData._id}`
-=======
-                `http://192.168.119.162:3000/Users/ServiceSeeker/Fetch/${userData._id}`
->>>>>>> 2ad4232321d85618e89f70889d2a5f165bf7eaf8
+                `http://192.168.164.81:3000/Users/ServiceSeeker/Fetch/${userData._id}`
             )
             .then((res) => {
                 const data = res.data;
@@ -1362,7 +1334,7 @@ export const EditProfileSS = () => {
         const userID = formData._id;
         axios
             .put(
-                `http://192.168.1.14:3000/Users/ServiceSeeker/Update/${userID}`,
+                `http://192.168.164.81:3000/Users/ServiceSeeker/Update/${userID}`,
                 updateData
             )
             .then((res) => {
@@ -1389,7 +1361,7 @@ export const EditProfileSS = () => {
         const userID = formData._id;
         axios
             .put(
-                `http://192.168.1.14:3000/Users/ServiceSeeker/UpdatePassword/${userID}`,
+                `http://192.168.164.81:3000/Users/ServiceSeeker/UpdatePassword/${userID}`,
                 updateData
             )
             .then((res) => {
