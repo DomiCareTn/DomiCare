@@ -4,6 +4,8 @@ const EquipementsController = require("../controllers/Equipements");
 
 router.route("/")
   .get(EquipementsController.find_All)
+  router.route("/myEquipements/:userID")
+  .get(EquipementsController.find_Some)
   
   router.route("/fetch/:equipementsID")
   .get(EquipementsController.findByID)
@@ -12,7 +14,9 @@ router.route("/")
         .get(EquipementsController.findEquip)
 router.route("/:equipementsId")
   .get(EquipementsController.findOne)
-  .delete(EquipementsController.delete_one) 
+  
+  router.route("/delete/:equipementId")
+  .delete(EquipementsController.delete_One)
 
   router.route("/update/:equipementsId")
   .put(EquipementsController.update_one)

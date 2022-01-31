@@ -6,11 +6,11 @@ import {
     Button,
     ScrollView,
     Alert,
-    Picker,
     Image,
     Text,
     TouchableOpacity,
 } from "react-native";
+import { Picker } from "@react-native-picker/picker";
 import axios from "axios";
 import { Card, Icon } from "react-native-elements";
 import { Rating, AirbnbRating } from "react-native-ratings";
@@ -26,7 +26,7 @@ const serviceProvidersList = ({ navigation }) => {
     useEffect(async () => {
         try {
             const result = await axios.get(
-                `http://192.168.119.162:3000/Posts/serviceProvidersList`
+                `http://192.168.1.5:3000/Posts/serviceProvidersList`
             );
             setSProviders(result.data);
             setData(result.data);

@@ -63,7 +63,7 @@ function SSSignUpGoogle() {
             phoneNumber: formData.phoneNumber,
         };
         axios
-            .post(`http://192.168.119.162:3000/auth/SSSignUpGoogle`, { obj })
+            .post(`http://192.168.1.5:3000/auth/SSSignUpGoogle`, { obj })
             .then((res) => {
                 console.log(res.data);
                 if (res.data === "email already exists") {

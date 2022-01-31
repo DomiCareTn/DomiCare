@@ -19,6 +19,8 @@ import {
     Modal,
     Image,
 } from "native-base";
+import { FontAwesome } from "@expo/vector-icons";
+
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CredentialsContext } from "./CredentialsContext.js";
 import * as Google from "expo-google-app-auth";
@@ -59,7 +61,7 @@ function Login() {
     };
     const post = () => {
         axios
-            .post(`http://192.168.119.162:3000/auth/Login`, { formData })
+            .post(`http://192.168.1.5:3000/auth/Login`, { formData })
             .then((response) => {
                 let errors = {};
                 const data = response.data;
@@ -89,7 +91,7 @@ function Login() {
                 if (type == "success") {
                     const email = user.email;
                     axios
-                        .post(`http://192.168.119.162:3000/auth/GoogleLogin`, {
+                        .post(`http://192.168.1.5:3000/auth/GoogleLogin`, {
                             email,
                         })
                         .then((response) => {
@@ -140,7 +142,7 @@ function Login() {
                             height: 60,
                             position: "absolute",
                             top: 20,
-                            left: -30,
+                            left: 0,
                         }}
                         alt="logo"
                     />
@@ -217,18 +219,25 @@ function Login() {
                                 Forget Password?
                             </Link>
                         </FormControl>
-                        <Button mt="2" colorScheme="teal" onPress={onSubmit}>
-                            Sign in
-                        </Button>
 
-                        <Divider my={2} />
-                        <Button
-                            mt="4"
-                            colorScheme="teal"
-                            onPress={handleGoogleSignin}
-                        >
-                            Sign in with Google
-                        </Button>
+                        <Box p={3} px="5" w="80%" maxW="300" ml={8}>
+                            <Button
+                                mt="2"
+                                colorScheme="teal"
+                                onPress={onSubmit}
+                            >
+                                Sign in
+                            </Button>
+
+                            <Divider my={3} />
+                            <FontAwesome.Button
+                                name="google"
+                                backgroundColor="#f39a6e"
+                                onPress={handleGoogleSignin}
+                            >
+                                Sign in with Google
+                            </FontAwesome.Button>
+                        </Box>
 
                         <HStack mt="6" justifyContent="center">
                             <Text

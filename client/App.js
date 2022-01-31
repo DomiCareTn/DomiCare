@@ -1,7 +1,6 @@
 import "react-native-gesture-handler";
 import React, { useState } from "react";
 import DrawerNav from "./navigators/DrawerNavigator";
-import MainScreen from "./navigators/MainScreen";
 import { StyleSheet } from "react-native";
 import AppLoading from "expo-app-loading";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -21,12 +20,14 @@ import SSSignUpGoogle from "./components/Authentification/SSSignUpGoogle.js";
 import SPSignUpGoogle from "./components/Authentification/SPSignUpGoogle.js";
 import EPSignUpGoogle from "./components/Authentification/EPSignUpGoogle.js";
 import ResetPassword from "./components/Authentification/ResetPassword.js";
-import { RefreshControl, SafeAreaView, ScrollView } from "react-native";
 const Auth = createNativeStackNavigator();
 
 export default function App() {
     const [appReady, setAppReady] = useState(false);
     const [storedCredentials, setStoredCredentials] = useState("");
+    
+
+    
     const checkLoginCredentials = () => {
         AsyncStorage.getItem("domicareCredentials")
             .then((result) => {
@@ -68,7 +69,13 @@ export default function App() {
                                 headerTintColor: "#fff",
                             })}
                         />
-                        <Auth.Screen name="Login" component={Login} />
+                        <Auth.Screen name="Login" component={Login}  options={({ route }) => ({
+                                headerBackTitleVisible: false,
+                                headerTitle: false,
+                                headerShown: false,
+                                headerTransparent: true,
+                                headerTintColor: "#fff",
+                            })}/>
                         <Auth.Screen
                             name="ForgetPassword"
                             component={ForgetPassword}
@@ -136,7 +143,13 @@ export default function App() {
                             })}
                         />
 
-                        <Auth.Screen name="SignUpAs" component={SignUpType} />
+                        <Auth.Screen name="SignUpAs" component={SignUpType}  options={({ route }) => ({
+                                headerBackTitleVisible: false,
+                                headerTitle: false,
+                                headerShown: false,
+                                headerTransparent: true,
+                                headerTintColor: "#fff",
+                            })} />
                         <Auth.Screen
                             name="SignUpServiceSeeker"
                             component={SignUpServiceSeeker}
