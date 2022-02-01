@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import moment from "moment";
+import { useNavigation } from "@react-navigation/native";
 
 import {
     View,
@@ -22,20 +23,23 @@ export const ProfileServiceSeeker = () => {
     const userData = storedCredentials.userData;
     const [formData, setData] = React.useState({});
 
+    const navigation = useNavigation();
     React.useEffect(() => {
-        axios
-            .get(
-                `http://192.168.119.162:3000/Users/ServiceSeeker/Fetch/${userData._id}`
-            )
-            .then((res) => {
-                const data = res.data;
-                console.log("test", data);
-                setData(data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }, []);
+        const unsubscribe = navigation.addListener("focus", () => {
+            axios
+                .get(
+                    `http://192.168.1.5:3000/Users/ServiceSeeker/Fetch/${userData._id}`
+                )
+                .then((res) => {
+                    const data = res.data;
+                    setData(data);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        });
+        return unsubscribe;
+    }, [navigation]);
 
     return (
         <ScrollView
@@ -140,21 +144,23 @@ export const ProfileServiceProvider = () => {
     const userData = storedCredentials.userData;
     const [formData, setData] = React.useState({});
 
+    const navigation = useNavigation();
     React.useEffect(() => {
-        axios
-            .get(
-                `http://192.168.119.162:3000/Users/ServiceProvider/Fetch/${userData._id}`
-            )
-            .then((res) => {
-                const data = res.data;
-                console.log("res.data", res.data);
-                setData(data);
-                console.log("test", formData);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }, []);
+        const unsubscribe = navigation.addListener("focus", () => {
+            axios
+                .get(
+                    `http://192.168.1.5:3000/Users/ServiceProvider/Fetch/${userData._id}`
+                )
+                .then((res) => {
+                    const data = res.data;
+                    setData(data);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        });
+        return unsubscribe;
+    }, [navigation]);
 
     return (
         <ScrollView
@@ -283,21 +289,23 @@ export const ProfileEquipementsProvider = () => {
     const userData = storedCredentials.userData;
     const [formData, setData] = React.useState({});
 
+    const navigation = useNavigation();
     React.useEffect(() => {
-        axios
-            .get(
-                `http://192.168.119.162:3000/Users/ServiceProvider/Fetch/${userData._id}`
-            )
-            .then((res) => {
-                const data = res.data;
-                console.log("res.data", res.data);
-                setData(data);
-                console.log("test", formData);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }, []);
+        const unsubscribe = navigation.addListener("focus", () => {
+            axios
+                .get(
+                    `http://192.168.1.5:3000/Users/ServiceProvider/Fetch/${userData._id}`
+                )
+                .then((res) => {
+                    const data = res.data;
+                    setData(data);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        });
+        return unsubscribe;
+    }, [navigation]);
 
     return (
         <ScrollView
