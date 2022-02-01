@@ -136,10 +136,14 @@ function SignUp() {
     const post = () => {
         axios
 <<<<<<< HEAD
+            .post(`http://192.168.11.98:3000/auth/SSSignUp`, { formData })
+=======
+<<<<<<< HEAD
             .post(`http://192.168.11.97:3000/auth/SSSignUp`, { formData })
 =======
             .post(`http://192.168.190.162:3000/auth/SSSignUp`, { formData })
 >>>>>>> 5e38b5dba6c2204c1c7224e5a4902975e672f2e3
+>>>>>>> 6ca2dafaaaed2ea509f8b9446400a34a60f607c8
             .then((response) => {
                 let errors = {};
                 const data = response.data;

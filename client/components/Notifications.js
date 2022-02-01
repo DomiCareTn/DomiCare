@@ -88,18 +88,39 @@ export const NotificationsScreen = () => {
             attachment: "",
         },
     ];
-
-    const surf = (notification) => {
-        if (notification.type === "comment") {
-            navigation.navigate("ForumPost", { _id: notification.postId });
-            axios
-                .put(
-                    `http://192.168.1.5:3000/Notifications/Seen/${notification._id}`
-                )
-                .catch((err) => console.log(err));
+    
+    const surf = (notification)=>{
+        if( notification.type === 'comment'){
+            navigation.navigate("ForumPost",
+                    {_id : notification.postId})
+            axios.put(`http://192.168.11.98:3000/Notifications/Seen/${notification._id}`)
+                 .catch((err)=>console.log(err))
+          
         }
-    };
-
+       else if(notification.type ===" new request"){
+            console.log('clicked',notification);
+            navigation.navigate("ServiceSeekerInfo",
+            {not:notification})
+            axios.put(`http://192.168.11.98:3000/Notifications/Seen/${notification._id}`)
+            .catch((err)=>console.log(err))
+        }
+        else if(notification.type ==="Accepted request"){
+            console.log('clicked',notification);
+            navigation.navigate("ServiceProviderInfo",
+            {not:notification})
+            axios.put(`http://192.168.11.98:3000/Notifications/Seen/${notification._id}`)
+            .catch((err)=>console.log(err))
+        }
+        else if(notification.type ==="offer"){
+            console.log('clicked',notification);
+            navigation.navigate("ServiceProviderInfo",
+            {not:notification})
+            axios.put(`http://192.168.11.98:3000/Notifications/Seen/${notification._id}`)
+            .catch((err)=>console.log(err))
+        }
+        else{}
+    }
+    
     return (
         <FlatList
             style={styles.root}

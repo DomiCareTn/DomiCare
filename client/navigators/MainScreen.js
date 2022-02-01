@@ -41,6 +41,7 @@ import ServiceProvidersSendedOffers from "../components/Transactions/ServiceProv
 import ServiceSeekerReceivedOffers from "../components/Transactions/ServiceSeekerReceivedOffers.js";
 import ServiceSeekerSendARequest from "../components/Transactions/ServiceSeekerSendARequest.js";
 import ServiceSeekerSendedRequests from "../components/Transactions/ServiceSeekerSendedRequests.js";
+import { ServiceProviderInfo ,ServiceSeekerInfo } from "../components/Singlenotification.js";
 import {Paiment} from "../components/paiment.js"
 
 
@@ -359,7 +360,18 @@ const HomeStackScreen = ({ navigation }) => {
                 name="ServiceSeekerSendedRequests"
                 component={ServiceSeekerSendedRequests}
             />
+<<<<<<< HEAD
+            <HomeStack.Screen
+                name="ServiceSeekerInfo"
+                component={ServiceSeekerInfo}
+            />
+            <HomeStack.Screen
+                name="ServiceProviderInfo"
+                component={ServiceProviderInfo}
+            />
+=======
           
+>>>>>>> 6ca2dafaaaed2ea509f8b9446400a34a60f607c8
         </HomeStack.Navigator>
     );
 };

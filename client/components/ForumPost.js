@@ -54,10 +54,10 @@ const ForumPost = (props) => {
         try {
             const _id = props.route.params._id;
             const post = await axios.get(
-                `http://192.168.1.5:3000/post/findpost/${_id}`
+                `http://192.168.11.98:3000/post/findpost/${_id}`
             );
             const com = await axios.get(
-                `http://192.168.1.5:3000/post/findcomments/${_id}`
+                `http://192.168.11.98:3000/post/findcomments/${_id}`
             );
             setpost(post.data);
             setpostOwner(post.data.owner);
@@ -88,12 +88,12 @@ const ForumPost = (props) => {
                 type: "comment",
             };
             const comment = await axios.post(
-                `http://192.168.1.5:3000/post/createComment/${postOwner}`,
+                `http://192.168.11.98:3000/post/createComment/${postOwner}`,
                 { obj }
             );
             setValue("");
             const recom = await axios.get(
-                `http://192.168.1.5:3000/post/findcomments/${_id}`
+                `http://192.168.11.98:3000/post/findcomments/${_id}`
             );
             setcomments(recom.data);
         } catch (err) {

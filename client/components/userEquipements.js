@@ -45,7 +45,9 @@ const userEquipements = ({ navigation }) => {
 
     useEffect(() => {
         axios
-            .get(`http://192.168.1.5:3000/Equipements/${userData.userData._id}`)
+            .get(
+                `http://192.168.11.98:3000/Equipements/${userData.userData._id}`
+            )
             .then((res) => {
                 setmyData(res.data);
                 console.log("res.data", res.data);
@@ -57,7 +59,9 @@ const userEquipements = ({ navigation }) => {
 
     const getEquip = () => {
         axios
-            .get(`http://192.168.1.5:3000/Equipements/equip/${formData._id}`)
+            .get(
+                `http://192.168.11.98:3000/Equipements/equip/${formData._id}`
+            )
             .then((res) => {
                 console.log("getEquip", res.data);
             })
@@ -69,7 +73,9 @@ const userEquipements = ({ navigation }) => {
 
     const fetchData = () => {
         axios
-            .get(`http://192.168.1.5:3000/Equipements/${userData.userData._id}`)
+            .get(
+                `http://192.168.11.98:3000/Equipements/${userData.userData._id}`
+            )
             .then((res) => {
                 setmyData(res.data);
                 console.log("res.data", res.data);
@@ -83,7 +89,7 @@ const userEquipements = ({ navigation }) => {
         console.log("ownerId", formData.ownerId);
         console.log("formData", formData);
         axios
-            .post(`http://192.168.1.5:3000/Equipements/saveEquip`, {
+            .post(`http://192.168.11.98:3000/Equipements/saveEquip`, {
                 formData,
             })
             .then((response) => {
@@ -97,7 +103,7 @@ const userEquipements = ({ navigation }) => {
     const myDelete = () => {
         console.log("ownerId", formData.ownerId);
         axios
-            .delete(`http://192.168.1.5:3000/Equipements/${myData.ownerId}`)
+            .delete(`http://192.168.11.98:3000/Equipements/${myData.ownerId}`)
             .catch((error) => {
                 console.log(error);
             });

@@ -58,7 +58,7 @@ const myEquipements = ({ navigation }) => {
     const FetchData = () => {
         axios
             .get(
-                `http://192.168.1.5:3000/Equipements/myEquipements/${userData.userData._id}`
+                `http://192.168.11.98:3000/Equipements/${userData.userData._id}`
             )
             .then((res) => {
                 setmyData(res.data);
@@ -122,7 +122,7 @@ const myEquipements = ({ navigation }) => {
         setData({ ...formData, ownerId: userData.userData._id });
 
         axios
-            .post(`http://192.168.1.5:3000/Equipements/saveEquip`, {
+            .post(`http://192.168.11.98:3000/Equipements/saveEquip`, {
                 formData,
             })
             .then(() => alert("Equipement added successfully!"))

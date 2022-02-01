@@ -17,7 +17,7 @@ const SendedRequests = () => {
             console.log("req");
             const _id = userData._id;
             const offers = await axios.get(
-                `http://192.168.1.5:3000/Transactions/sendedrequests/${_id}`
+                `http://192.168.11.98:3000/Transactions/sendedrequests/${_id}`
             );
             setFeed(offers.data);
         } catch (err) {
@@ -30,14 +30,16 @@ const SendedRequests = () => {
             console.log("cancel", _id);
 
             await axios.delete(
-                `http://192.168.1.5:3000/Transactions/deleterequest/${e._id}`
+                `http://192.168.11.98:3000/Transactions/deleterequest/${e._id}`
             );
         } catch (err) {
             console.log(err);
         }
     };
     return (
+     
         <NativeBaseProvider>
+            <View>
             <ScrollView>
                 {feed.map((e, key) => {
                     console.log("req", e);
@@ -58,14 +60,15 @@ const SendedRequests = () => {
                                     }{" "}
                                     {e.providerId.lastName}
                                 </Text>
-                                <Text>Speciality</Text>
+                                <Text>Speciality: {" "}
+                                    {e.providerId.speciality}</Text>
                                 <Text>Sent At:{e.createdAt}</Text>
                                 <Button
                                     onPress={() => {
                                         CancelRequest(e);
                                     }}
                                     title="Cancel the request"
-                                    color="teal"
+                                    color="#f39a6e"
                                     accessibilityLabel="Learn more about this purple button"
                                 />
                             </Card>
@@ -73,7 +76,9 @@ const SendedRequests = () => {
                     );
                 })}
             </ScrollView>
+            </View>
         </NativeBaseProvider>
+       
     );
 };
 const styles = StyleSheet.create({

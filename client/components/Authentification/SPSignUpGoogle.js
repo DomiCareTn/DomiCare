@@ -130,10 +130,14 @@ function SPSignUpGoogle() {
         };
         axios
 <<<<<<< HEAD
+            .post(`http://192.168.11.98:3000/auth/SPSignUpGoogle`, { obj })
+=======
+<<<<<<< HEAD
             .post(`http://192.168.11.97:3000/auth/SPSignUpGoogle`, { obj })
 =======
             .post(`http://192.168.1.5:3000/auth/SPSignUpGoogle`, { obj })
 >>>>>>> 5e38b5dba6c2204c1c7224e5a4902975e672f2e3
+>>>>>>> 6ca2dafaaaed2ea509f8b9446400a34a60f607c8
             .then((res) => {
                 if (res.data === "email already exists") {
                     onOpen();
