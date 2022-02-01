@@ -1,31 +1,36 @@
 
 
 var mongoose = require("mongoose");
-var ReportsSchema=mongoose.Schema(
-    {
-        reporterId : {
-         type: mongoose.Schema.Types.ObjectId, refPath: 'onModel',
-         required: true,
-        },
-        reportedId : {
-            type: mongoose.Schema.Types.ObjectId, refPath: 'onModel',
-            required: true,
-        },
-        onModel: {
-            type: String,
-            required: true,
-            enum: ['ServiceSeeker', 'ServiceProvider']
-          },
-        reason : {
+var ReportsSchema = new mongoose.Schema({
+
+
+            reporter: {
+                type: mongoose.Schema.Types.String, ref: 'ServiceSeeker',
+               
+            },
+            reported: {
+                type: mongoose.Schema.Types.String,
+                ref: "ServiceProvider",
+              
+            },
+        
+    title: {
         type: String,
-        required: true,
-        },
-        createdAt: {
-            type: Date,
-            immutable: true,
-            default: () => Date.now(),
-          },
-    }
+      
+    
+            },
+            reason: {
+                type: String,
+               
+            },
+            createdAt: {
+                type: Date,
+                immutable: true,
+                default: () => Date.now(),
+            },
+        
+        
+}
 )
 const Reports = mongoose.model("Reports", ReportsSchema);
 module.exports =  Reports;

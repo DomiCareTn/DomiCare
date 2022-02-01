@@ -61,7 +61,11 @@ function Login() {
     };
     const post = () => {
         axios
+<<<<<<< HEAD
+            .post(`http://192.168.11.97:3000/auth/Login`, { formData })
+=======
             .post(`http://192.168.1.5:3000/auth/Login`, { formData })
+>>>>>>> 5e38b5dba6c2204c1c7224e5a4902975e672f2e3
             .then((response) => {
                 let errors = {};
                 const data = response.data;
@@ -91,7 +95,11 @@ function Login() {
                 if (type == "success") {
                     const email = user.email;
                     axios
+<<<<<<< HEAD
+                        .post(`http://192.168.11.97:3000/auth/GoogleLogin`, {
+=======
                         .post(`http://192.168.1.5:3000/auth/GoogleLogin`, {
+>>>>>>> 5e38b5dba6c2204c1c7224e5a4902975e672f2e3
                             email,
                         })
                         .then((response) => {

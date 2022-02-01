@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { localhost } from "@env";
+
+
 import {
+    SafeAreaView,
+    Pressable,
+    TextInput,
+    Modal,
     View,
     StyleSheet,
     Button,
@@ -8,20 +14,52 @@ import {
     Alert,
     Image,
     Text,
+    Dimensions,
     TouchableOpacity,
+    TouchableHighlight
+
 } from "react-native";
-import { Picker } from "@react-native-picker/picker";
+import {
+    IconButton,
+
+    Box,
+    Heading,
+    Center,
+    HStack,
+    FormControl,
+    Input,
+    Stack,
+    NativeBaseProvider,
+    TextArea,
+} from "native-base";
 import axios from "axios";
-import { Card, Icon } from "react-native-elements";
+import { Card } from "react-native-elements";
+import { CredentialsContext } from "../Authentification/CredentialsContext.js";
+
+
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+
 import { Rating, AirbnbRating } from "react-native-ratings";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
+// import { TouchableHighlight } from "react-native-gesture-handler";
+
 const serviceProvidersList = ({ navigation }) => {
+    const { storedCredentials, setStoredCredentials } =
+        React.useContext(CredentialsContext);
     const [selectedValue, setSelectedValue] = useState("");
     const [selectedgender, setSelectedGender] = useState("");
     const [ServiceProviders, setSProviders] = useState([]);
     const [Data, setData] = useState([]);
+    const [modalVisible, setModalVisible] = useState(false);
+    const [reason, setReason] = React.useState('');
+    const userData = storedCredentials.userData;
+    const reporter = userData.firstName +" "+userData.lastName;
+    
+    const [reported, setreported] = React.useState("")
+    const [title,setTitle]= React.useState('')
+
 
     useEffect(async () => {
         try {
@@ -34,6 +72,21 @@ const serviceProvidersList = ({ navigation }) => {
             console.log(error);
         }
     }, []);
+    const SavePost = () => {
+     
+        
+       
+        axios
+            .post(`http://192.168.11.97:3000/reports/reports`, {title,reason,reporter,reported})
+        .then((res) => {
+            setModalVisible(!modalVisible)
+                console.log("-------",res.data);
+
+            setData(res.data);
+        })
+        .catch((err) => console.log(err));
+
+    };
 
     const ratingCompleted = (rating) => {
         console.log("Rating is: " + rating);
@@ -62,7 +115,101 @@ const serviceProvidersList = ({ navigation }) => {
     };
 
     return (
-        <View style={styles.container}>
+        <NativeBaseProvider>
+               <SafeAreaView style={styless.container}>
+                <ScrollView
+                    showsVerticalScrollIndicator={false}
+                    _contentContainerStyle={{
+                        px: "20px",
+                        mb: "4",
+                        minW: "80",
+                    }}
+                ></ScrollView>
+            <View style={styless.centeredView}>
+        <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+                setModalVisible(!modalVisible);
+            }}
+        >
+            <View style={styless.centeredView}>
+                <View style={styless.modalView}>
+                    <Text style={styless.addPostTittle}>
+                        Create a Report
+                    </Text>
+                    <TextInput
+                        style={{
+                            height: 40,
+                            backgroundColor: "rgb(248,248,248)",
+                            borderRadius: 15,
+                            width: 300,
+                            marginLeft: 0,
+                            justifyContent: "center",
+                            flexDirection: "row",
+                            display: "flex",
+                            alignItems: "center",
+                            margin: 6,
+                            padding: 5,
+                        }}
+                        onChangeText={(value) =>
+                            setTitle(value)}
+                        placeholder="Title"
+                    />
+                    <TextArea
+                        h={200}
+                        placeholder="Write Something Here ..."
+                        onChangeText={(value) =>
+                            setReason( value,
+                            )
+                        }
+                        w={300}
+                        style={{
+                            marginLeft: 0,
+                            borderRadius: 15,
+                        }}
+                    />
+                    <View
+                        style={{
+                            flexDirection: "row",
+                            justifyContent: "space-evenly",
+                            marginTop: 20,
+                            marginLeft: 0,
+                        }}
+                    >
+                        <Pressable
+                            style={[
+                                styless.button,
+                                styless.buttonClose,
+                                styless.cancelButton,
+                            ]}
+                            onPress={() =>
+                                setModalVisible(!modalVisible)
+                            }
+                        >
+                            <Text style={styless.textStyle}>
+                                Cancel
+                            </Text>
+                        </Pressable>
+                        <Pressable
+                            style={[
+                                styless.button,
+                                styless.buttonClose,
+                                styless.confirmButton,
+                            ]}
+                            onPress={SavePost}
+                        >
+                            <Text style={styless.textStyle}>
+                                Confirm
+                            </Text>
+                        </Pressable>
+                    </View>
+                </View>
+            </View>
+        </Modal>
+                </View>
+                
             <View style={styles.cities}>
                 <Picker
                     selectedValue={selectedValue}
@@ -117,62 +264,128 @@ const serviceProvidersList = ({ navigation }) => {
 
             <ScrollView>
                 <View style={styles.container}>
-                    <Card style={styles.card}>
-                        <Card.Title>Service Providers</Card.Title>
-                        <Card.Divider />
-                        {ServiceProviders.map((u, i) => {
+                   
+                        {ServiceProviders.map((u, key) => {
                             return (
-                                <View key={i} style={styles.user}>
-                                    <Image
-                                        style={styles.image}
-                                        resizeMode="cover"
-                                        source={{
-                                            uri: "https://i.pinimg.com/originals/6e/ff/53/6eff53e82b80fb5dd7614d5ba054f144.jpg",
-                                        }}
-                                    />
-                                    <Text style={styles.name}>
-                                        {" "}
-                                        firstName : {u.firstName}
-                                    </Text>
-                                    <Text style={styles.name}>
-                                        {" "}
-                                        lastName : {u.lastName}
-                                    </Text>
-                                    <Text style={styles.name}>
-                                        {" "}
-                                        Position : {u.speciality}
-                                    </Text>
-                                    <Text style={styles.name}>
-                                        {" "}
-                                        City : {u.city}
-                                    </Text>
-                                    <Text style={styles.name}>
-                                        {" "}
-                                        Gender : {u.gender}
-                                    </Text>
-                                    <Text style={styles.name}>
-                                        {" "}
-                                        Services : {u.posts}
-                                    </Text>
-                                    <AirbnbRating style={styles.airbnbRating} />
+                                <View key={key} style={styles.itemVue}>
+                                                               <TouchableOpacity>
+                                        <Icon name="flag-remove-outline" type="ionicon" title="report" color="black" size={30} style={{ marginLeft: 270 }} onPress={() => {
+                                            setreported(u.firstName+" "+u.lastName)
+                                            setModalVisible(true)
+                                        }} />
+                                    </TouchableOpacity>
+                                <Image style={styles.cardImage} source={{ uri: u.picture }} />
+                                    <Text style={styles.titleStyle}>{u.firstName} {u.lastName}</Text>
+                                    <Text style={styles.categoryStyle}>
+                                  speciality : {u.speciality}
+                                </Text>
+                                
+                                <Text style={styles.categoryStyle}>
+                                  availability : {u.availability}
+                                </Text>
+                               
+                                    <AirbnbRating size={20} style={styles.airbnbRating}/>
+                                    <TouchableOpacity style={{ height: 40,width:150, marginTop: 30,marginLeft: 90 }}>
                                     <Button
-                                        title="Ask for service"
-                                        onPress={() =>
+                                         onPress={() =>
                                             navigation.navigate(
                                                 "ServiceSeekerSendARequest",
                                                 u
                                             )
                                         }
-                                    />
-                                </View>
+                                        color="teal" title="Ask for service"
+                                    width={50}
+                                   
+                                        />
+                       
+                                        {/* <Icon
+                                            name="flag-outline" color="black" size={30} style={{ marginTop:-300, marginLeft: -60 }} title="report" /> */}
+                     
+                                    </TouchableOpacity>
+         
+                                    {/* <Button onPress={() => setModalVisible(true)} title="hello"
+                                    style={{ position: "relative", marginLeft: 150, width: 60 }}/>  */}
+
+                              
+
+                                   
+                              
+                                
+                              </View>
                             );
                         })}
-                    </Card>
+                
                 </View>
             </ScrollView>
-        </View>
+ 
+                {/* </View> */}
+                </SafeAreaView>
+            </NativeBaseProvider>
+        
     );
 };
+const devicewidth = Math.round(Dimensions.get("window").width);
+const radius = 20;
+const styless = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+    scrollView: {
+        flex: 1,
+        backgroundColor: "pink",
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 22,
+    },
+    modalView: {
+        margin: 20,
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: 35,
+        // alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+    },
+    addPostTittle: {
+        fontWeight: "bold",
+        marginBottom: 10,
+    },
+    button: {
+        borderRadius: 10,
+        padding: 10,
+        elevation: 2,
+    },
+
+    buttonClose: {
+        width: 80,
+    },
+    cancelButton: {
+        backgroundColor: "#f39a6e",
+    },
+    confirmButton: {
+        backgroundColor: "#008080",
+    },
+    textStyle: {
+        color: "white",
+        fontWeight: "bold",
+        textAlign: "center",
+    },
+    modalText: {
+        marginBottom: 15,
+        textAlign: "center",
+    },
+});
 
 const styles = StyleSheet.create({
     container: {
@@ -189,15 +402,61 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         marginBottom: 50,
     },
-
-    image: {
-        borderRadius: 100,
-        width: 90,
-        height: 90,
-        marginRight: 10,
+    buttonStyle: {
+        color: 'red',
+        marginTop: 20,
+        padding: 20,
+        backgroundColor: 'green'
     },
+
+  
+    cardImage: {
+    width: 100,
+        height: 100,
+        borderRadius: 100,
+    
+    borderTopLeftRadius: radius,
+    borderTopRightRadius: 25,
+    borderBottomRightRadius: radius,
+    borderBottomLeftRadius: radius,
+    opacity: 0.9,
+    alignContent: "center",
+    alignSelf: "center",
+  },
+  itemVue: {
+    paddingTop: 15,
+    marginTop: 25,
+    width: devicewidth - 60,
+    backgroundColor: "#F5F5F5",
+
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 12,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 1.84,
+
+    elevation: 30,
+
+    height: 380,
+    marginLeft: 10,
+    borderRadius: radius,
+  },
+  titleStyle: {
+    fontSize: 17,
+    fontWeight: "700",
+    alignContent: "center",
+    alignSelf: "center",
+  },
+  categoryStyle: {
+    fontWeight: "200",
+    alignContent: "center",
+    alignSelf: "center",
+  },
     airbnbRating: {
         marginRight: 20,
+       
     },
     name: {
         fontSize: 20,

@@ -22,6 +22,7 @@ const Posts = mongoose.model(
     content: {
       type: String
     },
+    
     city: {
       type: String,
     },

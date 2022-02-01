@@ -18,7 +18,6 @@ import {
     EditProfileSP,
     EditProfileEP,
 } from "../components/EditProfiles";
-import Report from "../components/report.js";
 import ForumPost from "../components/ForumPost.js";
 import Forum2 from "../components/forum2.js";
 import Equipmentsfetch from "../components/Equipementsfetch.js";
@@ -360,6 +359,7 @@ const HomeStackScreen = ({ navigation }) => {
                 name="ServiceSeekerSendedRequests"
                 component={ServiceSeekerSendedRequests}
             />
+          
         </HomeStack.Navigator>
     );
 };

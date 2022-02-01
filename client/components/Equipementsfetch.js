@@ -26,6 +26,8 @@ const Equipementsfetch = () => {
         axios
             .get("http://192.168.1.5:3000/Equipements")
             .then((res) => {
+                console.log("res", res);
+                console.log("res.data", res.data);
                 setEquipements(res.data);
                 setmyData(res.data);
                 setReset(res.data);
@@ -34,6 +36,18 @@ const Equipementsfetch = () => {
                 console.log(error);
             });
     }, []);
+    //  var fetchData=()=>{
+    //     fetch("http://192.168.11.61:3000/Equipements")
+    //     .then(response=>{
+    //       console.log("response",response,response.json());
+    //      response.json()
+    //     })
+    //     .then(res=>{setEquipements(res)})
+    //     .catch(error=>{
+    //       console.log("error",error);
+    //     })
+    // }
+    //  var filterData=(city)=> {
 
     var filter = () => {
         var FiltredData;

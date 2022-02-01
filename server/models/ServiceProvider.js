@@ -40,7 +40,15 @@ var ServiceProviderSchema=mongoose.Schema(
         
         availability: {
           type: Date,
-        },
+    },
+    banned : {
+      type : Boolean ,
+      default : false
+    },
+    verified : {
+      type : Boolean ,
+      default : false
+    },
         certificate: {
           type: String,
         },
