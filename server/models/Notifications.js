@@ -17,6 +17,9 @@ const Notifications = mongoose.model(
     postId:{
       type: String
     },
+    reqoffId:{
+      type:String
+    },
     createdAt: {
       type: Date,
       immutable: true,
@@ -32,3 +35,6 @@ const Notifications = mongoose.model(
   })
 );
 module.exports = Notifications;
+
+
+

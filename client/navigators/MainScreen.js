@@ -39,6 +39,7 @@ import ServiceProvidersSendedOffers from "../components/Transactions/ServiceProv
 import ServiceSeekerReceivedOffers from "../components/Transactions/ServiceSeekerReceivedOffers.js";
 import ServiceSeekerSendARequest from "../components/Transactions/ServiceSeekerSendARequest.js";
 import ServiceSeekerSendedRequests from "../components/Transactions/ServiceSeekerSendedRequests.js";
+import { ServiceProviderInfo ,ServiceSeekerInfo } from "../components/Singlenotification.js";
 
 const MainTabScreen = () => {
     return (
@@ -326,6 +327,14 @@ const HomeStackScreen = ({ navigation }) => {
             <HomeStack.Screen
                 name="ServiceSeekerSendedRequests"
                 component={ServiceSeekerSendedRequests}
+            />
+            <HomeStack.Screen
+                name="ServiceSeekerInfo"
+                component={ServiceSeekerInfo}
+            />
+            <HomeStack.Screen
+                name="ServiceProviderInfo"
+                component={ServiceProviderInfo}
             />
         </HomeStack.Navigator>
     );

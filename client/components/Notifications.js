@@ -23,7 +23,7 @@ export const NotificationsScreen = () => {
     const userData = storedCredentials.userData;
     useEffect(() => {
         const unsubscribe = navigation.addListener("focus", () => {
-            axios.get(`http://192.168.164.210:3000/Notifications/Fetch/${userData._id}`).then((res) => {
+            axios.get(`http://192.168.11.98:3000/Notifications/Fetch/${userData._id}`).then((res) => {
                 setNotifications(res.data);
             });
         })
@@ -88,10 +88,32 @@ export const NotificationsScreen = () => {
         if( notification.type === 'comment'){
             navigation.navigate("ForumPost",
                     {_id : notification.postId})
-            axios.put(`http://192.168.164.210:3000/Notifications/Seen/${notification._id}`)
+            axios.put(`http://192.168.11.98:3000/Notifications/Seen/${notification._id}`)
                  .catch((err)=>console.log(err))
           
         }
+       else if(notification.type ===" new request"){
+            console.log('clicked',notification);
+            navigation.navigate("ServiceSeekerInfo",
+            {not:notification})
+            axios.put(`http://192.168.11.98:3000/Notifications/Seen/${notification._id}`)
+            .catch((err)=>console.log(err))
+        }
+        else if(notification.type ==="Accepted request"){
+            console.log('clicked',notification);
+            navigation.navigate("ServiceProviderInfo",
+            {not:notification})
+            axios.put(`http://192.168.11.98:3000/Notifications/Seen/${notification._id}`)
+            .catch((err)=>console.log(err))
+        }
+        else if(notification.type ==="offer"){
+            console.log('clicked',notification);
+            navigation.navigate("ServiceProviderInfo",
+            {not:notification})
+            axios.put(`http://192.168.11.98:3000/Notifications/Seen/${notification._id}`)
+            .catch((err)=>console.log(err))
+        }
+        else{}
     }
     
     return (

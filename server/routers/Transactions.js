@@ -21,5 +21,8 @@ router.route("/OfferMyService")
   .delete(Transactions.CancelOffer)
   router.route("/acceptrequest/:_id")
    .put(Transactions.acceptrequest)
+   router.route("/findrequest/:_id")
+   .get(Transactions.FindOne)
+  
    
 module.exports = router;

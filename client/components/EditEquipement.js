@@ -35,7 +35,7 @@ const EditEquipement = ({ navigation }) => {
         console.log("test1 : ", userData.userData._id);
         axios
             .get(
-                `http://192.168.164.210:3000/Equipements/${userData.userData._id}`
+                `http://192.168.11.98:3000/Equipements/${userData.userData._id}`
             ) ///Equipements/${userData.userData._id}
             .then((res) => {
                 var user = res.data;
@@ -50,7 +50,7 @@ const EditEquipement = ({ navigation }) => {
     const fetchData = () => {
         axios
             .get(
-                `http://192.168.164.210:3000/Equipements/${userData.userData._id}`
+                `http://192.168.11.98:3000/Equipements/${userData.userData._id}`
             )
             .then((res) => {
                 // console.log("equipement id",res);
@@ -68,7 +68,7 @@ const EditEquipement = ({ navigation }) => {
         console.log("test formData :", formData[0]);
         axios
             .put(
-                `http://192.168.164.210:3000/Equipements/update/${formData[0]._id}`,
+                `http://192.168.11.98:3000/Equipements/update/${formData[0]._id}`,
                 {
                     formData,
                 }

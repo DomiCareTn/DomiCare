@@ -18,7 +18,7 @@ const ReceivedRequests = () => {
         console.log(_id);
         try {
             const posts = await axios.get(
-                `http://192.168.164.210:3000/Transactions/servicerequests/${_id}`
+                `http://192.168.11.98:3000/Transactions/servicerequests/${_id}`
             );
             setFeed(posts.data);
         } catch (err) {
@@ -28,7 +28,7 @@ const ReceivedRequests = () => {
     const AcceptRequest = async (e) => {
         try {
             await axios.put(
-                `http://192.168.164.210:3000/Transactions/acceptrequest/${e._id}`,
+                `http://192.168.11.98:3000/Transactions/acceptrequest/${e._id}`,
                 { e }
             );
         } catch (err) {
@@ -39,7 +39,7 @@ const ReceivedRequests = () => {
         try {
             console.log("cancel", _id);
             await axios.put(
-                `http://192.168.164.210:3000/Transactions/deleterequest/${e._id}`,
+                `http://192.168.11.98:3000/Transactions/deleterequest/${e._id}`,
                 { e }
             );
         } catch (err) {
@@ -48,7 +48,9 @@ const ReceivedRequests = () => {
     };
 
     return (
+        
         <NativeBaseProvider>
+            <View>
             <ScrollView>
                 {feed.map((e, key) => {
                     console.log("first", e);
@@ -85,7 +87,7 @@ const ReceivedRequests = () => {
                                         DeclineRequest(e._id);
                                     }}
                                     title="Decline"
-                                    color="red"
+                                    color="#f39a6e"
                                     accessibilityLabel="Learn more about this purple button"
                                 />
                             </Card>
@@ -93,7 +95,9 @@ const ReceivedRequests = () => {
                     );
                 })}
             </ScrollView>
+            </View>
         </NativeBaseProvider>
+        
     );
 };
 const styles = StyleSheet.create({

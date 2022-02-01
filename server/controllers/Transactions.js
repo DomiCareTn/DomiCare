@@ -24,9 +24,32 @@ module.exports = {
         file,
         type,
       });
+      const not =await Notifications.create({
+        sender:seekerId,
+        receiver_id:providerId,
+        content :"You received a new service request",
+        type: " new request",
+        reqoffId:RequestService._id
+
+      })
       res.send(RequestService);
     } catch (err) {
       res.send(err);
+    }
+  },
+  FindOne:async(req,res)=>{
+    try {
+      const request=await Transactions.findById(
+        {_id:req.params._id}
+      ).populate('seekerId')
+
+
+      
+      res.send(request)
+      console.log("request",request);
+    }
+    catch(err){
+      console.log(err);
     }
   },
   GetReceivedOffers: async (req, res) => {
@@ -38,23 +61,36 @@ module.exports = {
         {
           seekerId: req.params._id,
         }
-      );
+      ).populate('providerId')
+      console.log('offers',offers);
       res.send(offers);
     } catch (err) {
       res.send(err);
     }
   },
   SendServiceOffer: async (req, res) => {
-    const { type, postid, providerId, seekerId } = req.body;
+    console.log("first",req.body);
+    
     try {
       const offer = await Transactions.create({
-        type,
-        postid,
-        providerId,
-        seekerId,
+        type:req.body.type,
+        postid:req.body.postid,
+        providerId:req.body.providerId,
+        seekerId:req.body.seekerId,
       });
-      res.send(offer);
-    } catch (err) {
+      const not = await Notifications.create({
+        reqoffId:req.body.postid,
+        type:req.body.type,
+        sender:req.body.providerId,
+        receiver_id:req.body.seekerId._id,
+        content:req.body.content
+      })
+      
+       res.send(not);
+       
+    } 
+    catch (err) {
+      console.log(err);
       res.send(err);
     }
   },
@@ -98,33 +134,38 @@ module.exports = {
     }
   },
   DeleteRequest: async (req, res) => {
-    console.log("cancel");
+    console.log("cancel",req.body.sender);
 
     try {
       const notification=await Notifications.create({
         providerId:req.body.provider_id,
-        seekerId:req.body.seekerId,
+        receiver_id:req.body.sender,
+        sender:req.body.Sender,
         createdAt:req.body.createdAt,
         content:req.body.content,
         type:req.body.type
       });
+      const deleted =await Notifications.findOneAndDelete({_id:req.body.id});
       
-      const transaction=await Transactions.findByIdAndUpdate({ _id: req.params._id },{status:"Cancelled"});
+      const transaction=await Transactions.findOneAndDelete({ _id: req.params._id });
       res.send();
     } catch (error) {
       console.log(error);
     }
   },
   CancelOffer :async(req,res)=>{
+    
     try{
+      console.log("req",req.body);
       const notification=await Notifications.create({
         providerId:req.body.provider_id,
-        seekerId:req.body.seekerId,
+        sender:req.body.sender,
         createdAt:req.body.createdAt,
         content:req.body.content,
         type:req.body.type
+
       });
-      const cancelledOffer=await Transactions.findByIdAndUpdate({_id:req.params._id},{status:"Cancelled"})
+      const cancelledOffer=await Transactions.findByIdAndDelete({_id:req.params._id})
       res.send(cancelledOffer)
     }
     catch(err){
@@ -137,10 +178,11 @@ acceptrequest: async (req, res) => {
     try {
       const notification=await Notifications.create({
         providerId:req.body.provider_id,
-        seekerId:req.body.seekerId,
+        receiver_id:req.body.sender,
+        sender:req.body.Sender,
         createdAt:req.body.createdAt,
         content:req.body.content,
-        type:req.body.type
+        type:"Accepted request"
       });
       
       const transaction=await Transactions.findByIdAndUpdate({ _id: req.params._id },{status:"Confirmed"});
@@ -148,7 +190,7 @@ acceptrequest: async (req, res) => {
     } catch (error) {
       console.log(error);
     }
-  },
-  
+  }, 
  
+  
 };
