@@ -21,7 +21,7 @@ export default () => {
                         height: 60,
                         position: "absolute",
                         top: -170,
-                        left: 15,
+                        left: 0,
                     }} alt="logo"/>
             <Heading
                 size="md"

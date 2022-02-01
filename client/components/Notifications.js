@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, {useState  ,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import moment from "moment";
@@ -21,30 +21,36 @@ export const NotificationsScreen = () => {
     const { storedCredentials, setStoredCredentials } =
         React.useContext(CredentialsContext);
     const userData = storedCredentials.userData;
+
     useEffect(() => {
         const unsubscribe = navigation.addListener("focus", () => {
-            axios.get(`http://192.168.11.97:3000/Notifications/Fetch/${userData._id}`).then((res) => {
-                setNotifications(res.data);
-            });
-        })
+            axios
+                .get(
+                    `http://192.168.1.5:3000/Notifications/Fetch/${userData._id}`
+                )
+                .then((res) => {
+                    setNotifications(res.data);
+                    const NotSeen = res.data.filter(
+                        (item) => item.seen === false
+                    );
+                });
+        });
         return unsubscribe;
     }, [navigation]);
-    const  data= [
+    const data = [
         {
             id: 3,
             image: "https://bootdey.com/img/Content/avatar/avatar7.png",
             name: "March SoulLaComa",
             text: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.",
-            attachment:
-                "https://via.placeholder.com/100x100/FFB6C1/000000",
+            attachment: "https://via.placeholder.com/100x100/FFB6C1/000000",
         },
         {
             id: 2,
             image: "https://bootdey.com/img/Content/avatar/avatar6.png",
             name: "John DoeLink",
             text: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.",
-            attachment:
-                "https://via.placeholder.com/100x100/20B2AA/000000",
+            attachment: "https://via.placeholder.com/100x100/20B2AA/000000",
         },
         {
             id: 4,
@@ -65,8 +71,7 @@ export const NotificationsScreen = () => {
             image: "https://bootdey.com/img/Content/avatar/avatar1.png",
             name: "Frank Odalthh",
             text: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.",
-            attachment:
-                "https://via.placeholder.com/100x100/7B68EE/000000",
+            attachment: "https://via.placeholder.com/100x100/7B68EE/000000",
         },
         {
             id: 6,
@@ -83,17 +88,18 @@ export const NotificationsScreen = () => {
             attachment: "",
         },
     ];
-    
-    const surf = (notification)=>{
-        if( notification.type === 'comment'){
-            navigation.navigate("ForumPost",
-                    {_id : notification.postId})
-            axios.put(`http://192.168.11.97:3000/Notifications/Seen/${notification._id}`)
-                 .catch((err)=>console.log(err))
-          
+
+    const surf = (notification) => {
+        if (notification.type === "comment") {
+            navigation.navigate("ForumPost", { _id: notification.postId });
+            axios
+                .put(
+                    `http://192.168.1.5:3000/Notifications/Seen/${notification._id}`
+                )
+                .catch((err) => console.log(err));
         }
-    }
-    
+    };
+
     return (
         <FlatList
             style={styles.root}
@@ -104,51 +110,53 @@ export const NotificationsScreen = () => {
             keyExtractor={(item) => {
                 return item._id;
             }}
-            renderItem={(item,key) => {
-                
+            renderItem={(item, key) => {
                 const Notification = item.item;
                 let mainContentStyle;
-             
+
                 return (
-                    <TouchableOpacity onPress={()=>surf(Notification)}>
-                              <View style={styles.container}>
-                        <Image
-                            source={{ uri: Notification.sender.picture}}
-                            style={styles.avatar}
-                        />
-                        <View style={styles.content}>
-                            <View style={mainContentStyle}>
-                                <View style={styles.text}>
-                                    <Text style={styles.name}>
-                                        {Notification.sender.lastName + ' ' + Notification.sender.firstName }
+                    <TouchableOpacity onPress={() => surf(Notification)}>
+                        <View style={styles.container}>
+                            <Image
+                                source={{ uri: Notification.sender.picture }}
+                                style={styles.avatar}
+                            />
+                            <View style={styles.content}>
+                                <View style={mainContentStyle}>
+                                    <View style={styles.text}>
+                                        <Text style={styles.name}>
+                                            {Notification.sender.lastName +
+                                                " " +
+                                                Notification.sender.firstName}
+                                        </Text>
+                                        <Text>{Notification.content}</Text>
+                                    </View>
+                                    <Text style={styles.timeAgo}>
+                                        {moment(
+                                            Notification.createdAt
+                                        ).fromNow()}
                                     </Text>
-                                    <Text>{Notification.content}</Text>
                                 </View>
-                                <Text style={styles.timeAgo}>
-                                    {moment(Notification.createdAt).fromNow()}
-                                </Text>
-                            </View>
-                            {
-                                !Notification.seen?(
+                                {!Notification.seen ? (
                                     <FontAwesome
-                                    name="eye-slash"
-                                    size={25}
-                                    style={{position:'absolute',right:10,top:20}}
-                                    color="#f39a6e"
-                                />
-                                ):null
-                            }
+                                        name="eye-slash"
+                                        size={25}
+                                        style={{
+                                            position: "absolute",
+                                            right: 10,
+                                            top: 20,
+                                        }}
+                                        color="#f39a6e"
+                                    />
+                                ) : null}
+                            </View>
                         </View>
-                    </View>
                     </TouchableOpacity>
-              
                 );
             }}
         />
     );
-
-}
-
+};
 
 const styles = StyleSheet.create({
     root: {
@@ -170,7 +178,7 @@ const styles = StyleSheet.create({
         marginBottom: 5,
         flexDirection: "row",
         flexWrap: "wrap",
-        width:300
+        width: 300,
     },
     content: {
         flex: 1,

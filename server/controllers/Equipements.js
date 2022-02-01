@@ -2,7 +2,14 @@ const Equipement = require("../models/Equipements.js")
 const ServiceProvider = require("../models/ServiceProvider.js");
 
 module.exports = {
+     find_Some:(req,res)=>{
+          const ownerId = req.params.userID
+          Equipement.find({ownerId})
+                     .then((result)=> res.send(result))
+                     .catch((err)=> console.log(err))
+     },
      create_One : (req,res) => {
+          console.log(req.body.formData)
           let obj =req.body.formData
           Equipement.create(obj)
           .then((equip)=> res.send(equip))
@@ -20,15 +27,13 @@ module.exports = {
             next(error);
        }
   }, find: async (req, res, next) => {
-       // get all the users
        try {
          
             const Equipements = await Equipement
-                 //{fullname:"/"+req.query.fullname+"/",city:"/"+req.query.city+"/",specialty:"/"+req.query.specialty+"/"}
+                
                  .find({ city: { $regex: req.query.city }})
                
-            // .populate(["parent", "provider"])
-            // .select('-password')
+          
 
             res.status(200).json(Equipements);
        } catch (error) {
@@ -53,28 +58,18 @@ Equipement.find({ownerId : req.params.userID})
        else res.send('user not found')
      })
      .catch((err)=> console.log(err))
- },delete_One:
- async (req, res, next) => {
-     try {
+ },
+ delete_One:
+ (req, res, ) => {
+     Equipement.findByIdAndRemove({_id:req.params.equipementId})
+             .then((result)=> res.send(result))
+             .catch((err)=> console.log(err))
    
-          const removedEquip = await Equipement
-               .findByIdAndRemove(req.params.ownerId)
-          res.send(removedEquip)
-     } catch (error) {
-          next(error)
-     }
-},delete_one:
-async function deleteProductById(req, res, next) {
-   
-     Equipement.findOneAndDelete(req.params.ownerId)
-       .then(res.send("it worked"))
-       .catch(err => next(err));
-   },
+},
    update_one:(req, res)=>{
-     const {ownerId,name, price,description,reference,city,delivery,availability, transactionType} = req.body.formData;
     
-        Equipement.findOneAndUpdate({'_id' : [
-          req.body.formData[0]._id]},{ownerId,name, price,description,reference,city,delivery,availability, transactionType},{new:true})
+    
+        Equipement.findOneAndUpdate({_id : req.params.equipementsId},req.body.formData,{new:true})
           .then(user=>res.send(user))
           .catch(err => (console.log(err)));
       }, 

@@ -19,7 +19,7 @@ const ServicesRequests = () => {
         console.log("feed", feed);
         try {
             const posts = await axios.get(
-                `http://192.168.11.97:3000/Posts/servicesrequests`
+                `http://192.168.1.5:3000/Posts/servicesrequests`
             );
             setFeed(posts.data);
         } catch (err) {
@@ -33,7 +33,7 @@ const ServicesRequests = () => {
         const type = "offer";
 
         const offer = await axios.post(
-            `http://192.168.11.97:3000/Transactions/OfferMyService`,
+            `http://192.168.1.5:3000/Transactions/OfferMyService`,
             { type, postid, providerId, seekerId }
         );
     };
