@@ -1,13 +1,14 @@
 import React from "react";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
-import {localhost} from "@env";
+import { IPAdress } from "@env";
 import * as ImagePicker from "expo-image-picker";
 import { Ionicons } from "@expo/vector-icons";
 import { storage } from "../../.firebase_config.js";
-import * as Google from 'expo-google-app-auth';
+import * as Google from "expo-google-app-auth";
 
 import {
+    Image,
     Box,
     Heading,
     VStack,
@@ -36,7 +37,7 @@ function SignUp() {
     const [errors, setErrors] = React.useState({});
     const [file, setFile] = React.useState("");
     const [uploading, setUploading] = React.useState("None");
-    
+
     const { storedCredentials, setStoredCredentials } =
         React.useContext(CredentialsContext);
 
@@ -47,8 +48,8 @@ function SignUp() {
             quality: 1,
         });
 
-        const picked =  "file:///" + result.uri.split("file:/").join("");
-        console.log('picked',picked)
+        const picked = "file:///" + result.uri.split("file:/").join("");
+        console.log("picked", picked);
 
         if (!result.cancelled) {
             setFile(picked);
@@ -84,7 +85,7 @@ function SignUp() {
             () => {
                 snapshot.snapshot.ref.getDownloadURL().then((url) => {
                     setUploading("done");
-                    setData({ ...formData, certificate: url })
+                    setData({ ...formData, certificate: url });
                 });
             }
         );
@@ -165,35 +166,37 @@ function SignUp() {
         setErrors(errors);
         return validation;
     };
-    
-    const handleGoogleSignup = () =>{
-        const config ={
-          iosClientId: '477279958073-g64kmtrrh5ut8hbv0ctbggiumiklpgid.apps.googleusercontent.com',
-          androidClientId :  '477279958073-ld24gig53t7i6lo9q4p42ga2ecsg6qvl.apps.googleusercontent.com',
-          scopes : ['profile', 'email']
-        }
-        Google 
-        .logInAsync(config)
-        .then((result)=>{
-          const {type, user}= result
-          if (type== 'success'){
-                navigation.navigate('SPSignUpGoogle',{
-                    email:user.email,
-                    firstName : user.givenName,
-                    lastName : user.familyName,
-                    picture : user.photoUrl})
-          } else {
-            console.log('Google signup was cancelled');
-          }
-        })
-        .catch((error)=>{
-          console.log(error)
-        } )
-      }
+
+    const handleGoogleSignup = () => {
+        const config = {
+            iosClientId:
+                "477279958073-g64kmtrrh5ut8hbv0ctbggiumiklpgid.apps.googleusercontent.com",
+            androidClientId:
+                "477279958073-ld24gig53t7i6lo9q4p42ga2ecsg6qvl.apps.googleusercontent.com",
+            scopes: ["profile", "email"],
+        };
+        Google.logInAsync(config)
+            .then((result) => {
+                const { type, user } = result;
+                if (type == "success") {
+                    navigation.navigate("SPSignUpGoogle", {
+                        email: user.email,
+                        firstName: user.givenName,
+                        lastName: user.familyName,
+                        picture: user.photoUrl,
+                    });
+                } else {
+                    console.log("Google signup was cancelled");
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
 
     const post = () => {
         axios
-            .post(`http://${localhost}:3000/auth/SPSignUp`, { formData })
+            .post(`http://192.168.11.97:3000/auth/SPSignUp`, { formData })
             .then((response) => {
                 let errors = {};
                 const data = response.data;
@@ -205,7 +208,6 @@ function SignUp() {
                     setErrors(errors);
                 } else {
                     persistLogin({ userData: data });
-                    navigation.navigate("Home");
                 }
             })
             .catch((err) => {
@@ -215,10 +217,7 @@ function SignUp() {
 
     const onSubmit = () => {
         if (validate()) {
-           
-             post()
-          
-           
+            post();
         } else console.log("Validation Failed");
     };
 
@@ -239,17 +238,19 @@ function SignUp() {
                     <Modal.Body>you have successfully registered</Modal.Body>
                 </Modal.Content>
             </Modal>
-            <Divider my={2} />
-                <Button mt="4" 
-                colorScheme="teal"
-                onPress={handleGoogleSignup}
-                 >
-                     
-                  Sign up with Google
-                </Button>
-                <Divider my={2} />
+            <Image
+                source={require("../../assets/categories/logo_small.png")}
+                style={{
+                    width: 300,
+                    height: 60,
+                    position: "absolute",
+                    top: 80,
+                    left: 15,
+                }}
+                alt="logo"
+            />
 
-            <Box safeArea p="2" w="120%" maxW="300" py="8">
+            <Box safeArea p="2" w="120%" maxW="300" py="8" marginTop={79}>
                 <Heading
                     size="lg"
                     color="coolGray.800"
@@ -273,6 +274,15 @@ function SignUp() {
                 </Heading>
 
                 <VStack space={3} mt="5">
+                    <Divider my={2} />
+                    <Button
+                        mt="4"
+                        colorScheme="teal"
+                        onPress={handleGoogleSignup}
+                    >
+                        Sign up with Google
+                    </Button>
+                    <Divider my={2} />
                     <FormControl isRequired isInvalid={"firstName" in errors}>
                         <FormControl.Label>First name</FormControl.Label>
                         <Input
@@ -355,51 +365,55 @@ function SignUp() {
                             ""
                         )}
                     </FormControl>
-                    
+
                     <FormControl isRequired isInvalid={"city" in errors}>
-        <FormControl.Label>Select City</FormControl.Label>
-        <Select
-          selectedValue={formData.city || 'Tunis'}
-          minWidth={200}
-          accessibilityLabel="Select your City"
-        
-          _selectedItem={{
-            bg: "teal.600",
-            endIcon: <CheckIcon size={5} />,
-          }}
-          mt={1}
-          onValueChange={(itemValue) => {
-            setData({ ...formData, city: itemValue })
-          }}
-        >
-          <Select.Item label="Tunis" value="Tunis" />
-          <Select.Item label="Ariana" value="Ariana"  />
-          <Select.Item label="Ben arous" value="Ben arous" />
-          <Select.Item label="Manouba" value="Manouba" />
-          <Select.Item label="Sousse" value="Sousse" />
-          <Select.Item label="Sfax" value="Sfax" />
-          <Select.Item label="Gabes" value="Gabes"  />
-          <Select.Item label="Medenine" value="Medenine" />
-          <Select.Item label="Mahdia" value="Mahdia" />
-          <Select.Item label="Beja" value="Beja" />
-          <Select.Item label="Bizerte" value="Bizerte" />
-          <Select.Item label="Gafsa" value="Gafsa"  />
-          <Select.Item label="Jendouba" value="Jendouba" />
-          <Select.Item label="Kairouan" value="Kairouan" />
-          <Select.Item label="Kasserine" value="Kasserine" />
-          <Select.Item label="Kef" value="Kef" />
-          <Select.Item label="Monastir" value="Monastir"  />
-          <Select.Item label="Nabeul" value="Nabeul" />
-          <Select.Item label="Sidi Bouzid" value="Sidi Bouzid" />
-          <Select.Item label="Siliana" value="Siliana" />
-          <Select.Item label="Tataouine" value="Tataouine" />
-          <Select.Item label="Tozeur" value="Tozeur"  />
-          <Select.Item label="Zaghouan" value="Zaghouan" />
-          <Select.Item label="Kebili" value="Kebili" />
-        </Select>
-       
-        <FormControl.ErrorMessage>{errors.city}</FormControl.ErrorMessage>
-      </FormControl>
+                        <FormControl.Label>Select City</FormControl.Label>
+                        <Select
+                            selectedValue={formData.city || "Tunis"}
+                            minWidth={200}
+                            accessibilityLabel="Select your City"
+                            _selectedItem={{
+                                bg: "teal.600",
+                                endIcon: <CheckIcon size={5} />,
+                            }}
+                            mt={1}
+                            onValueChange={(itemValue) => {
+                                setData({ ...formData, city: itemValue });
+                            }}
+                        >
+                            <Select.Item label="Tunis" value="Tunis" />
+                            <Select.Item label="Ariana" value="Ariana" />
+                            <Select.Item label="Ben arous" value="Ben arous" />
+                            <Select.Item label="Manouba" value="Manouba" />
+                            <Select.Item label="Sousse" value="Sousse" />
+                            <Select.Item label="Sfax" value="Sfax" />
+                            <Select.Item label="Gabes" value="Gabes" />
+                            <Select.Item label="Medenine" value="Medenine" />
+                            <Select.Item label="Mahdia" value="Mahdia" />
+                            <Select.Item label="Beja" value="Beja" />
+                            <Select.Item label="Bizerte" value="Bizerte" />
+                            <Select.Item label="Gafsa" value="Gafsa" />
+                            <Select.Item label="Jendouba" value="Jendouba" />
+                            <Select.Item label="Kairouan" value="Kairouan" />
+                            <Select.Item label="Kasserine" value="Kasserine" />
+                            <Select.Item label="Kef" value="Kef" />
+                            <Select.Item label="Monastir" value="Monastir" />
+                            <Select.Item label="Nabeul" value="Nabeul" />
+                            <Select.Item
+                                label="Sidi Bouzid"
+                                value="Sidi Bouzid"
+                            />
+                            <Select.Item label="Siliana" value="Siliana" />
+                            <Select.Item label="Tataouine" value="Tataouine" />
+                            <Select.Item label="Tozeur" value="Tozeur" />
+                            <Select.Item label="Zaghouan" value="Zaghouan" />
+                            <Select.Item label="Kebili" value="Kebili" />
+                        </Select>
+
+                        <FormControl.ErrorMessage>
+                            {errors.city}
+                        </FormControl.ErrorMessage>
+                    </FormControl>
 
                     <FormControl isRequired isInvalid={"password" in errors}>
                         <FormControl.Label>Password</FormControl.Label>
@@ -441,39 +455,26 @@ function SignUp() {
                     </FormControl>
                     <FormControl isRequired isInvalid={"certificate" in errors}>
                         <FormControl.Label>Certificate</FormControl.Label>
-                        
-                        { (uploading==="None")? (
-        <Button
-        onPress={pickImage}
-        colorScheme="teal"
-        leftIcon={
-            <Icon
-                as={Ionicons}
-                name="cloud-upload-outline"
-                size="sm"
-            />
-        }
-    >
-        Upload
-    </Button>
-    )
 
-: (uploading === "loading") ?(
-    (
-        <Spinner />
-    )
-)
-: (
-    (
-        <Button
-   
-        colorScheme="teal"
-        >
-        Uploaded!
-    </Button>
-    )
-)
-}  
+                        {uploading === "None" ? (
+                            <Button
+                                onPress={pickImage}
+                                colorScheme="teal"
+                                leftIcon={
+                                    <Icon
+                                        as={Ionicons}
+                                        name="cloud-upload-outline"
+                                        size="sm"
+                                    />
+                                }
+                            >
+                                Upload
+                            </Button>
+                        ) : uploading === "loading" ? (
+                            <Spinner />
+                        ) : (
+                            <Button colorScheme="teal">Uploaded!</Button>
+                        )}
                     </FormControl>
                     <Button onPress={onSubmit} mt="5" colorScheme="teal">
                         Submit

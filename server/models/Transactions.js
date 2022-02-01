@@ -34,11 +34,8 @@ const Transactions = mongoose.model(
     review: {
       type: String,
     },
-   
       selectedStartDate: {type:Date},
       selectedEndDate :{type:Date},
-    
-
     file: {
       type: String,
     },

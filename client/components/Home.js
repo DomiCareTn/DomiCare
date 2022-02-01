@@ -1,284 +1,274 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 import {
     View,
     Text,
+    SafeAreaView,
+    StatusBar,
     Image,
-    StyleSheet,
+    FlatList,
     TouchableOpacity,
+    ImageBackground,
     ScrollView,
-    Dimensions
 } from "react-native";
-import { useTheme } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { CredentialsContext } from "./Authentification/CredentialsContext.js";
-import Swiper from "react-native-swiper/src";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import CustomSwitch from "./CustomSwitch";
+import { Dimensions } from "react-native";
+const { width, height } = Dimensions.get("window");
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
+import { LogBox } from "react-native";
 
-const HomeScreen = ({ navigation }) => {
-    const theme = useTheme();
-    const { storedCredentials, setStoredCredentials } =
-        React.useContext(CredentialsContext);
-    const userData = storedCredentials;
-    console.log("userData :", userData);
+const SIZES = {
+    base: 10,
+    width,
+    height,
+};
 
-    const clearLogin = () => {
-        AsyncStorage.removeItem("domicareCredentials")
-            .then(() => {
-                setStoredCredentials("");
+let exercises = [
+    {
+        title: "Home Care",
+        image: require("../assets/categories/homeCare8.png"),
+    },
+    {
+        title: "Medical Advices",
+        image: require("../assets/categories/askForHelp2.png"),
+    },
+
+    {
+        title: "Equipements",
+        image: require("../assets/categories/equipements.png"),
+    },
+    {
+        title: "Contact Us",
+        image: require("../assets/categories/contactUs8.png"),
+    },
+];
+
+const ListItem = ({ photo, fullName, city, price, onPress }) => {
+    return (
+        <View
+            style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: 20,
+            }}
+        >
+            <View
+                style={{ flexDirection: "row", alignItems: "center", flex: 1 }}
+            >
+                <Image
+                    source={{ uri: photo }}
+                    style={{
+                        width: 55,
+                        height: 55,
+                        borderRadius: 10,
+                        marginRight: 8,
+                    }}
+                />
+                <View style={{ width: windowWidth - 220 }}>
+                    <Text
+                        style={{
+                            color: "#333",
+                            fontSize: 14,
+                            marginLeft: 10,
+                            fontWeight: "bold",
+                        }}
+                    >
+                        {fullName}
+                    </Text>
+                    <Text
+                        numberOfLines={1}
+                        style={{
+                            color: "#333",
+                            //   fontFamily: 'Roboto-Medium',
+                            fontSize: 14,
+                            marginLeft: 10,
+
+                            textTransform: "uppercase",
+                        }}
+                    >
+                        {city}
+                    </Text>
+                </View>
+            </View>
+
+            <TouchableOpacity
+                onPress={onPress}
+                style={{
+                    backgroundColor: "#f39a6e",
+                    padding: 10,
+                    width: 100,
+                    borderRadius: 10,
+                    marginRight: 10,
+                }}
+            >
+                <Text
+                    style={{
+                        color: "#fff",
+                        textAlign: "center",
+                        fontSize: 14,
+                    }}
+                >
+                    request
+                </Text>
+            </TouchableOpacity>
+        </View>
+    );
+};
+
+const HomeScreen = () => {
+    const [formData, setData] = React.useState([]);
+    const [equipements, setEquipements] = React.useState([]);
+    const [SPTab, setSPTab] = React.useState(1);
+    LogBox.ignoreLogs(["VirtualizedLists"]);
+
+    React.useEffect(() => {
+        axios
+            .get(`http://192.168.11.97:3000/Users/ServiceProvider/Fetch/`)
+            .then((res) => {
+                const data = res.data;
+                setData(data);
             })
-            .catch((error) => console.log(error));
+            .catch((error) => {
+                console.log(error);
+            });
+        axios
+            .get(`http://192.168.11.97:3000/Equipements`)
+            .then((result) => {
+                const data = result.data;
+                setEquipements(data);
+            })
+            .catch((err) => console.log(err));
+    }, []);
+
+    const onSelectSwitch = (value) => {
+        setSPTab(value);
     };
 
-    const profileType = () => {
-        if (!storedCredentials) {
-            return;
-        } else if (storedCredentials.type === "serviceProvider") {
-            console.log("provider",storedCredentials.type)
-            navigation.navigate("ServiceProviderProfile");
-        } else if (storedCredentials.type === "equipementsProvider") {
-            console.log("equipements",storedCredentials.type)
-            navigation.navigate("EquipementsProviderProfile");
-        } else return;
+    const ExerciseItem = ({ exercise }) => {
+        return (
+            <TouchableOpacity
+                activeOpacity={0.8}
+                style={{
+                    backgroundColor: "white",
+                    width: 0.5 * SIZES.width - 35,
+                    margin: 10,
+                    height: 200,
+                    borderRadius: 10,
+                    padding: 15,
+                    shadowColor: "#9e9898",
+                    elevation: 5,
+                }}
+            >
+                <ImageBackground
+                    source={exercise.image}
+                    style={{
+                        width: "100%",
+                        height: "100%",
+                        resizeMode: "cover",
+                        flex: 1,
+                    }}
+                />
+                <Text
+                    style={{ marginTop: 20, textAlign: "center", fontSize: 16 }}
+                >
+                    {exercise.title}
+                </Text>
+            </TouchableOpacity>
+        );
     };
 
     return (
-
-        <ScrollView style={styles.container}>
-            <View style={styles.sliderContainer}>
-                <Swiper
-                    autoplay
-                    horizontal={false}
-                    height={200}
-                    activeDotColor="#008080"
-                >
-                    <View style={styles.slide}>
-                        <Image
-                            source={{
-                                uri: "https://i.pinimg.com/originals/88/55/04/8855045af2589b1353f620b2b1235e10.jpg",
-                            }}
-                            resizeMode="cover"
-                            style={styles.sliderImage}
-                        />
-                    </View>
-                    <View style={styles.slide}>
-                        <Image
-                            source={{
-                                uri: "https://www.konicaminolta.co.th/wp-content/uploads/2019/10/Website_Konica-54.jpg",
-                            }}
-                            resizeMode="cover"
-                            style={styles.sliderImage}
-                        />
-                    </View>
-                    <View style={styles.slide}>
-                        <Image
-                            source={require("../assets/wa.png")}
-                            resizeMode="cover"
-                            style={styles.sliderImage}
-                        />
-                    </View>
-                </Swiper>
+        <ScrollView showsVerticalScrollIndicator={false}>
+            <StatusBar
+                backgroundColor="#008080"
+                barStyle="dark-content"
+                animated={true}
+            />
+            <View
+                style={{
+                    width: "100%",
+                    height: "25%",
+                    padding: 30,
+                    backgroundColor: "#008080",
+                    position: "relative",
+                }}
+            >
+                <Image
+                    source={require("../assets/categories/domicare2.png")}
+                    style={{
+                        width: 300,
+                        height: 60,
+                        position: "absolute",
+                        top: 30,
+                        left: 50,
+                    }}
+                />
             </View>
+            <SafeAreaView style={{ flex: 1 }}>
+                <FlatList
+                    data={exercises}
+                    style={{
+                        paddingHorizontal: 20,
+                        marginTop: -120,
+                    }}
+                    contentContainerStyle={{
+                        flex: 1,
+                        alignItems: "center",
+                    }}
+                    showsVerticalScrollIndicator={false}
+                    numColumns={2}
+                    keyExtractor={(item) => item.title}
+                    renderItem={({ item }) => <ExerciseItem exercise={item} />}
+                />
+            </SafeAreaView>
 
-            <View style={styles.categoryContainer}>
-                <TouchableOpacity
-                    style={styles.categoryBtn}
-                    onPress={() => navigation.navigate("serviceProvidersList")}
-                >
-                    <View style={styles.categoryIcon}>
-                        <Ionicons
-                            name="medical-sharp"
-                            size={35}
-                            color="white"
-                        />
-                    </View>
-                    <Text style={styles.categoryBtnTxt}>
-                        Services Providers
-                    </Text>
-                </TouchableOpacity>
+            <View style={{ marginTop: 80, height: windowHeight }}>
+                <View style={{ marginVertical: 20 }}>
+                    <CustomSwitch
+                        selectionMode={1}
+                        option1="Nurses"
+                        option2="Equipements"
+                        onSelectSwitch={onSelectSwitch}
+                    />
+                </View>
+                <ScrollView nestedScrollEnabled={true}>
+                    {SPTab == 1 &&
+                        formData.map((item) => (
+                            <ListItem
+                                key={item._id}
+                                photo={item.picture}
+                                fullName={item.firstName + " " + item.lastName}
+                                city={item.city}
 
-                <TouchableOpacity style={styles.categoryBtn}>
-                    <View style={styles.categoryIcon}>
-                        <Ionicons
-                            name="chatbubbles-sharp"
-                            size={35}
-                            color="white"
-                            onPress={() =>
-                                navigation.navigate("Forum2", userData)
-                            }
-                        />
-                    </View>
-                    <Text style={styles.categoryBtnTxt}>Forum</Text>
-                </TouchableOpacity>
-                
-                <TouchableOpacity style={styles.categoryBtn}>
-                    <View style={styles.categoryIcon}>
-                        <Ionicons
-                            name="chatbubbles-sharp"
-                            size={35}
-                            color="white"
-                            onPress={() =>
-                                navigation.navigate("Essai", userData)
-                            }
-                        />
-                    </View>
-                    <Text style={styles.categoryBtnTxt}>Essai</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.categoryBtn}>
-                    <View style={styles.categoryIcon}>
-                        <Ionicons
-                            name="chatbubbles-sharp"
-                            size={35}
-                            color="white"
-                            onPress={() =>
-                                navigation.navigate("ServicesRequests", userData)
-                            }
-                        />
-                    </View>
-                    <Text style={styles.categoryBtnTxt}>ServicesRequests</Text>
-                </TouchableOpacity>
-                
-
-                <TouchableOpacity style={styles.categoryBtn} onPress={() => {}}>
-                    <View style={styles.categoryIcon}>
-                        <Ionicons
-                            name="medkit-sharp"
-                            size={35}
-                            color="white"
-                            onPress={() =>
-                                navigation.navigate("Equipementsfetch")
-                            }
-                        />
-                    </View>
-                    <Text style={styles.categoryBtnTxt}>Equipements</Text>
-                </TouchableOpacity>
-            </View>
-            <View style={[styles.categoryContainer, { marginTop: 10 }]}>
-                <TouchableOpacity
-                    style={styles.categoryBtn}
-                    onPress={() => navigation.navigate("shareservice")}
-                >
-                    <View style={styles.categoryIcon}>
-                        <Ionicons name="documents" size={35} color="white" />
-                    </View>
-                    <Text style={styles.categoryBtnTxt}>Posts</Text>
-                </TouchableOpacity>
-
-                {storedCredentials ? (
-                    <>
-                        <TouchableOpacity
-                            style={styles.categoryBtn}
-                            onPress={profileType}
-                        >
-                            <View style={styles.categoryIcon}>
-                                <Ionicons
-                                    name="person"
-                                    size={35}
-                                    color="white"
-                                />
-                            </View>
-                            <Text style={styles.categoryBtnTxt}>Profil</Text>
-                        </TouchableOpacity>
-                    </>
-                ) : (
-                    <></>
-                )}
-
-                {storedCredentials ? (
-                    <>
-                        <TouchableOpacity
-                            style={styles.categoryBtn}
-                            onPress={clearLogin}
-                        >
-                            <View style={styles.categoryIcon}>
-                                <Ionicons
-                                    name="log-out"
-                                    size={35}
-                                    color="white"
-                                />
-                            </View>
-                            <Text style={styles.categoryBtnTxt}>Logout</Text>
-                        </TouchableOpacity>
-                    </>
-                ) : (
-                    <>
-                        <TouchableOpacity
-                            style={styles.categoryBtn}
-                            onPress={() => navigation.navigate("Login")}
-                        >
-                            <View style={styles.categoryIcon}>
-                                <Ionicons
-                                    name="log-in-sharp"
-                                    size={35}
-                                    color="white"
-                                />
-                            </View>
-                            <Text style={styles.categoryBtnTxt}>Login</Text>
-                        </TouchableOpacity>
-                    </>
-                )}
+                                //   onPress={() =>
+                                //     navigation.navigate('SPDetails', {
+                                //       title: item.title,
+                                //       id: item.id,
+                                //     })
+                                //   }
+                            />
+                        ))}
+                    {SPTab == 2 &&
+                        equipements.map((equipements) => (
+                            <ListItem
+                                key={equipements._id}
+                                photo={equipements.picture}
+                                fullName={equipements.name}
+                                city={equipements.city}
+                                //   onPress={() =>
+                                //     navigation.navigate('EquipementDetails', {
+                                //       title: item.title,
+                                //       id: item.id,
+                                //     })
+                                //   }
+                            />
+                        ))}
+                </ScrollView>
             </View>
         </ScrollView>
-
     );
 };
 
 export default HomeScreen;
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "white",
-
-    },
-    sliderContainer: {
-        height: 200,
-        width: "100%",
-        marginBottom: 50,
-        justifyContent: "center",
-        alignSelf: "center",
-        borderRadius: 8,
-    },
-
-    wrapper: {},
-
-    slide: {
-        flex: 1,
-        justifyContent: "center",
-        backgroundColor: "transparent",
-        borderRadius: 8,
-    },
-    sliderImage: {
-        height: "100%",
-        width: "100%",
-        alignSelf: "center",
-        borderRadius: 8,
-    },
-    categoryContainer: {
-        flexDirection: "row",
-        width: "90%",
-        alignSelf: "center",
-        marginTop: 25,
-        marginBottom: 10,
-    },
-    categoryBtn: {
-        flex: 1,
-        width: "30%",
-        marginHorizontal: 0,
-        alignSelf: "center",
-    },
-    categoryIcon: {
-        borderWidth: 0,
-        alignItems: "center",
-        justifyContent: "center",
-        alignSelf: "center",
-        width: 70,
-        height: 70,
-        backgroundColor: "#008080" /* '#FF6347' */,
-        borderRadius: 50,
-    },
-    categoryBtnTxt: {
-        alignSelf: "center",
-        marginTop: 5,
-        color: "black",
-    },
-});

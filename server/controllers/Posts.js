@@ -6,14 +6,20 @@ module.exports = {
     FindAllServiceProviders:(req,res)=>{
         ServiceProviders.find({type:"serviceProvider"})
                 .then((result)=>{
-                  console.log('FindAllServiceProviders', result)
                   res.send(result)})
                 .catch((err)=>console.log(err))
       },    
       FindAllServiceSeekerPosts:(req,res)=>{
-        Posts.find({type:"request"})
+        
+        Posts.find({type:"request"}).populate("serviceSeeker_id")
                 .then((result)=>{
-                  console.log('FindAllServiceSeekerPosts', result)
+                  res.send(result)})
+                .catch((err)=>console.log(err))
+      },
+      FindAServiceSeekerPosts:(req,res)=>{
+        
+        Posts.find({serviceSeeker_id:req.params._id})
+                .then((result)=>{
                   res.send(result)})
                 .catch((err)=>console.log(err))
       },
@@ -31,7 +37,8 @@ module.exports = {
             endDate:req.body.selectedEndDate,
             adress:req.body.adress,
             file:req.body.file,
-            type:"request"
+            type: "request",
+            user:req.body.user
           });
           console.log('CreateServiceSeekerPost',Post)
           res.status(200).json(Post);
@@ -40,5 +47,14 @@ module.exports = {
         catch (error) {
           next(error);
         }
-      }
+      },
+      DeleteApost: async (req, res) => {
+    
+        try {
+          await Posts.findByIdAndDelete({ _id: req.params._id });
+          res.send("Request Successfully Deleted");
+        } catch (error) {
+          console.log(error);
+        }
+      },
 }

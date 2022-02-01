@@ -14,9 +14,31 @@ router.route("/reports")
   .get(AdminController.get_reports)
   router.route("/equipement")
   .get(AdminController.get_equipement)
+  router.route("/transactions")
+  .get(AdminController.get_all_transactions)
   router.route("/quesans")
   .get(AdminController.get_quesans)
-  router.route("/equipdeletedId/:id")
-  .delete(AdminController.delete_equipement)
+  router.route("/deleteEquip/:id")
+    .delete(AdminController.delete_equipement)
+    router.route("/sp")
+  .get(AdminController.get_all_service_Providers)
+  router.route("/ss")
+  .get(AdminController.get_all_service_Seekers)
+router.route("/banned/:id")
+  .patch(AdminController.bann_User)
+  router.route("/unbanned/:id")
+  .patch(AdminController.unbann_User)
+  router.route("/bannedSS/:id")
+  .patch(AdminController.bann_UserSS)
+  router.route("/unbannedSS/:id")
+  .patch(AdminController.unbann_UserSS)
+
+  router.route("/admins")
+    .get(AdminController.get_all_admins)
+  router.route("/verify/:id")
+  .patch(AdminController.verify_User)
+
+  
+ 
 
 module.exports = router;

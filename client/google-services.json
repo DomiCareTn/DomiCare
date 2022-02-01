@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "196266883926",
+    "project_id": "domicare-47959",
+    "storage_bucket": "domicare-47959.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:196266883926:android:53b37146c16964f3c8f4f7",
+        "android_client_info": {
+          "package_name": "com.yourcompany.yourappname"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "196266883926-ps5mggk9duc8ja1tgb8k40dgbcchcdue.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDw4CzSft-oVz3V-9fAuE9df5_swo6vIR0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "196266883926-ps5mggk9duc8ja1tgb8k40dgbcchcdue.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
