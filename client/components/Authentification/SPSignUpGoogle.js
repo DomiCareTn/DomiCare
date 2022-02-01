@@ -7,6 +7,7 @@ import { CredentialsContext } from "./CredentialsContext.js";
 import { Ionicons } from "@expo/vector-icons";
 import { storage } from "../../.firebase_config.js";
 import * as ImagePicker from "expo-image-picker";
+import { LogBox } from "react-native";
 
 import {
     Box,
@@ -28,6 +29,8 @@ import {
 } from "native-base";
 
 function SPSignUpGoogle() {
+    LogBox.ignoreLogs(["timer"]);
+    LogBox.ignoreLogs(["Unhandled"]);
     const navigation = useNavigation();
     const route = useRoute();
 
@@ -126,7 +129,11 @@ function SPSignUpGoogle() {
             certificate: formData.certificate,
         };
         axios
+<<<<<<< HEAD
             .post(`http://192.168.11.97:3000/auth/SPSignUpGoogle`, { obj })
+=======
+            .post(`http://192.168.1.5:3000/auth/SPSignUpGoogle`, { obj })
+>>>>>>> 5e38b5dba6c2204c1c7224e5a4902975e672f2e3
             .then((res) => {
                 if (res.data === "email already exists") {
                     onOpen();

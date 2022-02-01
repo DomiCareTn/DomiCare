@@ -71,7 +71,7 @@ const DrawerNav = () => {
                 <SS.Navigator
                 screenOptions={{
                     headerShown: false,
-                    drawerActiveBackgroundColor: "#14b8a6",
+                    drawerActiveBackgroundColor: "#008080",
                     drawerActiveTintColor: "#fff",
                     drawerInactiveTintColor: "#333",
                     drawerLabelStyle: {
@@ -130,7 +130,7 @@ const DrawerNav = () => {
                 <SP.Navigator
                 screenOptions={{
                     headerShown: false,
-                    drawerActiveBackgroundColor: "#14b8a6",
+                    drawerActiveBackgroundColor: "#008080",
                     drawerActiveTintColor: "#fff",
                     drawerInactiveTintColor: "#333",
                     drawerLabelStyle: {
@@ -175,11 +175,11 @@ const DrawerNav = () => {
             />
             </SP.Navigator> 
 
-            ):(userType==='equipementProvider')?(
+            ):(userType==='equipementsProvider')?(
                 <EP.Navigator
                 screenOptions={{
                     headerShown: false,
-                    drawerActiveBackgroundColor: "#14b8a6",
+                    drawerActiveBackgroundColor: "#008080",
                     drawerActiveTintColor: "#fff",
                     drawerInactiveTintColor: "#333",
                     drawerLabelStyle: {
@@ -191,17 +191,22 @@ const DrawerNav = () => {
             >
 
 <EP.Screen  name="Main" component={MainTabScreen} />
-            <EP.Screen
-                name="Equipementsfetch"
-                component={Equipmentsfetch}
-            />
+        
                <EP.Screen
                 name="My Equipements"
                 component={MyEquipements}
+           
+             
             />
             <EP.Screen
                 name="Edit Equipement"
                 component={EditEquipement}
+                options={{
+                    drawerLabel: () => null,
+                    title: null,
+                    drawerItemStyle: { height: 0 },
+                    drawerIcon: () => null,
+                }}
             />
             <EP.Screen
                 name="Home Care Agents"
@@ -222,10 +227,7 @@ const DrawerNav = () => {
                 //     drawerIcon: () => null,
                 // }}
             />
-            <EP.Screen
-                name="My Equipements"
-                component={Equipmentsfetch}
-            />
+         
            
             </EP.Navigator> 
             ):(null)

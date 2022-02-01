@@ -50,7 +50,7 @@ export const Forum2 = (props) => {
     useEffect(() => {
         const unsubscribe = navigation.addListener("focus", () => {
             axios
-                .get(`http://192.168.11.97:3000/post/savepost`)
+                .get(`http://192.168.1.5:3000/post/savepost`)
                 .then((result) => setData(result.data))
                 .catch((err) => console.log(err));
         });
@@ -68,7 +68,7 @@ export const Forum2 = (props) => {
                 text: "Confirm",
                 onPress: () => {
                     axios
-                        .delete(`http://192.168.11.97:3000/post/Delete/${id}`)
+                        .delete(`http://192.168.1.5:3000/post/Delete/${id}`)
                         .then((result) => setData(result.data))
                         .catch((err) => console.log(err));
                 },
@@ -82,7 +82,7 @@ export const Forum2 = (props) => {
             type: "Quest",
         };
         axios
-            .post(`http://192.168.11.97:3000/post/savepost`, { obj })
+            .post(`http://192.168.1.5:3000/post/savepost`, { obj })
             .then((res) => {
                 setModalVisible(!modalVisible);
 
