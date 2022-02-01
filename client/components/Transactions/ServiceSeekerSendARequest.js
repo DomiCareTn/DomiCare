@@ -50,19 +50,16 @@ const SeekerRequest = (props) => {
     const type = "request";
     const post = () => {
         axios
-            .post(
-                `http://192.168.119.162:3000/Transactions/seekersendrequest`,
-                {
-                    type,
-                    details,
-                    address,
-                    file,
-                    seekerId,
-                    providerId,
-                    selectedStartDate,
-                    selectedEndDate,
-                }
-            )
+            .post(`http://192.168.1.5:3000/Transactions/seekersendrequest`, {
+                type,
+                details,
+                address,
+                file,
+                seekerId,
+                providerId,
+                selectedStartDate,
+                selectedEndDate,
+            })
             .then((res) => console.log(res))
             .catch((err) => console.log(err));
         console.log("hello", details, address, Prescription);

@@ -18,7 +18,7 @@ const ReceivedRequests = () => {
         console.log(_id);
         try {
             const posts = await axios.get(
-                `http://192.168.119.162:3000/Transactions/servicerequests/${_id}`
+                `http://192.168.1.5:3000/Transactions/servicerequests/${_id}`
             );
             setFeed(posts.data);
         } catch (err) {
@@ -28,7 +28,7 @@ const ReceivedRequests = () => {
     const AcceptRequest = async (e) => {
         try {
             await axios.put(
-                `http://192.168.119.162:3000/Transactions/acceptrequest/${e._id}`,
+                `http://192.168.1.5:3000/Transactions/acceptrequest/${e._id}`,
                 { e }
             );
         } catch (err) {
@@ -39,7 +39,7 @@ const ReceivedRequests = () => {
         try {
             console.log("cancel", _id);
             await axios.put(
-                `http://192.168.119.162:3000/Transactions/deleterequest/${e._id}`,
+                `http://192.168.1.5:3000/Transactions/deleterequest/${e._id}`,
                 { e }
             );
         } catch (err) {

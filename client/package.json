@@ -73,8 +73,10 @@
     "react-native-sticky-parallax-header": "^0.4.1",
     "react-native-swiper": "^1.6.0",
     "react-native-web": "^0.17.5",
+    "react-native-webview": "11.15.0",
     "react-navigation": "^4.4.4",
     "reanimated-bottom-sheet": "^1.0.0-alpha.22",
+    "socket.io-client": "^4.4.1",
     "styled-components": "^5.3.3",
     "sweetalert2": "^11.3.4"
   },

@@ -23,6 +23,7 @@ import {
 } from "native-base";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CredentialsContext } from "./CredentialsContext.js";
+import { FontAwesome } from "@expo/vector-icons";
 
 function SignUp() {
     const navigation = useNavigation();
@@ -116,7 +117,6 @@ function SignUp() {
             errors.phoneNumber = "Phone Number is required";
             validation = false;
         } else if (!typeof formData.phoneNumber === "number") {
-            console.log(formData.phoneNumber);
             errors.phoneNumber = "Invalid Phone Number ";
             validation = false;
         }
@@ -126,7 +126,7 @@ function SignUp() {
 
     const post = () => {
         axios
-            .post(`http://192.168.119.162:3000/auth/EPSignUp`, { formData })
+            .post(`http://192.168.1.5:3000/auth/EPSignUp`, { formData })
             .then((response) => {
                 let errors = {};
                 const data = response.data;
@@ -203,17 +203,18 @@ function SignUp() {
                 >
                     Sign up to continue!
                 </Heading>
-
-                <VStack space={3} mt="5">
-                    <Divider my={2} />
-                    <Button
-                        mt="4"
-                        colorScheme="teal"
+                <Divider my={2} mt={8} />
+                <Box p={2} px="4" w="80%" maxW="300" ml={8}>
+                    <FontAwesome.Button
+                        name="google"
+                        backgroundColor="#f39a6e"
                         onPress={handleGoogleSignup}
                     >
-                        Sign up with Google
-                    </Button>
-                    <Divider my={2} />
+                        Signup with Google
+                    </FontAwesome.Button>
+                </Box>
+                <Divider my={2} mb={8} />
+                <VStack space={3} mt="5">
                     <FormControl isRequired isInvalid={"firstName" in errors}>
                         <FormControl.Label>First name</FormControl.Label>
                         <Input

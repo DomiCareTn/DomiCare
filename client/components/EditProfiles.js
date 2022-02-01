@@ -27,7 +27,6 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { storage } from "../.firebase_config.js";
 
 import "firebase/compat/storage";
-import { Divider } from "react-native-paper";
 
 export const EditProfileEP = () => {
     LogBox.ignoreLogs(["timer"]);
@@ -52,7 +51,7 @@ export const EditProfileEP = () => {
     React.useEffect(() => {
         axios
             .get(
-                `http://192.168.119.162:3000/Users/ServiceProvider/Fetch/${userData._id}`
+                `http://192.168.1.5:3000/Users/ServiceProvider/Fetch/${userData._id}`
             )
             .then((res) => {
                 const data = res.data;
@@ -134,7 +133,6 @@ export const EditProfileEP = () => {
 
         if (!result.cancelled) {
             setFile(picked);
-            // setData({ ...formData, picture: picked });
             uploadFile();
         }
     };
@@ -186,7 +184,7 @@ export const EditProfileEP = () => {
         const userID = formData._id;
         axios
             .put(
-                `http://192.168.119.162:3000/Users/ServiceProvider/Update/${userID}`,
+                `http://192.168.1.5:3000/Users/ServiceProvider/Update/${userID}`,
                 updateData
             )
             .then((res) => {
@@ -208,7 +206,7 @@ export const EditProfileEP = () => {
         const userID = formData._id;
         axios
             .put(
-                `http://192.168.119.162:3000/Users/ServiceProvider/UpdatePassword/${userID}`,
+                `http://192.168.1.5:3000/Users/ServiceProvider/UpdatePassword/${userID}`,
                 updateData
             )
             .then((res) => {
@@ -328,7 +326,7 @@ export const EditProfileEP = () => {
                                     firstName: value,
                                 })
                             }
-                            placeholder="Firstname"
+                            placeholder={formData.firstName}
                             placeholderTextColor="#666666"
                             autoCorrect={false}
                             style={[
@@ -348,7 +346,7 @@ export const EditProfileEP = () => {
                                     lastName: value,
                                 })
                             }
-                            placeholder="Lastname"
+                            placeholder={formData.lastName}
                             placeholderTextColor="#666666"
                             autoCorrect={false}
                             style={[
@@ -369,7 +367,7 @@ export const EditProfileEP = () => {
                             onChangeText={(value) =>
                                 setUpdateData({ ...updateData, gender: value })
                             }
-                            placeholder="Gender"
+                            placeholder={formData.gender}
                             placeholderTextColor="#666666"
                             autoCorrect={false}
                             style={[
@@ -389,7 +387,7 @@ export const EditProfileEP = () => {
                                     phoneNumber: value,
                                 })
                             }
-                            placeholder="Phone"
+                            placeholder={`${formData.phoneNumber}`}
                             placeholderTextColor="#666666"
                             keyboardType="number-pad"
                             autoCorrect={false}
@@ -411,7 +409,7 @@ export const EditProfileEP = () => {
                             onChangeText={(value) =>
                                 setUpdateData({ ...updateData, email: value })
                             }
-                            placeholder="Email"
+                            placeholder={formData.email}
                             placeholderTextColor="#666666"
                             keyboardType="email-address"
                             autoCorrect={false}
@@ -434,7 +432,7 @@ export const EditProfileEP = () => {
                             onChangeText={(value) =>
                                 setUpdateData({ ...updateData, city: value })
                             }
-                            placeholder="City"
+                            placeholder={formData.city}
                             placeholderTextColor="#666666"
                             autoCorrect={false}
                             style={[
@@ -455,7 +453,7 @@ export const EditProfileEP = () => {
                             onChangeText={(value) =>
                                 setUpdateData({ ...updateData, adress: value })
                             }
-                            placeholder="Adresse"
+                            placeholder={formData.adress}
                             placeholderTextColor="#666666"
                             autoCorrect={false}
                             style={[
@@ -626,7 +624,7 @@ export const EditProfileSP = () => {
     React.useEffect(() => {
         axios
             .get(
-                `http://192.168.119.162:3000/Users/ServiceProvider/Fetch/${userData._id}`
+                `http://192.168.1.5:3000/Users/ServiceProvider/Fetch/${userData._id}`
             )
             .then((res) => {
                 const data = res.data;
@@ -760,7 +758,7 @@ export const EditProfileSP = () => {
         const userID = formData._id;
         axios
             .put(
-                `http://192.168.119.162:3000/Users/ServiceProvider/Update/${userID}`,
+                `http://192.168.1.5:3000/Users/ServiceProvider/Update/${userID}`,
                 updateData
             )
             .then((res) => {
@@ -782,7 +780,7 @@ export const EditProfileSP = () => {
         const userID = formData._id;
         axios
             .put(
-                `http://192.168.119.162:3000/Users/ServiceProvider/UpdatePassword/${userID}`,
+                `http://192.168.1.5:3000/Users/ServiceProvider/UpdatePassword/${userID}`,
                 updateData
             )
             .then((res) => {
@@ -902,7 +900,7 @@ export const EditProfileSP = () => {
                                     firstName: value,
                                 })
                             }
-                            placeholder="Firstname"
+                            placeholder={formData.firstName}
                             placeholderTextColor="#666666"
                             autoCorrect={false}
                             style={[
@@ -922,7 +920,7 @@ export const EditProfileSP = () => {
                                     lastName: value,
                                 })
                             }
-                            placeholder="Lastname"
+                            placeholder={formData.lastName}
                             placeholderTextColor="#666666"
                             autoCorrect={false}
                             style={[
@@ -943,7 +941,7 @@ export const EditProfileSP = () => {
                             onChangeText={(value) =>
                                 setUpdateData({ ...updateData, gender: value })
                             }
-                            placeholder="Gender"
+                            placeholder={formData.gender}
                             placeholderTextColor="#666666"
                             autoCorrect={false}
                             style={[
@@ -963,7 +961,7 @@ export const EditProfileSP = () => {
                                     phoneNumber: value,
                                 })
                             }
-                            placeholder="Phone"
+                            placeholder={`${formData.phoneNumber}`}
                             placeholderTextColor="#666666"
                             keyboardType="number-pad"
                             autoCorrect={false}
@@ -985,7 +983,7 @@ export const EditProfileSP = () => {
                             onChangeText={(value) =>
                                 setUpdateData({ ...updateData, email: value })
                             }
-                            placeholder="Email"
+                            placeholder={formData.email}
                             placeholderTextColor="#666666"
                             keyboardType="email-address"
                             autoCorrect={false}
@@ -1008,7 +1006,7 @@ export const EditProfileSP = () => {
                             onChangeText={(value) =>
                                 setUpdateData({ ...updateData, city: value })
                             }
-                            placeholder="City"
+                            placeholder={formData.city}
                             placeholderTextColor="#666666"
                             autoCorrect={false}
                             style={[
@@ -1029,7 +1027,7 @@ export const EditProfileSP = () => {
                             onChangeText={(value) =>
                                 setUpdateData({ ...updateData, adress: value })
                             }
-                            placeholder="Adresse"
+                            placeholder={formData.adress}
                             placeholderTextColor="#666666"
                             autoCorrect={false}
                             style={[
@@ -1185,9 +1183,7 @@ export const EditProfileSS = () => {
         React.useContext(CredentialsContext);
     const userData = storedCredentials.userData;
     const [errors, setErrors] = useState({});
-    const [image, setImage] = useState(
-        "https://api.adorable.io/avatars/80/abott@adorable.png"
-    );
+    const [image, setImage] = useState(null);
     const [uploading, setUploading] = React.useState(false);
     const [updateData, setUpdateData] = React.useState({});
     const [formData, setData] = React.useState({});
@@ -1200,7 +1196,7 @@ export const EditProfileSS = () => {
     React.useEffect(() => {
         axios
             .get(
-                `http://192.168.119.162:3000/Users/ServiceSeeker/Fetch/${userData._id}`
+                `http://192.168.1.5:3000/Users/ServiceSeeker/Fetch/${userData._id}`
             )
             .then((res) => {
                 const data = res.data;
@@ -1274,6 +1270,7 @@ export const EditProfileSS = () => {
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
             aspect: [4, 3],
             quality: 1,
         });
@@ -1282,7 +1279,6 @@ export const EditProfileSS = () => {
 
         if (!result.cancelled) {
             setFile(picked);
-            // setData({ ...formData, picture: picked });
             uploadFile();
         }
     };
@@ -1334,7 +1330,7 @@ export const EditProfileSS = () => {
         const userID = formData._id;
         axios
             .put(
-                `http://192.168.119.162:3000/Users/ServiceSeeker/Update/${userID}`,
+                `http://192.168.1.5:3000/Users/ServiceSeeker/Update/${userID}`,
                 updateData
             )
             .then((res) => {
@@ -1361,7 +1357,7 @@ export const EditProfileSS = () => {
         const userID = formData._id;
         axios
             .put(
-                `http://192.168.119.162:3000/Users/ServiceSeeker/UpdatePassword/${userID}`,
+                `http://192.168.1.5:3000/Users/ServiceSeeker/UpdatePassword/${userID}`,
                 updateData
             )
             .then((res) => {
@@ -1481,7 +1477,7 @@ export const EditProfileSS = () => {
                                     firstName: value,
                                 })
                             }
-                            placeholder="Firstname"
+                            placeholder={formData.firstName}
                             placeholderTextColor="#666666"
                             autoCorrect={false}
                             style={[
@@ -1501,7 +1497,7 @@ export const EditProfileSS = () => {
                                     lastName: value,
                                 })
                             }
-                            placeholder="Lastname"
+                            placeholder={formData.lastName}
                             placeholderTextColor="#666666"
                             autoCorrect={false}
                             style={[
@@ -1521,7 +1517,7 @@ export const EditProfileSS = () => {
                                     userName: value,
                                 })
                             }
-                            placeholder="Username"
+                            placeholder={formData.userName}
                             placeholderTextColor="#666666"
                             autoCorrect={false}
                             style={[
@@ -1547,7 +1543,7 @@ export const EditProfileSS = () => {
                             onChangeText={(value) =>
                                 setUpdateData({ ...updateData, gender: value })
                             }
-                            placeholder="Gender"
+                            placeholder={formData.gender}
                             placeholderTextColor="#666666"
                             autoCorrect={false}
                             style={[
@@ -1567,7 +1563,7 @@ export const EditProfileSS = () => {
                                     phoneNumber: value,
                                 })
                             }
-                            placeholder="Phone"
+                            placeholder={`${formData.phoneNumber}`}
                             placeholderTextColor="#666666"
                             keyboardType="number-pad"
                             autoCorrect={false}
@@ -1589,7 +1585,7 @@ export const EditProfileSS = () => {
                             onChangeText={(value) =>
                                 setUpdateData({ ...updateData, email: value })
                             }
-                            placeholder="Email"
+                            placeholder={formData.email}
                             placeholderTextColor="#666666"
                             keyboardType="email-address"
                             autoCorrect={false}
@@ -1612,7 +1608,7 @@ export const EditProfileSS = () => {
                             onChangeText={(value) =>
                                 setUpdateData({ ...updateData, city: value })
                             }
-                            placeholder="City"
+                            placeholder={formData.city}
                             placeholderTextColor="#666666"
                             autoCorrect={false}
                             style={[
@@ -1633,7 +1629,7 @@ export const EditProfileSS = () => {
                             onChangeText={(value) =>
                                 setUpdateData({ ...updateData, adress: value })
                             }
-                            placeholder="Adresse"
+                            placeholder={formData.adress}
                             placeholderTextColor="#666666"
                             autoCorrect={false}
                             style={[

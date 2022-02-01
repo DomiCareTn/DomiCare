@@ -6,6 +6,7 @@ import * as ImagePicker from "expo-image-picker";
 import { Ionicons } from "@expo/vector-icons";
 import { storage } from "../../.firebase_config.js";
 import * as Google from "expo-google-app-auth";
+import { FontAwesome } from '@expo/vector-icons';
 
 import {
     Image,
@@ -30,8 +31,11 @@ import {
 } from "native-base";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CredentialsContext } from "./CredentialsContext.js";
+import { LogBox } from "react-native";
 
 function SignUp() {
+    LogBox.ignoreLogs(["timer"]);
+    LogBox.ignoreLogs(["Unhandled"]);
     const navigation = useNavigation();
     const [formData, setData] = React.useState({});
     const [errors, setErrors] = React.useState({});
@@ -196,7 +200,7 @@ function SignUp() {
 
     const post = () => {
         axios
-            .post(`http://192.168.119.162:3000/auth/SPSignUp`, { formData })
+            .post(`http://192.168.190.162:3000/auth/SPSignUp`, { formData })
             .then((response) => {
                 let errors = {};
                 const data = response.data;
@@ -272,17 +276,19 @@ function SignUp() {
                 >
                     Sign up to continue!
                 </Heading>
-
+                <Divider my={2} mt={8}/>
+                    <Box p={2} px="4" w="80%" maxW="300" ml={8}>
+<FontAwesome.Button
+    name="google"
+    backgroundColor="#f39a6e"
+    onPress={handleGoogleSignup}
+>
+    Signup with Google
+</FontAwesome.Button>
+</Box>
+                    <Divider my={2} mb={8}/>
                 <VStack space={3} mt="5">
-                    <Divider my={2} />
-                    <Button
-                        mt="4"
-                        colorScheme="teal"
-                        onPress={handleGoogleSignup}
-                    >
-                        Sign up with Google
-                    </Button>
-                    <Divider my={2} />
+          
                     <FormControl isRequired isInvalid={"firstName" in errors}>
                         <FormControl.Label>First name</FormControl.Label>
                         <Input
