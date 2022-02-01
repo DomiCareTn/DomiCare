@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigation } from "@react-navigation/native";
+
 import {
     View,
     Text,
@@ -23,26 +25,6 @@ const SIZES = {
     width,
     height,
 };
-
-let exercises = [
-    {
-        title: "Home Care",
-        image: require("../assets/categories/homeCare8.png"),
-    },
-    {
-        title: "Medical Advices",
-        image: require("../assets/categories/askForHelp2.png"),
-    },
-
-    {
-        title: "Equipements",
-        image: require("../assets/categories/equipements.png"),
-    },
-    {
-        title: "Contact Us",
-        image: require("../assets/categories/contactUs8.png"),
-    },
-];
 
 const ListItem = ({ photo, fullName, city, price, onPress }) => {
     return (
@@ -118,29 +100,61 @@ const ListItem = ({ photo, fullName, city, price, onPress }) => {
 };
 
 const HomeScreen = () => {
+    const navigation = useNavigation();
+   
+  
+
     const [formData, setData] = React.useState([]);
     const [equipements, setEquipements] = React.useState([]);
     const [SPTab, setSPTab] = React.useState(1);
     LogBox.ignoreLogs(["VirtualizedLists"]);
 
     React.useEffect(() => {
-        axios
-            .get(`http://192.168.11.98:3000/Users/ServiceProvider/Fetch/`)
-            .then((res) => {
-                const data = res.data;
-                setData(data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-        axios
-            .get(`http://192.168.11.98:3000/Equipements`)
-            .then((result) => {
-                const data = result.data;
-                setEquipements(data);
-            })
-            .catch((err) => console.log(err));
-    }, []);
+        const unsubscribe = navigation.addListener("focus", () => {
+            axios
+                .get(`http://192.168.1.5:3000/Users/ServiceProvider/Fetch/`)
+                .then((res) => {
+                    const data = res.data;
+                    setData(data);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            axios
+                .get(`http://192.168.1.5:3000/Equipements`)
+                .then((result) => {
+                    const data = result.data;
+                    setEquipements(data);
+                })
+                .catch((err) => console.log(err));
+
+      
+        });
+        return unsubscribe;
+    }, [navigation]);
+
+    let exercises = [
+        {
+            title: "Home Care",
+            image: require("../assets/categories/homeCare8.png"),
+            navigation: "Home Care Agents",
+        },
+        {
+            title: "Medical Advices",
+            image: require("../assets/categories/askForHelp2.png"),
+            navigation: "Q/A",
+        },
+        {
+            title: "Equipements",
+            image: require("../assets/categories/equipements.png"),
+            navigation: "Equipements List",
+        },
+        {
+            title: "Contact Us",
+            image: require("../assets/categories/contactUs8.png"),
+            navigation: "Home Care",
+        },
+    ];
 
     const onSelectSwitch = (value) => {
         setSPTab(value);
@@ -160,6 +174,7 @@ const HomeScreen = () => {
                     shadowColor: "#9e9898",
                     elevation: 5,
                 }}
+                onPress={() => navigation.navigate(exercise.navigation)}
             >
                 <ImageBackground
                     source={exercise.image}
@@ -220,7 +235,9 @@ const HomeScreen = () => {
                     showsVerticalScrollIndicator={false}
                     numColumns={2}
                     keyExtractor={(item) => item.title}
-                    renderItem={({ item }) => <ExerciseItem exercise={item} />}
+                    renderItem={({ item, key }) => (
+                        <ExerciseItem exercise={item} key={item.title} />
+                    )}
                 />
             </SafeAreaView>
 

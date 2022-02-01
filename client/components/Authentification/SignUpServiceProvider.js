@@ -6,6 +6,7 @@ import * as ImagePicker from "expo-image-picker";
 import { Ionicons } from "@expo/vector-icons";
 import { storage } from "../../.firebase_config.js";
 import * as Google from "expo-google-app-auth";
+import { FontAwesome } from '@expo/vector-icons';
 
 import {
   Image,
@@ -30,13 +31,24 @@ import {
 } from "native-base";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CredentialsContext } from "./CredentialsContext.js";
+import { LogBox } from "react-native";
 
 function SignUp() {
+<<<<<<< HEAD
   const navigation = useNavigation();
   const [formData, setData] = React.useState({});
   const [errors, setErrors] = React.useState({});
   const [file, setFile] = React.useState("");
   const [uploading, setUploading] = React.useState("None");
+=======
+    LogBox.ignoreLogs(["timer"]);
+    LogBox.ignoreLogs(["Unhandled"]);
+    const navigation = useNavigation();
+    const [formData, setData] = React.useState({});
+    const [errors, setErrors] = React.useState({});
+    const [file, setFile] = React.useState("");
+    const [uploading, setUploading] = React.useState("None");
+>>>>>>> 6ca2dafaaaed2ea509f8b9446400a34a60f607c8
 
   const { storedCredentials, setStoredCredentials } =
     React.useContext(CredentialsContext);
@@ -194,6 +206,7 @@ function SignUp() {
       });
   };
 
+<<<<<<< HEAD
   const post = () => {
     axios
       .post(`http://192.168.11.98:3000/auth/SPSignUp`, { formData })
@@ -214,6 +227,32 @@ function SignUp() {
         console.log(err);
       });
   };
+=======
+    const post = () => {
+        axios
+<<<<<<< HEAD
+            .post(`http://192.168.11.97:3000/auth/SPSignUp`, { formData })
+=======
+            .post(`http://192.168.190.162:3000/auth/SPSignUp`, { formData })
+>>>>>>> 5e38b5dba6c2204c1c7224e5a4902975e672f2e3
+            .then((response) => {
+                let errors = {};
+                const data = response.data;
+                if (response.data === "email address already exists") {
+                    errors["email"] = "email address already exists";
+                    setErrors(errors);
+                } else if (response.data === "Username already exists") {
+                    errors["userName"] = "Username already exists";
+                    setErrors(errors);
+                } else {
+                    persistLogin({ userData: data });
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+>>>>>>> 6ca2dafaaaed2ea509f8b9446400a34a60f607c8
 
   const onSubmit = () => {
     if (validate()) {
@@ -250,6 +289,7 @@ function SignUp() {
         alt="logo"
       />
 
+<<<<<<< HEAD
       <Box safeArea p="2" w="120%" maxW="300" py="8" marginTop={79}>
         <Heading
           size="lg"
@@ -294,6 +334,58 @@ function SignUp() {
               ""
             )}
           </FormControl>
+=======
+            <Box safeArea p="2" w="120%" maxW="300" py="8" marginTop={79}>
+                <Heading
+                    size="lg"
+                    color="coolGray.800"
+                    _dark={{
+                        color: "warmGray.50",
+                    }}
+                    fontWeight="semibold"
+                >
+                    Welcome
+                </Heading>
+                <Heading
+                    mt="1"
+                    color="coolGray.600"
+                    _dark={{
+                        color: "warmGray.200",
+                    }}
+                    fontWeight="medium"
+                    size="xs"
+                >
+                    Sign up to continue!
+                </Heading>
+                <Divider my={2} mt={8}/>
+                    <Box p={2} px="4" w="80%" maxW="300" ml={8}>
+<FontAwesome.Button
+    name="google"
+    backgroundColor="#f39a6e"
+    onPress={handleGoogleSignup}
+>
+    Signup with Google
+</FontAwesome.Button>
+</Box>
+                    <Divider my={2} mb={8}/>
+                <VStack space={3} mt="5">
+          
+                    <FormControl isRequired isInvalid={"firstName" in errors}>
+                        <FormControl.Label>First name</FormControl.Label>
+                        <Input
+                            onChangeText={(value) =>
+                                setData({ ...formData, firstName: value })
+                            }
+                        />
+                        {"firstName" in errors ? (
+                            <FormControl.ErrorMessage>
+                                {errors.firstName}
+                            </FormControl.ErrorMessage>
+                        ) : (
+                            ""
+                        )}
+                    </FormControl>
+>>>>>>> 6ca2dafaaaed2ea509f8b9446400a34a60f607c8
 
           <FormControl isRequired isInvalid={"lastName" in errors}>
             <FormControl.Label>Last name</FormControl.Label>

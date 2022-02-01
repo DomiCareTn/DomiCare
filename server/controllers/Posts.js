@@ -26,7 +26,6 @@ module.exports = {
       CreateServiceSeekerPost:async (req, res, next) => {
         
 
-        console.log('create a post');
         
         
         try {
@@ -38,7 +37,8 @@ module.exports = {
             endDate:req.body.selectedEndDate,
             adress:req.body.adress,
             file:req.body.file,
-            type:"request"
+            type: "request",
+            user:req.body.user
           });
           console.log('CreateServiceSeekerPost',Post)
           res.status(200).json(Post);

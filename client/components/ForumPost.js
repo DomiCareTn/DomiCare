@@ -1,33 +1,25 @@
 import React, { useState, useEffect, useRef } from "react";
-import { PrivateValueStore, useNavigation } from "@react-navigation/native";
+import {  useNavigation } from "@react-navigation/native";
 import moment from "moment";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 import {
     StyleSheet,
     View,
     Text,
-    Button,
-    Image,
+ 
     SafeAreaView,
     ScrollView,
-    TextInput,
-    Touchable,
+  
     TouchableOpacity,
     Alert,
-    Platform,
-    TouchableWithoutFeedback,
-    Keyboard,
-    KeyboardAvoidingView,
+
 } from "react-native";
 import {
-    IconButton,
-    // Icon,
+
     Input,
     Box,
     Heading,
-    AspectRatio,
     Center,
     HStack,
     Stack,
@@ -40,26 +32,19 @@ import axios from "axios";
 import { CredentialsContext } from "./Authentification/CredentialsContext.js";
 import { Dimensions } from "react-native";
 const windowWidth = Dimensions.get("window").width;
-const windowHeight = Dimensions.get("window").height;
 
 const ForumPost = (props) => {
     const [value, setValue] = React.useState("");
     const [shouldShow, setShouldShow] = useState(false);
-    const [shouldshow, setshouldshow] = useState(false);
 
-    const handleChange = (text) => {
-        console.log(text);
-        setValue(text);
-    };
+  
     const navigation = useNavigation();
     const [singlepost, setpost] = useState([]);
     const [singlepostOwner, setpostOwner] = useState([]);
     const [participants, setparticipants] = useState([]);
     const [comments, setcomments] = useState([]);
-    const [subcomment, setsubcomment] = useState({});
-    const [focus, setfocus] = useState(false);
+   
     const [like, setLike] = useState(false);
-    const [text, setText] = useState("");
 
     const { storedCredentials, setStoredCredentials } =
         React.useContext(CredentialsContext);
@@ -115,28 +100,10 @@ const ForumPost = (props) => {
             console.log(err);
         }
     };
-    const replyto = async () => {
-        try {
-            const id = subcomment;
-            const reply = await axios.post(
-                `http://192.168.11.98:3000/post/reply`,
-                {
-                    rep: {
-                        owner: { _id: userData._id, name: userData.firstName },
-                        commentid: id,
-                        content: value,
-                    },
-                }
-            );
-            const _id = props.route.params._id;
-            const recomm = await axios.get(
-                `http://192.168.11.98:3000/post/findcomments/${_id}`
-            );
-            setcomments(recomm.data);
-        } catch (err) {
-            console.log(err);
-        }
+    const handleChange = (text) => {
+        setValue(text);
     };
+
     const Like = async () => {
         const userid = userData._id;
         const postid = singlepost._id;
@@ -151,7 +118,7 @@ const ForumPost = (props) => {
                 setLike(false);
             }
             const post = await axios.put(
-                `http://192.168.11.98:3000/post/savepost`,
+                `http://192.168.1.5:3000/post/savepost`,
                 {
                     userid,
                     postid,
@@ -171,7 +138,6 @@ const ForumPost = (props) => {
         content,
         fullName,
         createdAt,
-        onPress,
         owner_id,
         postId,
     }) => {
@@ -270,7 +236,7 @@ const ForumPost = (props) => {
                 text: "Confirm",
                 onPress: () => {
                     axios
-                        .delete(`http://192.168.11.98:3000/post/Delete/${id}`)
+                        .delete(`http://192.168.1.5:3000/post/Delete/${id}`)
                         .then(() => navigation.navigate("Forum2"))
                         .catch((err) => console.log(err));
                 },
@@ -291,7 +257,7 @@ const ForumPost = (props) => {
 
                     axios
                         .delete(
-                            `http://192.168.11.98:3000/post/deleteComment/${id}/${postID}`
+                            `http://192.168.1.5:3000/post/deleteComment/${id}/${postID}`
                         )
                         .then((res) => setcomments(res.data))
                         .catch((err) => console.log(err));
@@ -300,124 +266,7 @@ const ForumPost = (props) => {
         ]);
 
     return (
-        //         <NativeBaseProvider>
-        //             <Image
-        //                 source={{
-        //                     uri: "https://www.holidify.com/images/cmsuploads/compressed/Bangalore_citycover_20190613234056.jpg",
-        //                 }}
-        //                 alt="image"
-        //             />
-
-        //             <Text> {singlepost.title}</Text>
-        //             <Text> By:{singlepostOwner.userName}</Text>
-        //             <Text>Posted At : {singlepost.createdAt}</Text>
-        //             <Text> {singlepost.content}</Text>
-        //             <Text> {participants.length}Likes</Text>
-        //             <Divider/>
-        //             <View style ={{flexDirection: "row" ,marginLeft: 20, justifyContent: 'space-evenly' }}>
-        //             <Button title="Like" style={{width : 50}} st onPress={() => Like()} />
-        // <Button
-        //     title="comment"
-
-        //     onPress={() => setShouldShow(!shouldShow)}
-        // />
-        //             </View>
-        //             <Divider/>
-
-        //             {shouldShow ? (
-        //                 <Input
-        //                     value={value}
-        //                     variant="rounded"
-        //                     placeholder="Round"
-        //                     onChangeText={(text) => handleChange(text)}
-        //                     w={{
-        //                         md: "25%",
-        //                     }}
-        //                     InputRightElement={
-        //                         <Button
-        //                             size="xs"
-        //                             rounded="none"
-        //                             w="1/6"
-        //                             h="full"
-        //                             title="Submit"
-        //                             onPress={() => Comment()}
-        //                         ></Button>
-        //                     }
-        //                 />
-        //             ) : null}
-        //             <View>
-        //                 <View style={{ height: 600, width: 500 }}>
-        //                     <SafeAreaView>
-        //                         <ScrollView>
-        //                             <View>
-        //                                 {comments.map((comment, key) => {
-        //                                     return (
-        //                                         <View key={key}>
-        //                                             <Text> {comment.name} </Text>
-        //                                             <Text> {comment.content} </Text>
-        //                                             <Text> {comment.createdAt} </Text>
-        //                                             <Text> {comment.likesCount} </Text>
-
-        //                                             <Button
-        //                                                 title="Reply"
-        //                                                 onPress={() => {
-        //                                                     setshouldshow(!shouldshow);
-        //                                                     setsubcomment(comment._id);
-        //                                                 }}
-        //                                             />
-        //                                             {comment.comments.map(
-        //                                                 (reply, key) => {
-        //                                                     return (
-        //                                                         <View key={key}>
-        //                                                             <Text>
-        //                                                                 {
-        //                                                                     reply.owner
-        //                                                                         .name
-        //                                                                 }
-        //                                                             </Text>
-        //                                                             <Text>
-        //                                                                 {reply.content}
-        //                                                             </Text>
-        //                                                         </View>
-        //                                                     );
-        //                                                 }
-        //                                             )}
-        //                                             {shouldshow ? (
-        //                                                 <Input
-        //                                                     value={value}
-        //                                                     variant="rounded"
-        //                                                     placeholder="..."
-        //                                                     onChange={(text) =>
-        //                                                         handleChange(text)
-        //                                                     }
-        //                                                     w={{
-        //                                                         md: "25%",
-        //                                                     }}
-        //                                                     InputRightElement={
-        //                                                         <Button
-        //                                                             size="xs"
-        //                                                             rounded="none"
-        //                                                             w="1/6"
-        //                                                             h="full"
-        //                                                             title="Submit"
-        //                                                             onPress={() =>
-        //                                                                 replyto()
-        //                                                             }
-        //                                                         ></Button>
-        //                                                     }
-        //                                                 />
-        //                                             ) : null}
-        //                                         </View>
-        //                                     );
-        //                                 })}
-        //                             </View>
-        //                         </ScrollView>
-        //                     </SafeAreaView>
-        //                 </View>
-        //             </View>
-
-        //         </NativeBaseProvider>
-
+  
         <NativeBaseProvider>
             <Center flex={1} px="3">
                 <View>
