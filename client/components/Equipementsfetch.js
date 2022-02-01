@@ -1,290 +1,355 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigation } from "@react-navigation/native";
 import {
-  View,
-  StyleSheet,
-  Button,
-  ScrollView,
-  Alert,
-  Image,
-  Text,
-  TouchableOpacity,
-  Picker,
-  Dimensions,
+    StyleSheet,
+    Text,
+    View,
+    TouchableOpacity,
+    Image,
+    Alert,
+    ScrollView,
+    FlatList,
 } from "react-native";
+import { Picker } from "@react-native-picker/picker";
+import { Button } from "react-native-paper";
 
 const Equipementsfetch = () => {
-  const [selectedValue, setSelectedValue] = useState("");
-  const [selectedprice, setselectedprice] = useState("");
-  const [selectedavailability, setselectedavailability] = useState(null);
-  const [Equipements, setEquipements] = useState([]);
-  const [myData, setmyData] = useState([]);
+    const navigation = useNavigation();
+    const [city, setCity] = useState("");
+    const [transaction, setTransaction] = useState("");
+    const [Equipements, setEquipements] = useState([]);
+    const [myData, setmyData] = useState([]);
+    const [reset, setReset] = useState([]);
 
-  useEffect(() => {
-    axios
-      .get("http://192.168.11.61:3000/Equipements")
-      .then((res) => {
-        setEquipements(res.data);
-        setmyData(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+    useEffect(() => {
+        axios
+            .get("http://192.168.11.98:3000/Equipements")
+            .then((res) => {
+                console.log("res", res);
+                console.log("res.data", res.data);
+                setEquipements(res.data);
+                setmyData(res.data);
+                setReset(res.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
+    //  var fetchData=()=>{
+    //     fetch("http://192.168.11.61:3000/Equipements")
+    //     .then(response=>{
+    //       console.log("response",response,response.json());
+    //      response.json()
+    //     })
+    //     .then(res=>{setEquipements(res)})
+    //     .catch(error=>{
+    //       console.log("error",error);
+    //     })
+    // }
+    //  var filterData=(city)=> {
 
-  const availability = (eve) => {
-    var ava;
-    if (eve === "Available") {
-      ava = Equipements.filter((item) => item.availability === "Available");
-      setEquipements(ava);
-    } else if (eve === "Not Available") {
-      ava = Equipements.filter((item) => item.availability === "Not Available");
-      setEquipements(ava);
-    } else {
-      setEquipements(myData);
-    }
-  };
-
-  const ascendingSort = (eve) => {
-    var asc;
-    if (eve === "Between 0 and 500") {
-      asc = Equipements.filter((item) => {
-        if (item.price < 500 && item.price > 0) {
-          return item.price;
+    var filter = () => {
+        var FiltredData;
+        if (city !== "" && transaction === "") {
+            FiltredData = myData.filter((item) => item.city === city);
+            setEquipements(FiltredData);
+            setmyData(reset);
+        } else if (city === "" && transaction !== "") {
+            FiltredData = myData.filter(
+                (item) => item.transactionType === transaction
+            );
+            setEquipements(FiltredData);
+            setmyData(reset);
+        } else if (city !== "" && transaction !== "") {
+            FiltredData = myData.filter(
+                (item) =>
+                    item.transactionType === transaction && item.city === city
+            );
+            setEquipements(FiltredData);
+            setmyData(reset);
+        } else {
+            setEquipements(reset);
         }
-      });
-      setEquipements(asc);
-    } else if (eve === "more then 500") {
-      asc = Equipements.filter((item) => {
-        if (item.price >= 500 && item.price <= 1000) {
-          return item.price;
-        }
-      });
-      setEquipements(asc);
-    } else if (eve === "more then 1000") {
-      asc = Equipements.filter((item) => {
-        if (item.price > 1000) {
-          return item.price;
-        }
-      });
-      setEquipements(asc);
-    } else if (eve === "") {
-      setEquipements(myData);
-    }
-  };
+    };
 
-  var filterData = (city) => {
-    var FiltredData;
-    if (city !== "") {
-      FiltredData = Equipements.filter((item) => item.city === city);
-      setEquipements(FiltredData);
-    } else {
-      setEquipements(myData);
-    }
-  };
-
-  var apihandler = () => {
-    const url = "http://192.168.11.61:3000/Equipements";
-    fetch(url)
-      .then((res) => res.json())
-      .then((resJson) => {
-        setEquipements({ data: resJson });
-      });
-  };
-
-  var filterData2 = (city) => {
-    const FiltredData = Equipements.filter((item) => {
-      if (city !== "") {
-        return item.city === city;
-      } else {
-        console.log("im in");
-        apihandler;
-      }
-    });
-    setEquipements(FiltredData);
-  };
-
-  return (
-    <View style={styles.container}>
-      <View
-        style={{ display: "flex", flexDirection: "row", flexWrap: "nowrap" }}
-      >
-        <View style={styles.cities}>
-          <Picker
-            selectedValue={selectedValue}
-            style={{
-              height: 30,
-              width: 100,
-              marginLeft: 15,
-              borderRadius: 15,
-              paddingLeft: 5,
-              marginTop: 30,
-            }}
-            onValueChange={(cityValue, cityIndex) => {
-              setSelectedValue(cityValue);
-              filterData(cityValue);
-            }}
-          >
-            <Picker.Item label="city" value="" />
-            <Picker.Item label="Ariana" value="Ariana" />
-            <Picker.Item label="Ben Arous" value="Ben Arous" />
-            <Picker.Item label="Tunis" value="Tunis" />
-            <Picker.Item label="Sousse" value="Sousse" />
-            <Picker.Item label="Monastir" value="Monastir" />
-            <Picker.Item label="Sfax" value="Sfax" />
-            <Picker.Item label="Beja" value="Beja" />
-            <Picker.Item label="Benzart" value="Benzart" />
-            <Picker.Item label="Mahdia" value="Mahdia" />
-            <Picker.Item label="kairouan" value="kairouan" />
-            <Picker.Item label="Sidi Bouzid" value="Sidi Bouzid" />
-            <Picker.Item label="Zaghouane" value="Zaghouane" />
-            <Picker.Item label="Mednine" value="Mednine" />
-            <Picker.Item label="Gabes" value="Gabes" />
-            <Picker.Item label="Kebili" value="Kebili" />
-            <Picker.Item label="Gasserine" value="Gasserine" />
-            <Picker.Item label="Jendouba" value="Jendouba" />
-            <Picker.Item label="Kef" value="Kef" />
-            <Picker.Item label="Siliana" value="Siliana" />
-            <Picker.Item label="Tozeur" value="Tozeur" />
-            <Picker.Item label="Tataouine" value="Tataouine" />
-            <Picker.Item label="Manouba" value="Manouba" />
-            <Picker.Item label="Gafsa" value="Gafsa" />
-            <Picker.Item label="Nabeul" value="Nabeul" />
-          </Picker>
-        </View>
-        <View>
-          <Picker
-            selectedprice={selectedprice}
-            style={{
-              height: 30,
-              width: 110,
-              marginLeft: 10,
-              borderRadius: 15,
-              paddingLeft: 5,
-              marginTop: 30,
-            }}
-            onValueChange={(priceValue, cityIndex) => {
-              console.log(priceValue);
-              setselectedprice(priceValue);
-              ascendingSort(priceValue);
-            }}
-          >
-            <Picker.Item label="price" value="" />
-            <Picker.Item label="Less than 500" value="Between 0 and 500" />
-            <Picker.Item label="Over 500" value="more then 500" />
-            <Picker.Item label="Over 1000" value="more then 1000" />
-          </Picker>
-        </View>
-        <View>
-          <Picker
-            selectedavailability={selectedavailability}
-            style={{
-              height: 30,
-              width: 150,
-              marginLeft: 5,
-              borderRadius: 15,
-              paddingLeft: 5,
-              marginTop: 30,
-            }}
-            onValueChange={(AvailabilityValue, cityIndex) => {
-              setselectedavailability(AvailabilityValue);
-              availability(AvailabilityValue);
-            }}
-          >
-            <Picker.Item label="Availability" value="" />
-            <Picker.Item label="Available" value="Available" />
-            <Picker.Item label="Not Available" value="Not Available" />
-          </Picker>
-        </View>
-      </View>
-      <ScrollView style={styles.sProvider}>
-        {Equipements.map((item, key) => {
-          return (
-            <View key={key} style={styles.itemVue}>
-              <Image style={styles.cardImage} source={{ uri: item.picture }} />
-              <Text style={styles.titleStyle}>{item.name}</Text>
-              <Text style={styles.categoryStyle}>
-                Price : {item.price + " TND"}
-              </Text>
-              <Text style={styles.categoryStyle}>
-                Quantity : {item.quantity}
-              </Text>
-              <Text style={styles.categoryStyle}>
-                Description : {item.description}
-              </Text>
-              <Text style={styles.categoryStyle}>City : {item.city}</Text>
-              <Text style={styles.categoryStyle}>
-                Delivery : {item.delivery}
-              </Text>
-              <Text style={styles.categoryStyle}>
-                Transaction Type : {item.transactionType}
-              </Text>
-              {item.availability === "Available" ? (
-                <Text style={styles.categoryStyle}>Available</Text>
-              ) : (
-                <Text style={styles.categoryStyle}>Not Available</Text>
-              )}
+    return (
+        <View style={styles.container}>
+            <View
+                style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    flexWrap: "nowrap",
+                }}
+            >
+                <View style={styles.cities}>
+                    <Picker
+                        selectedValue={city}
+                        style={{
+                            height: 30,
+                            width: 110,
+                            marginLeft: 30,
+                            borderRadius: 15,
+                            paddingLeft: 5,
+                            marginTop: 0,
+                        }}
+                        onValueChange={(cityValue) => {
+                            setCity(cityValue);
+                        }}
+                    >
+                        <Picker.Item label="City" value="" />
+                        <Picker.Item label="Ariana" value="Ariana" />
+                        <Picker.Item label="Ben Arous" value="Ben Arous" />
+                        <Picker.Item label="Tunis" value="Tunis" />
+                        <Picker.Item label="Sousse" value="Sousse" />
+                        <Picker.Item label="Monastir" value="Monastir" />
+                        <Picker.Item label="Sfax" value="Sfax" />
+                        <Picker.Item label="Beja" value="Beja" />
+                        <Picker.Item label="Benzart" value="Benzart" />
+                        <Picker.Item label="Mahdia" value="Mahdia" />
+                        <Picker.Item label="kairouan" value="kairouan" />
+                        <Picker.Item label="Sidi Bouzid" value="Sidi Bouzid" />
+                        <Picker.Item label="Zaghouane" value="Zaghouane" />
+                        <Picker.Item label="Mednine" value="Mednine" />
+                        <Picker.Item label="Gabes" value="Gabes" />
+                        <Picker.Item label="Kebili" value="Kebili" />
+                        <Picker.Item label="Gasserine" value="Gasserine" />
+                        <Picker.Item label="Jendouba" value="Jendouba" />
+                        <Picker.Item label="Kef" value="Kef" />
+                        <Picker.Item label="Siliana" value="Siliana" />
+                        <Picker.Item label="Tozeur" value="Tozeur" />
+                        <Picker.Item label="Tataouine" value="Tataouine" />
+                        <Picker.Item label="Manouba" value="Manouba" />
+                        <Picker.Item label="Gafsa" value="Gafsa" />
+                        <Picker.Item label="Nabeul" value="Nabeul" />
+                    </Picker>
+                </View>
+                <View>
+                    <Picker
+                        selectedValue={transaction}
+                        style={{
+                            height: 30,
+                            width: 110,
+                            marginLeft: 20,
+                            borderRadius: 15,
+                            paddingLeft: 5,
+                            marginTop: 0,
+                        }}
+                        onValueChange={(transactionType) => {
+                            setTransaction(transactionType);
+                        }}
+                    >
+                        <Picker.Item label="All" value="" />
+                        <Picker.Item label="Sale" value="For Sale" />
+                        <Picker.Item label="Rent" value="For Rent" />
+                    </Picker>
+                </View>
+                <TouchableOpacity style={styles.shareButton} onPress={filter}>
+                    <Text style={{ color: "white" }}>Filter</Text>
+                </TouchableOpacity>
             </View>
-          );
-        })}
-      </ScrollView>
-    </View>
-  );
+
+            <FlatList
+                style={styles.list}
+                contentContainerStyle={styles.listContainer}
+                data={Equipements}
+                horizontal={false}
+                numColumns={2}
+                keyExtractor={(item) => {
+                    return item._id;
+                }}
+                ItemSeparatorComponent={() => {
+                    return <View style={styles.separator} />;
+                }}
+                renderItem={(post) => {
+                    const item = post.item;
+                    return (
+                        <View style={styles.card}>
+                            <View style={styles.cardHeader}>
+                                <View>
+                                    <Text style={styles.title}>
+                                        {item.name}
+                                    </Text>
+                                    <Text style={styles.info}>
+                                        {item.transactionType +
+                                            " - " +
+                                            item.city}
+                                    </Text>
+                                </View>
+                            </View>
+
+                            <Image
+                                style={styles.cardImage}
+                                source={{ uri: item.picture }}
+                            />
+
+                            <View style={styles.cardFooter}>
+                                <View style={styles.socialBarContainer}>
+                                    <View style={styles.socialBarSection}>
+                                        <TouchableOpacity
+                                            style={styles.socialBarButton}
+                                            onPress={() =>
+                                                navigation.navigate(
+                                                    "Equipement",
+                                                    item
+                                                )
+                                            }
+                                        >
+                                            <Image
+                                                style={styles.icon}
+                                                source={{
+                                                    uri: "https://img.icons8.com/nolan/96/3498db/add-shopping-cart.png",
+                                                }}
+                                            />
+                                            {item.transactionType === 'For Rent' ? (
+                                                    <Text
+                                                    style={[
+                                                        styles.socialBarLabel,
+                                                        styles.buyNow,
+                                                    ]}
+                                                >
+                                                    Rent Now
+                                                </Text>
+                                            ): (
+                                                <Text
+                                                style={[
+                                                    styles.socialBarLabel,
+                                                    styles.buyNow,
+                                                ]}
+                                            >
+                                                Buy Now
+                                            </Text>
+                                            )}
+                                         
+                                        </TouchableOpacity>
+                                    </View>
+                                    <View style={styles.socialBarSection}>
+                                        <Text style={styles.price}>
+                                            {item.price + " TD"}
+                                        </Text>
+                                    </View>
+                                </View>
+                            </View>
+                        </View>
+                    );
+                }}
+            />
+        </View>
+    );
 };
-const devicewidth = Math.round(Dimensions.get("window").width);
-const radius = 20;
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    // backgroundColor:'#fff',
-    paddingTop: 40,
-    paddingHorizontal: 20,
-  },
-  cardImage: {
-    width: devicewidth - 90,
-    height: 180,
-    borderTopLeftRadius: radius,
-    borderTopRightRadius: 25,
-    borderBottomRightRadius: radius,
-    borderBottomLeftRadius: radius,
-    opacity: 0.9,
-    alignContent: "center",
-    alignSelf: "center",
-  },
-  itemVue: {
-    paddingTop: 15,
-    marginTop: 25,
-    width: devicewidth - 60,
-    backgroundColor: "#F5F5F5",
-
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 12,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 1.84,
-
-    elevation: 30,
-
-    height: 380,
-    marginLeft: 10,
-    borderRadius: radius,
-  },
-  titleStyle: {
-    fontSize: 17,
-    fontWeight: "700",
-    alignContent: "center",
-    alignSelf: "center",
-  },
-  categoryStyle: {
-    fontWeight: "200",
-    alignContent: "center",
-    alignSelf: "center",
-  },
-  sProvider: {
-    // marginHorizontal:10,
-  },
-});
 
 export default Equipementsfetch;
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        marginTop: 20,
+    },
+    list: {
+        marginTop: 30,
+        paddingHorizontal: 5,
+        backgroundColor: "#E6E6E6",
+    },
+    listContainer: {
+        alignItems: "center",
+    },
+    separator: {
+        marginTop: 10,
+    },
+    shareButton: {
+        height: 30,
+        width: 80,
+        marginTop: 10,
+        marginLeft: 30,
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: 10,
+        backgroundColor: "#f39a6e",
+    },
+    /******** card **************/
+    card: {
+        shadowColor: "#00000021",
+        shadowOffset: {
+            width: 2,
+        },
+        shadowOpacity: 0.5,
+        shadowRadius: 4,
+        marginVertical: 8,
+        backgroundColor: "white",
+        flexBasis: "47%",
+        marginHorizontal: 5,
+    },
+    cardHeader: {
+        paddingVertical: 17,
+        paddingHorizontal: 16,
+        borderTopLeftRadius: 1,
+        borderTopRightRadius: 1,
+        flexDirection: "row",
+        justifyContent: "space-between",
+    },
+    cardContent: {
+        paddingVertical: 12.5,
+        paddingHorizontal: 16,
+    },
+    cardFooter: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        paddingTop: 12.5,
+        paddingBottom: 25,
+        paddingHorizontal: 16,
+        borderBottomLeftRadius: 1,
+        borderBottomRightRadius: 1,
+    },
+    cardImage: {
+        flex: 1,
+        height: 150,
+        width: null,
+    },
+    /******** card components **************/
+    title: {
+        fontSize: 16,
+        flex: 1,
+    },
+    info: {
+        fontSize: 12,
+        color: "#008080",
+        marginTop: 5,
+    },
+    price: {
+        fontSize: 14,
+        color: "#f39a6e",
+        marginTop: 5,
+        marginLeft: 15,
+    },
+    buyNow: {
+        color: "#008080",
+        marginTop: 5,
+    },
+    icon: {
+        width: 25,
+        height: 25,
+    },
+    /******** social bar ******************/
+    socialBarContainer: {
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "row",
+        flex: 1,
+    },
+    socialBarSection: {
+        justifyContent: "center",
+        flexDirection: "row",
+        flex: 1,
+    },
+    socialBarlabel: {
+        marginLeft: 8,
+        alignSelf: "flex-end",
+        justifyContent: "center",
+    },
+    socialBarButton: {
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+});

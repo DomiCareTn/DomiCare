@@ -71,7 +71,15 @@ function ResetPassword() {
     const post = () => {
         const pass = formData.password;
         axios
-            .post(`http://192.168.11.61:3000/auth/ResetPassword`, {
+<<<<<<< HEAD
+            .post(`http://192.168.11.98:3000/auth/ResetPassword`, {
+=======
+<<<<<<< HEAD
+            .post(`http://192.168.11.97:3000/auth/ResetPassword`, {
+=======
+            .post(`http://192.168.1.5:3000/auth/ResetPassword`, {
+>>>>>>> 5e38b5dba6c2204c1c7224e5a4902975e672f2e3
+>>>>>>> 6ca2dafaaaed2ea509f8b9446400a34a60f607c8
                 pass,
                 email,
             })
@@ -115,7 +123,6 @@ function ResetPassword() {
                                     setData({ ...formData, password: value })
                                 }
                             />
-
                             {"password" in errors ? (
                                 <FormControl.ErrorMessage>
                                     {errors.password}
@@ -130,7 +137,6 @@ function ResetPassword() {
                                 </FormControl.HelperText>
                             )}
                         </FormControl>
-
                         <FormControl
                             isRequired
                             isInvalid={"password" in errors}

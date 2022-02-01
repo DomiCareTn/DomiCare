@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { localhost } from "@env";
+
 import { View, StyleSheet, Picker } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CredentialsContext } from "../Authentification/CredentialsContext.js";
@@ -38,7 +38,7 @@ const SeekerRequest = (props) => {
         console.log("create a post");
 
         axios
-            .post(`http://192.168.11.61:3000/Posts/CreateServiceSeekerPost`, {
+            .post(`http://192.168.11.98:3000/Posts/CreateServiceSeekerPost`, {
                 details,
                 address,
                 file,

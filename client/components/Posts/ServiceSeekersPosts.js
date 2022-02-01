@@ -8,7 +8,6 @@ import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import moment from "moment";
 
-
 const ServicesRequests = () => {
     const [feed, setFeed] = useState([]);
     const { storedCredentials, setStoredCredentials } =
@@ -20,7 +19,7 @@ const ServicesRequests = () => {
         console.log("feed", feed);
         try {
             const posts = await axios.get(
-                `http://192.168.11.61:3000/Posts/servicesrequests`
+                `http://192.168.11.98:3000/Posts/servicesrequests`
             );
             setFeed(posts.data);
         } catch (err) {
@@ -29,18 +28,22 @@ const ServicesRequests = () => {
     }, []);
     const OfferMysService = async (e) => {
         const postid = e._id;
-        const providerId = userData._id;
+        const providerId = userData;
         const seekerId = e.serviceSeeker_id;
         const type = "offer";
+        const content = "You received an offer from "+userData.firstName+" "+userData.lastName
 
         const offer = await axios.post(
-            `http://192.168.11.61:3000/Transactions/OfferMyService`,
-            { type, postid, providerId, seekerId }
+            `http://192.168.11.98:3000/Transactions/OfferMyService`,
+            { type, postid, providerId, seekerId,content }
         );
+        console.log("first");
     };
 
     return (
+        
         <NativeBaseProvider>
+            <View>
             <ScrollView>
                 <Button
                     onPress={() => navigation.navigate("ServiceSeekerAddPost")}
@@ -82,7 +85,9 @@ const ServicesRequests = () => {
                     );
                 })}
             </ScrollView>
+            </View>
         </NativeBaseProvider>
+        
     );
 };
 const styles = StyleSheet.create({

@@ -2,12 +2,16 @@ const report = require('../models/reports.js')
 
 
 module.exports = {
-    push : async (req, res) => {
+	reports: async (req, res) => {
+		// console.log("helloooo",req.body);
+		const {title,reason,reporter,reported}=req.body
 		try {
-			console.log(req.body)
-			const reportas = await report.create(req.body)
-			res.send("succ");
+			const reportas = await report.create({title,reason,reporter,reported})
+			res.send(reportas);
+			console.log(reportas);
+			
 		} catch (err) {
+			console.log("err",err);
 			res.send(err);
 		}
 	},

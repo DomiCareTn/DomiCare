@@ -11,20 +11,24 @@ const Equipement = mongoose.model(
     description: {
       type: String
     },
-    delivery: {
-      type: String
-    },
+
     transactionType: {
       type: String
     },
     price: {
-      type: String
+      type: Number
+    },
+    quantity: {
+      type: Number
     },
     picture: {
       type: String
     },
-    availability: {
-      type: String},
+    paiementLinks: {
+      type: Object,
+      default : {}
+    },
+
     ownerId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "ServiceProvider"

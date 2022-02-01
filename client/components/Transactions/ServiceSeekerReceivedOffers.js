@@ -5,6 +5,7 @@ import { Avatar, NativeBaseProvider } from "native-base";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CredentialsContext } from "../Authentification/CredentialsContext.js";
 import axios from "axios";
+import { ListItem } from "react-native-elements";
 
 const ReceivedOffers = () => {
     const { storedCredentials, setStoredCredentials } =
@@ -15,77 +16,88 @@ const ReceivedOffers = () => {
         try {
             const _id = userData._id;
             const offers = await axios.get(
-                `http://192.168.11.61:3000/Transactions/serviceoffers/:${_id}`
+                `http://192.168.11.98:3000/Transactions/serviceoffers/:${_id}`
             );
             setFeed(offers.data);
         } catch (error) {
             console.log(error);
         }
     }, []);
-    const AcceptOffer = async (e)=>{
-        try{
+    const AcceptOffer = async (e) => {
+        try {
             await axios.put(
-                `http://192.168.11.61:3000/Transactions/Acceptarequest/${e._id}`,
+                `http://192.168.11.98:3000/Transactions/Acceptarequest/${e._id}`,
                 { e }
-            )
-        }
-        catch(err){
+            );
+        } catch (err) {
             console.log(err);
         }
-    }
+    };
     const RejectOffer = async (e) => {
         try {
-            console.log("cancel", _id);
+           
             await axios.put(
-                `http://192.168.11.61:3000/Transactions/deleterequest/${e._id}`,{e}
-                
+                `http://192.168.11.98:3000/Transactions/deleterequest/${e._id}`,
+                { e }
             );
         } catch (err) {
             console.log(err);
         }
     };
     return (
+        
         <NativeBaseProvider>
+            <View>
             <ScrollView>
                 {feed.map((e, key) => {
+                    console.log('e',e)
                     return (
                         <View style={styles.container} key={key}>
+
                             <Card style={{ padding: 10, margin: 10 }}>
                                 <Text style={{ marginLeft: 270 }}>
                                     {" "}
-                                    createdAt
+                                    createdAt{e.createdAt}
                                 </Text>
                                 <Avatar
-                                    bg="green.500"
+                                    // bg="grey"
                                     size="md"
                                     source={{
-                                        uri: "https://us.123rf.com/450wm/tuktukdesign/tuktukdesign1606/tuktukdesign160600119/59070200-user-icon-man-profil-homme-d-affaires-avatar-personne-ic%C3%B4ne-illustration-vectorielle.jpg?ver=6",
+                                        uri: e.providerId.picture,
                                     }}
                                 ></Avatar>
-                                <Text> firstName</Text>
-                                <Text>lastName</Text>
-                                <Text>Gender</Text>
-                                <Text>Speciality</Text>
-                                <Button
-                                    onPress={() => {AcceptOffer(e)}}
-                                    title="Accept"
+                                <Text> From:{e.providerId.firstName}{" "}{e.providerId.lastName}</Text>
+                                <Text>Gender :{" "}{e.providerId.gender}</Text>
+                                <Text>Speciality :{" "}{e.providerId.speciality}</Text>
+                                <Text></Text>
+                                <View style={{ flexDirection: "row" , justifyContent: 'space-evenly' }}>
+                                <Button style={{ width:10}}
+                                    onPress={() => {
+                                        AcceptOffer(e);
+                                    }}
+                                   
+                                    title="     Accept     "
                                     color="teal"
                                     accessibilityLabel="Learn more about this purple button"
                                 />
-                                <Button
+                                <Button style={{ width:50 }} 
                                     onPress={() => {
                                         RejectOffer(e);
                                     }}
-                                    title="Decline"
-                                    color="red"
+                                   
+                                    title="     Decline     "
+                                    color="#f39a6e"
                                     accessibilityLabel="Learn more about this purple button"
                                 />
+                                </View>
                             </Card>
                         </View>
                     );
                 })}
             </ScrollView>
+            </View>
         </NativeBaseProvider>
+        
     );
 };
 const styles = StyleSheet.create({

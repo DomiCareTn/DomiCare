@@ -4,9 +4,10 @@ import { createMaterialBottomTabNavigator } from "@react-navigation/material-bot
 import { createStackNavigator } from "@react-navigation/stack";
 import Icon from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { useNavigation } from "@react-navigation/native";
 
 import HomeScreen from "../components/Home.js";
-import NotificationsScreen from "../components/Notifications.js";
+import { NotificationsScreen } from "../components/Notifications.js";
 import {
     ProfileServiceSeeker,
     ProfileServiceProvider,
@@ -17,12 +18,12 @@ import {
     EditProfileSP,
     EditProfileEP,
 } from "../components/EditProfiles";
-import Report from "../components/report.js";
 import ForumPost from "../components/ForumPost.js";
-import AddBlog from "../components/AddBlog.js";
 import Forum2 from "../components/forum2.js";
 import Equipmentsfetch from "../components/Equipementsfetch.js";
+import EquipementItem from "../components/EquipementItem.js";
 import { CredentialsContext } from "../components/Authentification/CredentialsContext.js";
+
 import { Avatar } from "react-native-paper";
 import { View } from "react-native-animatable";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -31,7 +32,7 @@ const NotificationStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
 const QAStack = createStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
-
+import axios from "axios";
 import ServiceProvidersProfiles from "../components/Posts/ServiceProvidersProfiles.js";
 import ServiceSeekerAddPost from "../components/Posts/ServiceSeekerAddPost.js";
 import ServiceSeekersPosts from "../components/Posts/ServiceSeekersPosts.js";
@@ -40,8 +41,31 @@ import ServiceProvidersSendedOffers from "../components/Transactions/ServiceProv
 import ServiceSeekerReceivedOffers from "../components/Transactions/ServiceSeekerReceivedOffers.js";
 import ServiceSeekerSendARequest from "../components/Transactions/ServiceSeekerSendARequest.js";
 import ServiceSeekerSendedRequests from "../components/Transactions/ServiceSeekerSendedRequests.js";
+import { ServiceProviderInfo ,ServiceSeekerInfo } from "../components/Singlenotification.js";
+import {Paiment} from "../components/paiment.js"
+
 
 const MainTabScreen = () => {
+    const navigation = useNavigation();
+
+    const { storedCredentials, setStoredCredentials } =
+        React.useContext(CredentialsContext);
+    const userData = storedCredentials.userData;
+
+    const [Notif, setNotif] = React.useState(0);
+
+    React.useEffect(() => { const interval = setInterval(() => {      axios
+        .get(
+            `http://192.168.1.5:3000/Notifications/Fetch/${userData._id}`
+        )
+        .then((res) => {
+            const NotSeen = res.data.filter(
+                (item) => item.seen === false
+            );
+            const NotifN = NotSeen.length;
+            setNotif(NotifN);
+        }); }, 1000); return () => clearInterval(interval); }, [])
+    
     return (
         <Tab.Navigator barStyle={{ backgroundColor: "#008080" }}>
             <Tab.Screen
@@ -82,6 +106,7 @@ const MainTabScreen = () => {
                 component={NotificationStackScreen}
                 options={{
                     tabBarLabel: "Notifications",
+                    tabBarBadge: Notif>0 ?  `${Notif}` : null,
                     tabBarIcon: ({ color }) => (
                         <Icon
                             name="ios-notifications"
@@ -133,13 +158,6 @@ const HomeStackScreen = ({ navigation }) => {
                     ),
                     headerRight: () => (
                         <View style={{ flexDirection: "row", marginRight: 10 }}>
-                            {/* <Icon.Button
-                                name="ios-search"
-                                size={25}
-                                color="white"
-                                backgroundColor="#008080"
-                                onPress={() => {}}
-                            /> */}
                             <TouchableOpacity
                                 style={{ paddingHorizontal: 10, marginTop: 5 }}
                                 onPress={() => {
@@ -158,12 +176,46 @@ const HomeStackScreen = ({ navigation }) => {
                 }}
             />
             <HomeStack.Screen
-                name="Equipementsfetch"
+                name="Equipements List"
                 component={Equipmentsfetch}
-                options={({ route }) => ({
-                    title: route.params.title,
-                    headerBackTitleVisible: false,
-                })}
+                options={{
+                    headerLeft: () => (
+                        <Icon.Button
+                            name="ios-menu"
+                            size={25}
+                            backgroundColor="#008080"
+                            onPress={() => navigation.openDrawer()}
+                        />
+                    ),
+                }}
+            />
+              <HomeStack.Screen
+                name="Paiment"
+                component={Paiment}
+                options={{
+                    headerLeft: () => (
+                        <Icon.Button
+                            name="ios-menu"
+                            size={25}
+                            backgroundColor="#008080"
+                            onPress={() => navigation.openDrawer()}
+                        />
+                    ),
+                }}
+            />
+            <HomeStack.Screen
+                name="Equipement"
+                component={EquipementItem}
+                options={{
+                    headerLeft: () => (
+                        <Icon.Button
+                            name="ios-menu"
+                            size={25}
+                            backgroundColor="#008080"
+                            onPress={() => navigation.openDrawer()}
+                        />
+                    ),
+                }}
             />
 
             <HomeStack.Screen
@@ -184,13 +236,6 @@ const HomeStackScreen = ({ navigation }) => {
                     ),
                     headerRight: () => (
                         <View style={{ flexDirection: "row", marginRight: 10 }}>
-                            {/* <Icon.Button
-                                name="ios-search"
-                                size={25}
-                                color="white"
-                                backgroundColor="#008080"
-                                onPress={() => {}}
-                            /> */}
                             <TouchableOpacity
                                 style={{ paddingHorizontal: 10, marginTop: 5 }}
                                 onPress={() => {
@@ -226,55 +271,7 @@ const HomeStackScreen = ({ navigation }) => {
                     ),
                     headerRight: () => (
                         <View style={{ flexDirection: "row", marginRight: 10 }}>
-                            {/* <Icon.Button
-                                name="ios-search"
-                                size={25}
-                                color="white"
-                                backgroundColor="#008080"
-                                onPress={() => {}}
-                            /> */}
-                            <TouchableOpacity
-                                style={{ paddingHorizontal: 10, marginTop: 5 }}
-                                onPress={() => {
-                                    navigation.navigate("Profile Screen");
-                                }}
-                            >
-                                <Avatar.Image
-                                    source={{
-                                        uri: userData.picture,
-                                    }}
-                                    size={35}
-                                />
-                            </TouchableOpacity>
-                        </View>
-                    ),
-                }}
-            />
-            <HomeStack.Screen
-                name="AddBlog"
-                component={AddBlog}
-                options={{
-                    title: "Add Post",
-                    headerLeft: () => (
-                        <View style={{ marginLeft: 10 }}>
-                            <Icon.Button
-                                name="ios-menu"
-                                size={25}
-                                color="white"
-                                backgroundColor="#008080"
-                                onPress={() => navigation.openDrawer()}
-                            />
-                        </View>
-                    ),
-                    headerRight: () => (
-                        <View style={{ flexDirection: "row", marginRight: 10 }}>
-                            {/* <Icon.Button
-                                name="ios-search"
-                                size={25}
-                                color="white"
-                                backgroundColor="#008080"
-                                onPress={() => {}}
-                            /> */}
+                      
                             <TouchableOpacity
                                 style={{ paddingHorizontal: 10, marginTop: 5 }}
                                 onPress={() => {
@@ -311,13 +308,7 @@ const HomeStackScreen = ({ navigation }) => {
                     ),
                     headerRight: () => (
                         <View style={{ flexDirection: "row", marginRight: 10 }}>
-                            {/* <Icon.Button
-                                name="ios-search"
-                                size={25}
-                                color="white"
-                                backgroundColor="#008080"
-                                onPress={() => {}}
-                            /> */}
+                   
                             <TouchableOpacity
                                 style={{ paddingHorizontal: 10, marginTop: 5 }}
                                 onPress={() => {
@@ -337,7 +328,7 @@ const HomeStackScreen = ({ navigation }) => {
             />
 
             <HomeStack.Screen
-                name="ServiceProvidersProfiles"
+                name="Home Care"
                 component={ServiceProvidersProfiles}
             />
             <HomeStack.Screen
@@ -369,6 +360,18 @@ const HomeStackScreen = ({ navigation }) => {
                 name="ServiceSeekerSendedRequests"
                 component={ServiceSeekerSendedRequests}
             />
+<<<<<<< HEAD
+            <HomeStack.Screen
+                name="ServiceSeekerInfo"
+                component={ServiceSeekerInfo}
+            />
+            <HomeStack.Screen
+                name="ServiceProviderInfo"
+                component={ServiceProviderInfo}
+            />
+=======
+          
+>>>>>>> 6ca2dafaaaed2ea509f8b9446400a34a60f607c8
         </HomeStack.Navigator>
     );
 };
@@ -589,7 +592,7 @@ const QAStackScreen = ({ navigation }) => (
         }}
     >
         <QAStack.Screen
-            name="Forum2"
+            name="Medical Forum"
             component={Forum2}
             options={{
                 headerLeft: () => (
@@ -603,22 +606,8 @@ const QAStackScreen = ({ navigation }) => (
             }}
         />
         <QAStack.Screen
-            name="ForumPost"
+            name="Post"
             component={ForumPost}
-            options={{
-                headerLeft: () => (
-                    <Icon.Button
-                        name="ios-menu"
-                        size={25}
-                        backgroundColor="#008080"
-                        onPress={() => navigation.openDrawer()}
-                    />
-                ),
-            }}
-        />
-        <QAStack.Screen
-            name="AddBlog"
-            component={AddBlog}
             options={{
                 headerLeft: () => (
                     <Icon.Button

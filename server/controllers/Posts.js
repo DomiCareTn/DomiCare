@@ -6,7 +6,6 @@ module.exports = {
     FindAllServiceProviders:(req,res)=>{
         ServiceProviders.find({type:"serviceProvider"})
                 .then((result)=>{
-                  console.log('FindAllServiceProviders', result)
                   res.send(result)})
                 .catch((err)=>console.log(err))
       },    
@@ -14,7 +13,6 @@ module.exports = {
         
         Posts.find({type:"request"}).populate("serviceSeeker_id")
                 .then((result)=>{
-                  console.log('FindAllServiceSeekerPosts', result)
                   res.send(result)})
                 .catch((err)=>console.log(err))
       },
@@ -22,14 +20,12 @@ module.exports = {
         
         Posts.find({serviceSeeker_id:req.params._id})
                 .then((result)=>{
-                  console.log('FindAllServiceSeekerPosts', result)
                   res.send(result)})
                 .catch((err)=>console.log(err))
       },
       CreateServiceSeekerPost:async (req, res, next) => {
         
 
-        console.log('create a post');
         
         
         try {
@@ -41,7 +37,8 @@ module.exports = {
             endDate:req.body.selectedEndDate,
             adress:req.body.adress,
             file:req.body.file,
-            type:"request"
+            type: "request",
+            user:req.body.user
           });
           console.log('CreateServiceSeekerPost',Post)
           res.status(200).json(Post);
