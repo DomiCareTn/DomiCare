@@ -59,7 +59,7 @@ function Login() {
     };
     const post = () => {
         axios
-            .post(`http://192.168.164.81:3000/auth/Login`, { formData })
+            .post(`http://192.168.11.97:3000/auth/Login`, { formData })
             .then((response) => {
                 let errors = {};
                 const data = response.data;
@@ -89,7 +89,7 @@ function Login() {
                 if (type == "success") {
                     const email = user.email;
                     axios
-                        .post(`http://192.168.164.81:3000/auth/GoogleLogin`, {
+                        .post(`http://192.168.11.97:3000/auth/GoogleLogin`, {
                             email,
                         })
                         .then((response) => {

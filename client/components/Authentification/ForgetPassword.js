@@ -31,7 +31,7 @@ function ResetPassword() {
 
     const post = () => {
         axios
-            .post(`http://192.168.164.81:3000/auth/ForgetPassword`, {
+            .post(`http://192.168.11.97:3000/auth/ForgetPassword`, {
                 formData,
             })
             .then((response) => {

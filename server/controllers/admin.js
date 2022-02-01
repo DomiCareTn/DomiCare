@@ -68,7 +68,7 @@ module.exports = {
     },
     get_reports: async (req, res) => {
         try {
-            const reports = await report.find({}).populate("reporterId")
+            const reports = await report.find({})
              res.send(reports)
          
      }

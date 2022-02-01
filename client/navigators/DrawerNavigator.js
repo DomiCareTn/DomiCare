@@ -11,7 +11,6 @@ import { CredentialsContext } from "../components/Authentification/CredentialsCo
 import MainTabScreen from "./MainScreen.js";
 import ForumPost from "../components/ForumPost.js";
 import Equipmentsfetch from "../components/Equipementsfetch.js";
-import Report from "../components/report.js";
 import MyEquipements from "../components/MyEquipements.js"
 import EditEquipement from "../components/EditEquipement.js";
 import CustomDrawer from "../navigators/CustomDrawer";
@@ -100,16 +99,7 @@ const DrawerNav = () => {
                 name="Posts Feed"
                 component={ServiceSeekersPosts}
             />
-            <Drawer.Screen
-                name="Report"
-                component={Report}
-                options={{
-                    drawerLabel: () => null,
-                    title: null,
-                    drawerItemStyle: { height: 0 },
-                    drawerIcon: () => null,
-                }}
-            />
+          
             <Drawer.Screen
                 name="Forum"
                 component={Forum2}
@@ -164,16 +154,7 @@ const DrawerNav = () => {
                 name="Posts Feed"
                 component={ServiceSeekersPosts}
             />
-            <SP.Screen
-                name="Report"
-                component={Report}
-                options={{
-                    drawerLabel: () => null,
-                    title: null,
-                    drawerItemStyle: { height: 0 },
-                    drawerIcon: () => null,
-                }}
-            />
+            
             <SP.Screen
                 name="Forum"
                 component={Forum2}
@@ -230,16 +211,7 @@ const DrawerNav = () => {
                 name="Posts Feed"
                 component={ServiceSeekersPosts}
             />
-            <EP.Screen
-                name="Report"
-                component={Report}
-                options={{
-                    drawerLabel: () => null,
-                    title: null,
-                    drawerItemStyle: { height: 0 },
-                    drawerIcon: () => null,
-                }}
-            />
+           
             <EP.Screen
                 name="Forum"
                 component={Forum2}

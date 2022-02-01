@@ -17,7 +17,6 @@ import {
     EditProfileSP,
     EditProfileEP,
 } from "../components/EditProfiles";
-import Report from "../components/report.js";
 import ForumPost from "../components/ForumPost.js";
 import Forum2 from "../components/forum2.js";
 import Equipmentsfetch from "../components/Equipementsfetch.js";
@@ -251,48 +250,6 @@ const HomeStackScreen = ({ navigation }) => {
             />
          
 
-            <HomeStack.Screen
-                name="Report"
-                component={Report}
-                options={{
-                    title: "Report",
-                    headerLeft: () => (
-                        <View style={{ marginLeft: 10 }}>
-                            <Icon.Button
-                                name="ios-menu"
-                                size={25}
-                                color="white"
-                                backgroundColor="#008080"
-                                onPress={() => navigation.openDrawer()}
-                            />
-                        </View>
-                    ),
-                    headerRight: () => (
-                        <View style={{ flexDirection: "row", marginRight: 10 }}>
-                            {/* <Icon.Button
-                                name="ios-search"
-                                size={25}
-                                color="white"
-                                backgroundColor="#008080"
-                                onPress={() => {}}
-                            /> */}
-                            <TouchableOpacity
-                                style={{ paddingHorizontal: 10, marginTop: 5 }}
-                                onPress={() => {
-                                    navigation.navigate("Profile Screen");
-                                }}
-                            >
-                                <Avatar.Image
-                                    source={{
-                                        uri: userData.picture,
-                                    }}
-                                    size={35}
-                                />
-                            </TouchableOpacity>
-                        </View>
-                    ),
-                }}
-            />
 
             <HomeStack.Screen
                 name="ServiceProvidersProfiles"

@@ -15,7 +15,7 @@ const ReceivedOffers = () => {
         try {
             const _id = userData._id;
             const offers = await axios.get(
-                `http://192.168.164.81:3000/Transactions/serviceoffers/:${_id}`
+                `http://192.168.11.97:3000/Transactions/serviceoffers/:${_id}`
             );
             setFeed(offers.data);
         } catch (error) {
@@ -25,7 +25,7 @@ const ReceivedOffers = () => {
     const AcceptOffer = async (e) => {
         try {
             await axios.put(
-                `http://192.168.164.81:3000/Transactions/Acceptarequest/${e._id}`,
+                `http://192.168.11.97:3000/Transactions/Acceptarequest/${e._id}`,
                 { e }
             );
         } catch (err) {
@@ -36,7 +36,7 @@ const ReceivedOffers = () => {
         try {
             console.log("cancel", _id);
             await axios.put(
-                `http://192.168.164.81:3000/Transactions/deleterequest/${e._id}`,
+                `http://192.168.11.97:3000/Transactions/deleterequest/${e._id}`,
                 { e }
             );
         } catch (err) {

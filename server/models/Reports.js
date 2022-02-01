@@ -4,21 +4,24 @@ var mongoose = require("mongoose");
 var ReportsSchema = new mongoose.Schema({
 
 
-            reporterId: {
-                type: mongoose.Schema.Types.ObjectId, refPath: 'onModel',
-                required: true,
+            reporter: {
+                type: mongoose.Schema.Types.String, ref: 'ServiceSeeker',
+               
             },
-            reportedId: {
-                type: mongoose.Schema.Types.ObjectId, refPath: 'onModel',
-                required: true,
+            reported: {
+                type: mongoose.Schema.Types.String,
+                ref: "ServiceProvider",
+              
             },
-            onModel: {
-                type: String,
-                enum: ['ServiceSeeker', 'ServiceProvider']
+        
+    title: {
+        type: String,
+      
+    
             },
             reason: {
                 type: String,
-                required: true,
+               
             },
             createdAt: {
                 type: Date,
